@@ -1,22 +1,51 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Welcome from '../views/Welcome.vue'
 import Home from '../views/Home.vue'
+import EnterInfo from '../views/EnterInfo.vue'
+import FindMiddle from '../views/FindMiddle.vue'
+import FindPlace from '../views/FindPlace.vue'
+import MakeAppointment from '../views/MakeAppointment.vue'
+import OneClick from '../views/OneClick.vue'
+
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'Welcome',
+    component: Welcome
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/enterinfo',
+    name: 'EnterInfo',
+    component: EnterInfo
+  },
+  {
+    path: '/findmiddle',
+    name: 'FindMiddle',
+    component: FindMiddle
+  },
+  {
+    path: '/findplace',
+    name: 'FindPlace',
+    component: FindPlace
+  },
+  {
+    path: '/makeappointment',
+    name: 'MakeAppointment',
+    component: MakeAppointment
+  },
+  {
+    path: '/oneclick',
+    name: 'OneClick',
+    component: OneClick
   }
 ]
 
