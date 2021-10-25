@@ -32,6 +32,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
+    'appointments',
+    'groups',
+    'maps',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -142,4 +146,4 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / 'my_static'
 
-AUTH_USER_MODEL = 'accounts.User'
+# AUTH_USER_MODEL = 'accounts.User'
