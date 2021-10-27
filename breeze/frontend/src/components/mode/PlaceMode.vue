@@ -4,7 +4,12 @@
     <button @click="modeUpdate(1)" :style="[selectedMode == 1 ? {color:'#4F5B9A'} : {color:'#FFFFFF'}]">카페</button>
     <button @click="modeUpdate(2)" :style="[selectedMode == 2 ? {color:'#4F5B9A'} : {color:'#FFFFFF'}]">술집</button>
     <button @click="modeUpdate(3)" :style="[selectedMode == 3 ? {color:'#4F5B9A'} : {color:'#FFFFFF'}]">문화</button>
-    <button class="dropdown">인기순</button>
+    <select v-model="selectedFilter" class="select" name="filter">
+      <option value=0 selected >인기순</option>
+      <option value=1>평점순</option>
+      <option value=2>랜 덤</option>
+    </select>
+
   </div>
 </template>
 
@@ -16,11 +21,13 @@ export default {
   data() {
     return {
       selectedMode: 0,
+      selectedFilter: 0,
     }
   },
   methods: {
     ...mapActions([
-      'setMode2'
+      'setMode2',
+      'setFilter'
     ]),
     modeUpdate: function (idx) {
       this.setMode2(idx)
@@ -30,6 +37,11 @@ export default {
   created() {
     this.selectedMode = 0
   },
+  watch: {
+    selectedFilter: function (idx) {
+      this.setFilter(idx)
+    }
+  }
 }
 </script>
 
@@ -45,7 +57,15 @@ export default {
     font-weight: 600;
     font-size: 15px;
   }
-  .dropdown {
-    color: #FFFFFF
+  .select {
+    font-weight: 600;
+    font-size: 15px;
+    background: transparent;
+    border: 0 none;
+    outline: 0 none;
+    padding: 0 5px;
+    position: relative;
+    z-index: 3;
+    color: #4F5B9A
   }
 </style>
