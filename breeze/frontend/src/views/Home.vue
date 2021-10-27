@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <div>확인</div>
   </div>
 </template>
 
