@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header v-if="$route.name !== 'Welcome'" id="header"/>
-    <router-view :style="[$route.name == 'Welcome' ? {height:'100%'} : {height:'80%'}]"/>
+    <router-view :style="[$route.name == 'Welcome' ? {height:'100%'} : {height:'82%'}]"/>
     <Footer v-if="$route.name !== 'Welcome'" id="footer"/>
   </div>
 </template>
@@ -48,21 +48,11 @@ export default {
     border-radius: 5px;
   }
   #header {
-    /* padding: 15px; */
-    height: 10%;
+    height: 9%;
     background: #B8D2FA;;
   }
   #footer {
-    position:absolute;
-    bottom: 0;
-    width:100%;
-    height: 10%;
-    /* padding-top: 15px;
-    padding-bottom: 15px; */
+    height: 9%;
     background: #B8D2FA;;
   }
-
-  #router {
-    height: 80%;
-    }
 </style>
