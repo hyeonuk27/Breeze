@@ -4,21 +4,24 @@
       <img
         src="@/assets/footer/home.png"
         alt="home-button"
-        :class="{ deactivate: $route.name !== 'Home' }"
+        @click="menuUpdate(0)"
+        :style="[selectedMenu == 0 ? {opacity:1} : {opacity:0.5}]"
       />
     </router-link>
     <router-link to="/enterinfo">
       <img
         src="@/assets/footer/new.png"
         alt="new-button"
-        :class="[{ deactivate: $route.name == 'Home'}, { deactivate: $route.name == 'OneClick'}]"
+        @click="menuUpdate(1)"
+        :style="[selectedMenu == 1 ? {opacity:1} : {opacity:0.5}]"
       />
     </router-link>
     <router-link to="/oneclick">
       <img
         src="@/assets/footer/oneclick.png"
         alt="oneclick-button"
-        :class="{ deactivate: $route.name !== 'OneClick' }"
+        @click="menuUpdate(2)"
+        :style="[selectedMenu == 2 ? {opacity:1} : {opacity:0.5}]"
       />
     </router-link>
   </div>
@@ -27,6 +30,19 @@
 <script>
 export default {
   name: "Footer",
+  data() {
+    return {
+      selectedMenu: 0,
+    }
+  },
+  methods: {
+    menuUpdate: function (idx) {
+      this.selectedMenu = idx
+    },
+  },
+  created() {
+    this.selectedMenu = 0
+  },
 };
 </script>
 

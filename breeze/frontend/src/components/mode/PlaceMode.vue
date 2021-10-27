@@ -16,7 +16,6 @@ export default {
   data() {
     return {
       selectedMode: 0,
-      isClicked: 0,
     }
   },
   methods: {
