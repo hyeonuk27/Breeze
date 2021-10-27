@@ -8,5 +8,6 @@ export default {
     map: '/map',
     group: '/group',
     appointment: '/appointment',
+    // login: '/oauth/kakao/callback'
   }
 }
