@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>enterInfo</h1>
     <ChooseDate/>
     <AddFriends/>
     <Participant/>
