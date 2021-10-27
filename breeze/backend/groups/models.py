@@ -5,7 +5,7 @@ User = settings.AUTH_USER_MODEL
 
 class Group(models.Model):
     id = models.IntegerField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='groups')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mygroups')
     name = models.CharField(max_length=20)
 
 
