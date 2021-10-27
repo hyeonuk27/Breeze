@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header v-if="$route.name !== 'Welcome'" id="header"/>
-    <router-view/>
+    <router-view :style="[$route.name == 'Welcome' ? {height:'100%'} : {height:'80%'}]"/>
     <Footer v-if="$route.name !== 'Welcome'" id="footer"/>
   </div>
 </template>
@@ -31,8 +31,8 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    height: 100vh;
     width: 100vw;
+    height: 100vh;
   }
   /* 스크롤 */
   ::-webkit-scrollbar {
@@ -48,15 +48,21 @@ export default {
     border-radius: 5px;
   }
   #header {
-    padding: 15px;
+    /* padding: 15px; */
+    height: 10%;
     background: #B8D2FA;;
   }
   #footer {
     position:absolute;
     bottom: 0;
     width:100%;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    height: 10%;
+    /* padding-top: 15px;
+    padding-bottom: 15px; */
     background: #B8D2FA;;
   }
+
+  #router {
+    height: 80%;
+    }
 </style>
