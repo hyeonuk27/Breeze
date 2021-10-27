@@ -20,7 +20,7 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'ChooseDate',
@@ -30,7 +30,20 @@ export default {
       timezone: 'Asia/Seoul'
     }
   },
+  methods: {
+    ...mapActions([
+      'setDate'
+    ])
+  },
   computed: {
+    chooseDate () {
+      return this.date
+    },
+  },
+  watch: {
+    chooseDate (val) {
+      this.setDate(val)
+    }
   }
 }
 </script>
