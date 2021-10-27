@@ -30,7 +30,6 @@ export default {
 
   created() {
     this.kakaoLogin()
-    console.log('왜 아무것도 안 찍히는거야....')
   }
 
 }
