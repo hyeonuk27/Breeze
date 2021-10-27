@@ -1,7 +1,7 @@
 <template>
   <div>
     <a :href="auth.url">
-      <img :src="require('@/assets/kakao_login.png')" alt="">
+      <img src="@/assets/kakao_login.png" alt="" class="kakao-btn-img">
     </a>
 
   </div>
@@ -35,6 +35,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.kakao-btn-img {
+  width: 180px;
+}
 
 </style>
