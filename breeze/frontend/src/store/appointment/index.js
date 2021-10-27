@@ -6,15 +6,22 @@ export default {
   },
   getters: {
     date: state => state.date,
+    participants: state => state.participants,
   },
   mutations: {
-    SETDATE: function (state, data) {
+    SETDATE (state, data) {
       state.date = data
     },
+    ADDPARTICIPANT (state, data) {
+      state.participants.push(data)
+    }
   },
   actions: {
-    setDate: function ({ commit }, data) {
+    setDate ({ commit }, data) {
       commit('SETDATE', data)
     },
+    addParticipant ({ commit }, data) {
+      commit('ADDPARTICIPANT', data)
+    }
   },
 }

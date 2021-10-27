@@ -1,12 +1,28 @@
 <template>
   <div>
-    <p>참여자</p>
+    <div
+      v-for="(part, idx) in participants"
+      :key="idx"
+      >
+      {{ part }}
+    </div>
   </div>
 </template>
 
 <script>
-export default {
+import { mapGetters } from 'vuex'
 
+export default {
+  name: 'Participant',
+  data () {
+    return {
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'participants'
+    ])
+  }
 }
 </script>
 
