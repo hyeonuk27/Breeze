@@ -62,7 +62,4 @@ export default {
     background: #B8D2FA;;
   }
 
-  #router {
-    height: 80%;
-    }
 </style>
