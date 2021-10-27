@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header v-if="$route.name !== 'Welcome'" id="header"/>
+    <router-view/>
     <Footer v-if="$route.name !== 'Welcome'" id="footer"/>
   </div>
 </template>
@@ -30,6 +31,8 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    height: 100vh;
+    width: 100vw;
   }
   /* 스크롤 */
   ::-webkit-scrollbar {
