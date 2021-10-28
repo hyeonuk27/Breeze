@@ -1,32 +1,32 @@
 <template>
   <div>
-    <MyAppointment />
+    <Appointment />
   </div>
 </template>
 
 <script>
-import MyAppointment from '@/components/home/MyAppointment'
+import Appointment from '@/components/home/Appointment'
 import appointmentApi from "@/api/appointment.js";
 
 export default {
-  name: 'MyAppointmentList',
+  name: 'AppointmentList',
   components: {
-    MyAppointment,
+    Appointment,
   },
   data() {
     return {
-      myAppointmentList: []
+      appointmentList: []
     }
   },
   methos: {
     async getMyAppointmentList() {
       let accessToken = sessionStorage.getItem("access-token");
       let refreshToken = sessionStorage.getItem("refresh-token");
-      let result = await appointmentApi.getMyAppointmentList({
+      let result = await appointmentApi.getAppointmentList({
         "access-token": accessToken,
         "refresh-token": refreshToken,
       });
-      this.myAppointmentList = result;
+      this.appointmentList = result;
     }
   }
 }

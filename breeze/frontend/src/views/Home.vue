@@ -1,19 +1,19 @@
 <template>
   <div class="home-items">
-    <Myprofile class="my-profile" />
-    <MyAppointmentList class="my-appointment-list" />
+    <Profile class="my-profile" />
+    <AppointmentList class="my-appointment-list" />
   </div>
 </template>
 
 <script>
-import Myprofile from '@/components/home/Myprofile'
-import MyAppointmentList from '@/components/home/MyAppointmentList'
+import Profile from '@/components/home/Profile'
+import AppointmentList from '@/components/home/AppointmentList'
 
 export default {
   name: 'Home',
   components: {
-    Myprofile,
-    MyAppointmentList,
+    Profile,
+    AppointmentList,
   }
 }
 </script>
