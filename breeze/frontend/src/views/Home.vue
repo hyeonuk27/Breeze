@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Myprofile />
-    <MyAppointmentList />
+    <Myprofile class="my-profile" />
+    <MyAppointmentList class="my-appointment-list" />
   </div>
 </template>
 
@@ -19,4 +19,10 @@ export default {
 </script>
 
 <style>
+.my-profile {
+  height: 30%;
+}
+.my-appointment-list {
+  height: 70%;
+}
 </style>
