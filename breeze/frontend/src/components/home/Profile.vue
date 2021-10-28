@@ -1,5 +1,5 @@
 <template>
-  <div class="my-profile-items">
+  <div class="profile">
     <LogoutBtn />
     <div class="image-box">
       <img
@@ -65,7 +65,7 @@ export default {
     color: #7b6f72;
     font-size: 12px;
   }
-  .my-profile-items {
+  .profile {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 2fr 2fr;

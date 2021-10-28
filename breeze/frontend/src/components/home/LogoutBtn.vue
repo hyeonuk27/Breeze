@@ -11,10 +11,10 @@ export default {
 </script>
 
 <style scoped>
-* {
-    color: #7B6F72;
-    font-size: 14px;
-}
+  * {
+  color: #7B6F72;
+  font-size: 14px;
+  } 
   .button-box {
   grid-column: 4;
   grid-row: 1;
