@@ -8,4 +8,5 @@ urlpatterns = [
     path('alcohol/', views.get_alcohol),
     path('data/', views.data_integration),
     path('rate/', views.get_rate),
+    path('insta/', views.insta_tag),
 ]
