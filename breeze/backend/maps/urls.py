@@ -7,4 +7,5 @@ urlpatterns = [
     path('test/', views.store_info),
     path('alcohol/', views.get_alcohol),
     path('data/', views.data_integration),
+    path('rate/', views.get_rate),
 ]
