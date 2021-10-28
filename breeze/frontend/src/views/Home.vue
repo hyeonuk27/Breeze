@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home-items">
     <Myprofile class="my-profile" />
     <MyAppointmentList class="my-appointment-list" />
   </div>
@@ -19,10 +19,15 @@ export default {
 </script>
 
 <style>
+.home-items {
+  padding: 8%;
+}
 .my-profile {
   height: 30%;
+  background: rgb(235, 239, 254);
 }
 .my-appointment-list {
   height: 70%;
+  background: rgb(245, 247, 190);
 }
 </style>
