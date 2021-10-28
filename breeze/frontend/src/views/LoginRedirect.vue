@@ -16,7 +16,7 @@ export default {
       const response = await authApi.login(code)
       console.log(response, '로그인 response')
       if (response) {
-        await this.$store.dispatch('setUserInfo', 
+        await this.$store.dispatch('setUser', 
           // {
           //   nickname: response.nickname
           // }
@@ -27,9 +27,6 @@ export default {
 
         this.$router.push('/home')
       }
-
-
-
     }
   },
 

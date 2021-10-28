@@ -1,4 +1,7 @@
 import axios from 'axios';
+import SERVER from '@/api/drf.js';
+
+axios.defaults.baseURL = SERVER.URL
 
 
 const setJwtTokens = (response) => {
