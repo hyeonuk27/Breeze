@@ -5,7 +5,7 @@ export default {
     user: null,
   },
   mutations: {
-    SET_USER_INFO: function (state, data) {
+    SET_USER: function (state, data) {
       state.user = data
     },
     REMOVE_USER: function (state) {
@@ -13,8 +13,8 @@ export default {
     }
   },
   actions: {
-    setUserInfo: function ({commit}, data) {
-      commit('SET_USER_INFO', data)
+    setUser: function ({commit}, data) {
+      commit('SET_USER', data)
       // router.push({name: 'Home'})
     },
     removeUser: function ({commit}) {
