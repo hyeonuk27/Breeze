@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="enter-info">
     <ChooseDate/>
     <AddFriends/>
     <Participant/>
@@ -24,6 +24,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.enter-info {
+  display: grid;
+}
 </style>

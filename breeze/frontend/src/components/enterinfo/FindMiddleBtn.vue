@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="btn btn-primary"
+    class="btn btn-primary find-middle-btn"
     @click="goToFindMiddle()"
     >중간 장소 찾기</button>
 </template>
@@ -18,5 +18,7 @@ export default {
 </script>
 
 <style>
-
+.find-middle-btn {
+  
+}
 </style>
