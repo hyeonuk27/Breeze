@@ -8,9 +8,9 @@ const authApi = {
     return requestLogin(`/auth/login/?code=${data}`)
   },
 
-  logout: () => {
+  logout: (id, token) => {
     console.log('로그아웃 axios 보내기 1초 전')
-    return requestPost('/auth/logout')
+    return requestPost(`/auth/logout/?id=${id}`, null, token)
   }
 
 };

@@ -5,23 +5,26 @@ axios.defaults.baseURL = SERVER.URL
 
 
 const setJwtTokens = (response) => {
-  if (response.headers['jwt-access-token'])
-    sessionStorage.setItem('access-token', response.headers['jwt-access-token']);
-  if (response.headers['jwt-refresh-token'])
-    sessionStorage.setItem('refresh-token', response.headers['jwt-refresh-token']);
+  if (response.data['access_token'])
+    sessionStorage.setItem('access-token', response.data['access_token']);
+  if (response.data['refresh_token'])
+    sessionStorage.setItem('refresh-token', response.data['refresh_token']);
 };
 
 const updateAccessToken = (response) => {
-  if (response.headers['jwt-access-token'] !== sessionStorage.getItem('access-token')) {
-    sessionStorage.setItem('access-token', response.headers['jwt-access-token']);
+  if (response.data['access_token'] !== sessionStorage.getItem('access-token')) {
+    sessionStorage.setItem('access-token', response.data['access_token']);
   }
 };
 
 export const requestLogin = async (url, headers) => {
   try {
     const response = await axios.get(url, { headers });
-    if (response.status === 200) {
-      if (response.headers['jwt-access-token']) setJwtTokens(response);
+    console.log(response, '여기서 잠시 멈추자')
+    if (response.status === 201) {
+      console.log('응답 성공')
+      console.log(response.data['access_token'], '액세스토큰')
+      if (response.data.access_token) setJwtTokens(response)
       return response.data;
     }
     throw new Error();
@@ -34,8 +37,8 @@ export const requestLogin = async (url, headers) => {
 export const requestGet = async (url, headers) => {
   try {
     const response = await axios.get(url, { headers });
-    if (response.status === 200) {
-      if (response.headers['jwt-access-token']) updateAccessToken(response);
+    if (response.status === 201) {
+      if (response.data['access_token']) updateAccessToken(response);
       return response.data;
     }
     throw new Error();
@@ -46,10 +49,12 @@ export const requestGet = async (url, headers) => {
 };
 
 export const requestPost = async (url, data, headers) => {
+  console.log(url, 'url은 어떻게 나오는 지 보자')
+  console.log(headers, '내가 바라는 대로 헤더가 들어가니')
   try {
     const response = await axios.post(url, data, { headers });
-    if (response.status === 200) {
-      if (response.headers['jwt-access-token']) setJwtTokens(response);
+    if (response.status === 201) {
+      if (response.data['access_token']) updateAccessToken(response);
       return response.data;
     }
     throw new Error();
@@ -61,8 +66,8 @@ export const requestPost = async (url, data, headers) => {
 export const requestPut = async (url, data, headers) => {
   try {
     const response = await axios.put(url, data, { headers });
-    if (response.status === 200) {
-      if (response.headers['jwt-access-token']) updateAccessToken(response);
+    if (response.status === 201) {
+      if (response.data['access_token']) updateAccessToken(response);
       return response.data;
     }
     throw new Error();
@@ -74,8 +79,8 @@ export const requestPut = async (url, data, headers) => {
 export const requestDelete = async (url, headers) => {
   try {
     const response = await axios.delete(url, { headers });
-    if (response.status === 200) {
-      if (response.headers['jwt-access-token']) updateAccessToken(response);
+    if (response.status === 201) {
+      if (response.data['access_token']) updateAccessToken(response);
       return response.data;
     }
     throw new Error();

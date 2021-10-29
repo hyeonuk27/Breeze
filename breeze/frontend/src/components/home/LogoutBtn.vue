@@ -12,12 +12,11 @@ export default {
   methods: {
     async logout() {
       let accessToken = sessionStorage.getItem("access-token");
-      let refreshToken = sessionStorage.getItem("refresh-token");
-      const payload = {
-        "access-token": accessToken,
-        "refresh-token": refreshToken,
-      }
-      const response = await authApi.logout(payload)
+      console.log(accessToken, '로그아웃시 액세스토큰')
+      const userId = this.$store.getters.getUserId
+      const response = await authApi.logout(userId, {
+          Authorization: `Bearer ${accessToken}`
+      })
       console.log(response, '로그아웃 response')
       if (response.data == 'success') {
         await this.$store.dispatch('removeUser')

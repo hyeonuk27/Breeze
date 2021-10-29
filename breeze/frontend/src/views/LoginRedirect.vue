@@ -14,19 +14,12 @@ export default {
       let code = new URL(window.location.href).searchParams.get('code');
       console.log(code, 'kakao 인가코드 axios 보내기 전 확인')
       const response = await authApi.login(code)
-      console.log(response, '로그인 response')
-      if (response) {
-        await this.$store.dispatch('setUser', 
-          // {
-          //   nickname: response.nickname
-          // }
-          {
-            nickname: 'jimin'
-          }
-        )
-
-        this.$router.push('/home')
-      }
+      console.log(response, '로그인 response 여기까지 왔다아아아')
+      await this.$store.dispatch('setUser', {
+        userId: response.id,
+        userName: response.username
+      })
+      this.$router.push('/home')
     }
   },
 
