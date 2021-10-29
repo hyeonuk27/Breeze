@@ -1,7 +1,7 @@
 <template>
   <div class="enter-info">
     <ChooseDate/>
-    <AddFriends/>
+    <!-- <AddFriends/> -->
     <Participant/>
     <FindMiddleBtn/>
   </div>
@@ -9,7 +9,7 @@
 
 <script>
 import ChooseDate from '@/components/enterinfo/ChooseDate.vue'
-import AddFriends from '@/components/enterinfo/AddFriends.vue'
+// import AddFriends from '@/components/enterinfo/AddFriends.vue'
 import Participant from '@/components/enterinfo/Participant.vue'
 import FindMiddleBtn from '@/components/enterinfo/FindMiddleBtn.vue'
 
@@ -17,7 +17,7 @@ export default {
   name: 'EnterInfo',
   components: {
     ChooseDate,
-    AddFriends,
+    // AddFriends,
     Participant,
     FindMiddleBtn,
   }
