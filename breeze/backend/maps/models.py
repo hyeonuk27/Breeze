@@ -14,3 +14,4 @@ class Place(models.Model):
     tag = models.IntegerField(null=True, blank=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
+    category_num = models.IntegerField()
