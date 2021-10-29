@@ -99,7 +99,8 @@ export default {
     font-size: 15px;
   }
   .remains {
-    grid-column: 2;
+    grid-column-start: 2;
+    grid-column-end: span 3;
     grid-row: 3;
     align-self: center;
     text-align: start;
