@@ -25,7 +25,7 @@ def check_login(func):
             token_status = get_token_status(access_token)
             user = User.objects.get(id=user_id)
             request.user = user
-
+            
             if token_status == 200:
                 request.access_token = 0
             # 유효하지 않으면
@@ -36,6 +36,8 @@ def check_login(func):
                 if new_refresh_token:
                     user.token = new_refresh_token
                     user.save()
+                    user_update = User.objects.get(id=user_id)
+                    request.user = user_update
                 request.access_token = new_access_token
 
         except User.DoesNotExist:
