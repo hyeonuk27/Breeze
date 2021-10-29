@@ -48,12 +48,15 @@ export default {
 
 <style scoped>
   .footer-items {
+    width: 100%;
+    height: 100%;
     display: flex;
-    justify-content: space-around;
+    align-items: center;
   }
   .footer-items img {
-    width: 27px;
-    height: 27px;
+    height: 100%;
+    width: 25%;
+    flex:1;
   }
   .deactivate {
     filter: opacity(0.5) drop-shadow(0 0 0 white);

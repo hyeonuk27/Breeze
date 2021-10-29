@@ -32,12 +32,9 @@ export default {
 </script>
 
 <style scoped>
-  .mode1-items {
-    display: flex;
-    justify-content: space-around;
-  }
   .mode1-items button {
-    width:100px;
+    width: 30%;
+    height: 100%;
     background-color: rgba(256, 256, 256, 0);
     border: none;
     font-weight: 600;
