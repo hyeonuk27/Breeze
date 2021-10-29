@@ -1,6 +1,6 @@
 <template>
-  <div class="appointment" :style="[isDday ? {background:'#B8D0FA'} : {background:'#EBECCA'}]">
-  <button @click="deleteAppointment(appointment.appointment_id)">x</button>
+  <div @mouseup="moveToAppointmentNote" class="appointment" :style="[isDday ? {background:'#B8D0FA'} : {background:'#EBECCA'}]">
+  <button @mousedown="deleteAppointment(appointment.appointment_id)">x</button>
     <div class="appointment-info">{{appointment.datetime}} {{appointment.middle_place}}</div>
     <div class="appointment-d-day"><div class="test">D-{{appointment.d_day}}</div></div>
   </div>
@@ -20,6 +20,14 @@ export default {
     }
   },
   methods: {
+    moveToAppointmentNote: function () {
+      this.$router.push({
+        name: 'MakeAppointment',
+        params: {
+          noteId: this.appointment.appointment_id 
+        },
+      })
+    },
     async deleteAppointment(noteId) {
       let accessToken = sessionStorage.getItem("access-token");
       let refreshToken = sessionStorage.getItem("refresh-token");
@@ -31,6 +39,7 @@ export default {
         "refresh-token": refreshToken,
       });
       this.$emit("get-appointmentlist");
+      console.log('삭제')
     }
   },
   created() {
@@ -73,6 +82,9 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 
+}
+button {
+  z-index: 100;
 }
 
 

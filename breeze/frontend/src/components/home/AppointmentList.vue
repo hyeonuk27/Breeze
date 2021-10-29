@@ -2,7 +2,7 @@
   <div class="appointment-list">
     <div v-if="appointmentList.length == 0">
     <div class="nothing"><div>예정된 약속이 없습니다.</div><div> 바라미들과 즐거운 약속을 만들어보세요!</div></div>
-    <img class="nothing-image" src="@/assets/baramis.png" alt="">
+    <img class="nothing-image" src="@/assets/barami/baramis.png" alt="">
     </div>
     <Appointment 
       v-for="(appointment, idx) in appointmentList"
