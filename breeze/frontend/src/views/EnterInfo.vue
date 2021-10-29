@@ -1,8 +1,8 @@
 <template>
-  <div class="enter-info">
+  <div>
     <ChooseDate/>
     <AddFriends/>
-    <Participant/>
+    <ParticipantList class="participant-list"/>
     <FindMiddleBtn/>
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script>
 import ChooseDate from '@/components/enterinfo/ChooseDate.vue'
 import AddFriends from '@/components/enterinfo/AddFriends.vue'
-import Participant from '@/components/enterinfo/Participant.vue'
+import ParticipantList from '@/components/enterinfo/ParticipantList.vue'
 import FindMiddleBtn from '@/components/enterinfo/FindMiddleBtn.vue'
 
 export default {
@@ -18,14 +18,14 @@ export default {
   components: {
     ChooseDate,
     AddFriends,
-    Participant,
+    ParticipantList,
     FindMiddleBtn,
   }
 }
 </script>
 
 <style scoped>
-.enter-info {
-  display: grid;
+.participant-list {
+  height: 38%;
 }
 </style>
