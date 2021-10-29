@@ -5,10 +5,10 @@ export const appointmentApi = {
   
   // 약속 리스트 조회
   getAppointmentList: (headers) => {
-    return requestGet(SERVER.URL + SERVER.ROUTES.appointment, headers);
+    return requestGet(SERVER.ROUTES.appointment, headers);
   },
   deleteAppointment: (data, headers) => {
-    return requestDelete(SERVER.URL + SERVER.ROUTES.appointment + `/${data.nodeId}`, headers);
+    return requestDelete(SERVER.ROUTES.appointment + `/${data.nodeId}`, headers);
   }
 };
 
