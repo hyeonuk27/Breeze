@@ -7,6 +7,7 @@ import FindMiddle from '../views/FindMiddle.vue'
 import FindPlace from '../views/FindPlace.vue'
 import MakeAppointment from '../views/MakeAppointment.vue'
 import OneClick from '../views/OneClick.vue'
+import LoginRedirect from '../views/LoginRedirect.vue'
 
 
 Vue.use(VueRouter)
@@ -46,6 +47,11 @@ const routes = [
     path: '/oneclick',
     name: 'OneClick',
     component: OneClick
+  },
+  {
+    path: '/oauth/kakao/callback',
+    name: 'LoginRedirect',
+    component: LoginRedirect
   }
 ]
 

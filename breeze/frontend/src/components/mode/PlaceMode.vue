@@ -46,24 +46,22 @@ export default {
 </script>
 
 <style scoped>
-  .mode2-items {
-    display: flex;
-    justify-content: space-around;
-  }
   .mode2-items button {
-    width:100px;
+    height: 100%;
+    width:18%;
     background-color: rgba(256, 256, 256, 0);
     border: none;
     font-weight: 600;
     font-size: 15px;
   }
   .select {
+    height: 100%;
+    width: 18%;
     font-weight: 600;
     font-size: 15px;
     background: transparent;
     border: 0 none;
     outline: 0 none;
-    padding: 0 5px;
     position: relative;
     z-index: 3;
     color: #4F5B9A

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header v-if="$route.name !== 'Welcome'" id="header"/>
+    <router-view :style="[$route.name == 'Welcome' ? {height:'100%'} : {height:'82%'}]"/>
     <Footer v-if="$route.name !== 'Welcome'" id="footer"/>
   </div>
 </template>
@@ -30,30 +31,28 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    width: 100vw;
+    height: 100vh;
   }
   /* 스크롤 */
   ::-webkit-scrollbar {
-    width: 7px;
+    width: 5px;
     border-radius: 5px;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: rgba(234, 238, 255, 0.7);
-    border-radius: 5px;
+    background-color: #9ABFFF;
+    border-radius: 6px;
   }
   ::-webkit-scrollbar-track {
-    background-color: #9ABFFF;
+    background-color: rgba(234, 238, 255, 0.7); 
     border-radius: 5px;
   }
   #header {
-    padding: 15px;
-    background: #B8D2FA;;
+    height: 9%;
+    background: #B8D2FA;
   }
   #footer {
-    position:absolute;
-    bottom: 0;
-    width:100%;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    background: #B8D2FA;;
+    height: 9%;
+    background: #B8D2FA;
   }
 </style>
