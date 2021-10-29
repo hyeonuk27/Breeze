@@ -85,7 +85,7 @@ def get_user_info(access_token, refresh_token):
     profile_json = requests.get('https://kapi.kakao.com/v2/user/me', headers=headers).json()
     user_id = profile_json.get('id')
     user_name = profile_json.get('kakao_account')
-    print(user_name)
+
     user_name = user_name.get('profile').get('nickname')
     # 우리 모델에 얘가 존재하지 않으면 회원가입
     if not User.objects.filter(id = user_id).exists():
