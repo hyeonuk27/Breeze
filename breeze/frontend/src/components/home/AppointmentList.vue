@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       isDday: false,
+      appointmentCnt: 0,
       appointmentList: 
       [
         {
@@ -63,6 +64,8 @@ export default {
         "refresh-token": refreshToken,
       });
       this.appointmentList = result;
+      this.appointmentCnt = result[0].length;
+      this.$emit('set-info', this.appointmentCnt)	
     }
   },
   created() {

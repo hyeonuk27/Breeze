@@ -1,22 +1,21 @@
 <template>
   <div
-    @mouseup="moveToAppointmentNote"
+    @click="moveToAppointmentNote"
     class="appointment"
     :style="[isDday ? { background: '#B8D0FA' } : { background: '#EBECCA' }]"
   >
-    <div
+    <img
+      onclick="event.cancelBubble = true;"
+      @click="deleteAppointment(appointment.appointment_id)"
       class="deleteBtn"
-      @mousedown="deleteAppointment(appointment.appointment_id)"
-    >
-      x
-    </div>
-    <div class="appointment-info">
-      {{ appointment.datetime }}
-      <div></div>
-      {{ appointment.middle_place }}
-    </div>
+      src="@/assets/close.png"
+      alt="close button"
+    />
+    <div class="appointment-info">{{ appointment.datetime }}<div>
+    </div>{{ appointment.middle_place }}</div>
     <div class="appointment-d-day">
-      <div class="test">D-{{ appointment.d_day }}</div>
+      <div v-if="isDday" class="appointment-d-day-text">오늘</div>
+      <div v-else class="appointment-d-day-text">D-{{ appointment.d_day }}</div>
     </div>
   </div>
 </template>
@@ -71,7 +70,7 @@ export default {
   grid-template-columns: 4fr 1fr 1fr;
   grid-template-rows: 1fr 4fr;
   height: 31.5%;
-  padding: 2% 5%;
+  padding: 5%;
   margin: 0 2% 3% 0;
   border-radius: 15px;
 }
@@ -81,14 +80,14 @@ export default {
   grid-row-start: 1;
   grid-row-end: span 2;
   align-self: center;
-  text-align: start;
+  margin-left: 5%;
   color: #7b6f72;
   font-size: 13px;
-  margin-left: 5%;
-  letter-spacing: -0.5px
+  text-align: start;
+  letter-spacing: -0.5px;
 }
 .appointment-d-day {
-  margin-right: 15%;
+  position: relative;
   grid-column-start: 2;
   grid-column-end: span 2;
   grid-row-start: 1;
@@ -97,23 +96,24 @@ export default {
   justify-self: end;
   height: 50px;
   width: 50px;
-  position: relative;
-  background: rgba(256, 256, 256, 0.5);
+  margin: 5% 15% 0 0;
   border-radius: 70%;
+  background: rgba(256, 256, 256, 0.5);
+  color: rgb(80, 79, 79);
   font-size: 13px;
   font-weight: 700;
-  color: rgb(80, 79, 79);
 }
-.test {
+.appointment-d-day-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 .deleteBtn {
-  z-index: 100;
   grid-column: 3;
   grid-row: 1;
-  text-align: end;
+  justify-self: end;
+  height: 10px;
+  width: 10px;
 }
 </style>
