@@ -3,7 +3,7 @@ from django.conf import settings
 
 class Place(models.Model):
     id = models.IntegerField(primary_key=True)
-    category = models.IntegerField()
+    category_num = models.IntegerField()
     name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20)
     address = models.TextField(null=True, blank=True)
@@ -14,4 +14,3 @@ class Place(models.Model):
     tag = models.IntegerField(null=True, blank=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    category_num = models.IntegerField()
