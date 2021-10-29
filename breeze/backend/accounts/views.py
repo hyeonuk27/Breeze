@@ -92,6 +92,7 @@ def get_user_info(access_token, refresh_token):
         new_user = User(
             id = user_id,
             username = user_name,
+            token = refresh_token,
         )
         new_user.save()
         
