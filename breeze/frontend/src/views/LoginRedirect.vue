@@ -12,19 +12,21 @@ export default {
   methods: {
     async kakaoLogin() {
       let code = new URL(window.location.href).searchParams.get('code');
-      console.log(code, '여기까지 잘 들어오니')
+      console.log(code, 'kakao 인가코드 axios 보내기 전 확인')
       const response = await authApi.login(code)
-      console.log(response, '백이 없으니까 답이 제대로 안오겠지? 에러나려나?')
+      console.log(response, '로그인 response')
       if (response) {
-        await this.$store.dispatch('setUserInfo', {
-          user: response.nickname
-        })
+        await this.$store.dispatch('setUser', 
+          // {
+          //   nickname: response.nickname
+          // }
+          {
+            nickname: 'jimin'
+          }
+        )
 
         this.$router.push('/home')
       }
-
-
-
     }
   },
 
