@@ -1,6 +1,8 @@
 from django.http.response import JsonResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from django.contrib import auth
 from .utils import check_login
 
 from decouple import config
@@ -115,19 +117,26 @@ def update_token(refresh_token):
     
     
 @api_view(['POST'])
+@check_login
 def logout(request):
     # Access Token을 사용하여 로그아웃
+    access_token = request.GET.get('access_token')
+
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer {ACCESS_TOKEN}',
+        'Authorization': f'Bearer {access_token}',
     }
 
     response = requests.post('https://kapi.kakao.com/v1/user/logout', headers=headers)
 
     # 카카오계정과 함께 로그아웃
+    auth.logout(request)
     params = (
-        ('client_id', '{YOUR_REST_API_KEY}'),
-        ('logout_redirect_uri', '{YOUR_LOGOUT_REDIRECT_URI}'),
+        ('client_id', REST_API_KEY),
+        # 어디로 보내면 좋을까나..
+        # ('logout_redirect_uri', 'auth/login/'),
     )
 
     response = requests.get('https://kauth.kakao.com/oauth/logout', params=params)
+
+    # return HttpResponseRedirect(response.logout_redirect_uri)
