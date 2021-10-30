@@ -1,24 +1,24 @@
 <template>
   <div class="participant">
-    <div class="d-flex">
-      <div class="image-box">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-1 image-box ms-3">
         <img
           :src="require('@/assets/barami/' + participant.baramiType + '.png')"
           class="image-box-barami"
           alt="barami-character"
         />
       </div>
-      <div class="d-flex">
+      <div class="col-6">
         <div class="content-box">
           <div class="participant-name">{{ participant.name }}</div>
           <div class="participant-location">{{ participant.location }}</div>
         </div>
-        <button
-          class="cancel-btn"
-          @click="deleteParticipant(idx)">
-          <i class="fas fa-times"></i>
-        </button>
       </div>
+      <button
+        class="col-3 cancel-btn"
+        @click="deleteParticipant(idx)">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
     <hr v-if="idx < participants.length-1" class="participant-hr">
   </div>
@@ -48,6 +48,7 @@ export default {
 
 <style scoped>
 .participant {
+  width: 95%;
   /* height: 30%; */
 }
 .image-box {
@@ -79,10 +80,14 @@ export default {
   color: #7B6F72;
 }
 .participant-hr {
-  color: #DDDADA;
+  color: #a7a7a7;
 }
 .cancel-btn {
   background: none;
   border: none;
+  text-align: right;
+  padding-right: 5%;
+  color: #a7a7a7;
+  font-weight: lighter;
 }
 </style>

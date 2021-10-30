@@ -8,7 +8,7 @@
           <i class="far fa-calendar-alt"></i>
         </button>
         <input
-          placeholder="약속 날짜를 선택해주세요"
+          placeholder="약속 날짜를 선택해주세요."
           :value="inputValue"
           class="choose-date-input text-gray-700 w-full py-1 px-2 appearance-none rounded-r focus:outline-none focus:border-blue-500"
           readonly
@@ -20,6 +20,8 @@
 
 <script>
 import { mapActions } from 'vuex'
+// const popOver = document.getElementsByClassName('vc-popover-content-wrapper')
+// popOver.style.transform = 'translate3d(20px, 120.667px, 0px)'
 
 export default {
   name: 'ChooseDate',
@@ -43,7 +45,7 @@ export default {
     chooseDate (val) {
       this.setDate(val)
     }
-  }
+  },
 }
 </script>
 

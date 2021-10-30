@@ -11,7 +11,7 @@
       ref="place-input-ref"
       placeholder="출발지를 입력해주세요.">
     <!-- 출발지 검색 결과 창 -->
-    <div v-if="searchWord" class="search-result">
+    <div v-if="isSearchResultOpen" class="search-result">
       <div
         v-for="(result, idx) in searchResult"
         :key="idx"
@@ -28,8 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="row add-friends-name-btn-container">
+      <div class="row d-flex justify-content-between add-friends-name-btn-container">
         <input
           type="text"
           class="col-10 name-input"
@@ -39,7 +38,6 @@
           <i class="fas fa-plus"></i>
         </button>
       </div>
-    </div>
   </div>
 </template>
 
@@ -55,6 +53,7 @@ export default {
       partName: '',
       searchResult: [],
       partLocation: null,
+      isSearchResultOpen: false,
     }
   },
   methods: {
@@ -62,23 +61,29 @@ export default {
       'addParticipant'
     ]),
     searchPlace () {
-      const URL = 'https://dapi.kakao.com/v2/local/search/keyword.json'
-      const apiKey = process.env.VUE_APP_KAKAO_API_KEY
-      axios.get(URL, {
-        headers: {
-          'Authorization': apiKey
-        },
-        params: {
-          'query': this.searchWord
-        }
-      })
-      .then((res) => {
-        // console.log(res.data.documents)
-        this.searchResult = res.data.documents
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      if ( this.searchWord.trim() ) {
+        // 키워드 장소 검색
+        const URL = 'https://dapi.kakao.com/v2/local/search/keyword.json'
+        const apiKey = process.env.VUE_APP_KAKAO_API_KEY
+        axios.get(URL, {
+          headers: {
+            'Authorization': apiKey
+          },
+          params: {
+            'query': this.searchWord
+          }
+        })
+        .then((res) => {
+          // console.log(res.data.documents)
+          this.isSearchResultOpen = true
+          this.searchResult = res.data.documents
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      } else {
+        this.isSearchResultOpen = false
+      }
     },
     setLocation (idx) {
       const target = this.searchResult[idx]
@@ -86,15 +91,19 @@ export default {
       this.partLocation = target.place_name
       this.searchWord = target.place_name
       this.searchResult = []
-      this.searchWord = ''
+      this.isSearchResultOpen = false
     },
     addPart () {
-      if (!this.partLocation.trim()) {
+      if (!this.partLocation || !this.partLocation.trim()) {
         alert('출발지를 입력해주세요')
-      } else if (!this.partName.trim()) {
+      } else if (!this.partName || !this.partName.trim()) {
         alert('이름을 입력해주세요')
-      } else if (this.partName.trim().length > 6) {
+      } else if (this.partName.length > 6 || this.partName.trim().length > 6) {
         alert('이름은 1~6자로 입력해주세요')
+      } else if (this.participants.length == 6) {
+        alert('친구는 최대 6명까지만 추가가 가능해요.')
+        this.partName = ''
+        this.searchWord = ''
       } else {
         const data = {
           'baramiType': this.participants.length,
@@ -159,11 +168,12 @@ export default {
 .add-friends-btn {
   background: linear-gradient(to left, #92A3FD, #9DCEFF);
   border: none;
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 3% 2%;
   color: white;
   font-size: 10pt;
   margin-bottom: 2%;
+  width: 14%;
 }
 .search-result {
   position: absolute;
