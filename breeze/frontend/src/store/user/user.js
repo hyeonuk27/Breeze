@@ -3,7 +3,7 @@
 export default {
   state: {
     userId: null,
-    userName: null
+    userName: null,
   },
   mutations: {
     SET_USER: function (state, data) {
