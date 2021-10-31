@@ -1,7 +1,10 @@
 from django.http.response import JsonResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from .serializers import UserSerializer
+from django.contrib import auth
+from .utils import check_login
+
 from decouple import config
 
 from rest_framework import status
@@ -14,17 +17,7 @@ import requests
 REST_API_KEY = config('REST_API_KEY')
 User = get_user_model()
 
-    # 
-    # 아니면 그냥 실행
-    
-    # 엑세스? 토큰 검사? 
-    
-    # 토큰을 바탕으로 회원아이디, 이름 -- 또 요청 보내야함
-    
 
-    # 우리 모델안에 이 회원의 아이디가 존재하지 않으면 회원가입 시켜야함
-    # 존재하면 그냥 로그인 
-    
 # 로그인 전체 로직 ===========================================================
 @api_view(['GET'])
 def login(request):
@@ -72,7 +65,6 @@ def get_token_status(access_token):
 
     response = requests.get('https://kapi.kakao.com/v1/user/access_token_info', headers=headers)
     
-    # 200 / 400 / 401
     return response.status_code
 
 
@@ -84,9 +76,8 @@ def get_user_info(access_token, refresh_token):
 
     profile_json = requests.get('https://kapi.kakao.com/v2/user/me', headers=headers).json()
     user_id = profile_json.get('id')
-    user_name = profile_json.get('kakao_account')
-    print(user_name)
-    user_name = user_name.get('profile').get('nickname')
+    user_name = profile_json.get('kakao_account').get('profile').get('nickname')
+    
     # 우리 모델에 얘가 존재하지 않으면 회원가입
     if not User.objects.filter(id = user_id).exists():
         new_user = User(
@@ -122,8 +113,30 @@ def update_token(refresh_token):
     new_access_token = response.get('access_token')
     new_refresh_token = response.get('refresh_token')
     return [new_access_token, new_refresh_token]
+
     
     
 @api_view(['POST'])
+@check_login
 def logout(request):
-    pass
+    # Access Token을 사용하여 로그아웃
+    access_token = request.GET.get('access_token')
+
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': f'Bearer {access_token}',
+    }
+
+    response = requests.post('https://kapi.kakao.com/v1/user/logout', headers=headers)
+
+    # 카카오계정과 함께 로그아웃
+    auth.logout(request)
+    params = (
+        ('client_id', REST_API_KEY),
+        # 어디로 보내면 좋을까나..
+        # ('logout_redirect_uri', 'auth/login/'),
+    )
+
+    response = requests.get('https://kauth.kakao.com/oauth/logout', params=params)
+
+    # return HttpResponseRedirect(response.logout_redirect_uri)
