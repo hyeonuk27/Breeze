@@ -117,7 +117,7 @@ def logout(request):
     if (request.access_token):
         access_token = request.access_token
     else:
-        access_token = request.headers["Authorization"]
+        access_token = request.headers["Authorization"].split()[1]
 
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -134,7 +134,7 @@ def check(request):
     if (request.access_token):
         access_token = request.access_token
     else:
-        access_token = request.headers["Authorization"]
+        access_token = request.headers["Authorization"].split()[1]
 
     response = {
         'access_token': access_token
