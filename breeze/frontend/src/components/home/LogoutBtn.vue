@@ -14,12 +14,13 @@ export default {
       let accessToken = sessionStorage.getItem("access-token");
       console.log(accessToken, '로그아웃시 액세스토큰')
       const userId = this.$store.getters.getUserId
+      // const response = await authApi.logout(userId, {'X-Custom-Header': userId})
       const response = await authApi.logout(userId)
       console.log(response, '로그아웃_프론트에서 받은 응답 확인')
       if (response == 'success') {
-        await this.$store.dispatch('removeUser')
-        sessionStorage.clear()
-        this.$router.push('/')
+        // await this.$store.dispatch('removeUser')
+        // sessionStorage.clear()
+        // this.$router.push('/')
       }
     }
   }
