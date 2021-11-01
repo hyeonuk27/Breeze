@@ -1,12 +1,22 @@
 <template>
   <div>
-    그룹 컴포넌트
+    <!-- {{ group }} -->
+    <div>{{ group.group_name }}</div>
+    <div
+    v-for="(member, idx) in group.group_members"
+    :key="idx">
+      {{ idx }} {{ member }}
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Group'
+  name: 'Group',
+  props: {
+    group: Object,
+    idx: Number,
+  },
 
 }
 </script>

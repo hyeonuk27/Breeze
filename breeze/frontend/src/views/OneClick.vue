@@ -44,6 +44,7 @@ export default {
 <style scoped>
 .introduction {
   padding: 5%;
+  margin: 1%;
 }
 .group-list {
   height: 70%;

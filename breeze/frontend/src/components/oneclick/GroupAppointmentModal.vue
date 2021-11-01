@@ -36,7 +36,12 @@
 
 <script>
 export default {
-  name: 'GroupAppointmentModal'
+  name: 'GroupAppointmentModal',
+  data () {
+    return {
+      date: ''
+    }
+  }
 }
 </script>
 
