@@ -1,5 +1,5 @@
 <template>
-  <div class="my-profile-items">
+  <div class="profile">
     <LogoutBtn />
     <div class="image-box">
       <img
@@ -12,7 +12,8 @@
       <div class="comment-box-greet">안녕하세요 {{ name }} 님</div>
       <div>저 {{ baramiName[randomNum] }}{{ baramiComment[randomNum] }}</div>
     </div>
-    <div class="remains">예정 약속 3개가 있습니다.</div>
+    <div v-if="appointmentCnt" class="remains">예정 약속 {{appointmentCnt}}개가 있습니다.</div>
+    <div v-else class="remains">예정 약속이 없습니다.</div>
   </div>
 </template>
 
@@ -22,6 +23,9 @@ import { mapState } from "vuex";
 
 export default {
   name: "Myprofile",
+  props: {
+    appointmentCnt: Number,
+  },
   components: {
     LogoutBtn,
   },
@@ -68,7 +72,7 @@ export default {
     color: #7b6f72;
     font-size: 12px;
   }
-  .my-profile-items {
+  .profile {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 2fr 2fr;
@@ -102,7 +106,8 @@ export default {
     font-size: 15px;
   }
   .remains {
-    grid-column: 2;
+    grid-column-start: 2;
+    grid-column-end: span 3;
     grid-row: 3;
     align-self: center;
     text-align: start;

@@ -1,5 +1,5 @@
 <template>
-  <div class="button-box">
+  <div class="logout-button">
     <button @click="logout">로그아웃</button>
   </div>
 </template>
@@ -27,17 +27,14 @@ export default {
 </script>
 
 <style scoped>
-* {
-    color: #7B6F72;
-    font-size: 14px;
-}
-  .button-box {
-  grid-column: 4;
-  grid-row: 1;
+  .logout-button {
+    grid-column: 4;
+    grid-row: 1;
   }
-  button {
+  .logout-button button {
     background-color: rgba(256, 256, 256, 0);
     border: none;
-    font-size: 13px;
+    font-size: 12px;
+    color: #7B6F72;
   }
 </style>

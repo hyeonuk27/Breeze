@@ -1,25 +1,35 @@
 <template>
-  <div class="home-items">
-    <Profile class="my-profile" />
-    <AppointmentList class="my-appointment-list" />
+  <div class="home">
+    <Profile :appointmentCnt="appointmentCnt" class="my-profile" />
+    <AppointmentList @set-info="setInfo" class="my-appointment-list" />
   </div>
 </template>
 
 <script>
-import Profile from '@/components/home/Profile'
-import AppointmentList from '@/components/home/AppointmentList'
+import Profile from "@/components/home/Profile";
+import AppointmentList from "@/components/home/AppointmentList";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     Profile,
     AppointmentList,
-  }
-}
+  },
+  data() {
+    return {
+      appointmentCnt: 0,
+    };
+  },
+  methods: {
+    setInfo(data) {
+      this.appointmentCnt = data;
+    },
+  },
+};
 </script>
 
 <style>
-.home-items {
+.home {
   padding: 8%;
 }
 .my-profile {
@@ -27,7 +37,6 @@ export default {
   background: rgb(235, 239, 254);
 }
 .my-appointment-list {
-  height: 70%;
-  background: rgb(245, 247, 190);
+  height: 66%;
 }
 </style>
