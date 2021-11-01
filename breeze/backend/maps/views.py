@@ -12,7 +12,8 @@ import requests
 import pickle
 import json
 import pandas as pd
-from selenium import webdriver
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
 import re
 
 
@@ -151,13 +152,11 @@ def data_integration(request):
     store_data.to_csv('data/store_data.csv', index=False)
 
 
+from selenium import webdriver
 def get_rate(request):
+    # chrome driver 사용: forbidden 문제 해결 필요
     store_data = pd.read_csv('data/store_data.csv')
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')
-    # options.add_argument("--disable-extensions") 
-    # options.add_argument("disable-infobars") 
-    # options.add_argument("window-size=1920x1080") 
     options.add_argument("no-sandbox") 
     options.add_argument("disable-gpu") 
     options.add_argument("--lang=ko_KR") 
@@ -166,18 +165,14 @@ def get_rate(request):
     driver = webdriver.Chrome(r"C:\Users\multicampus\CHENNI\자율프로젝트\S05P31A202\breeze\backend\maps\chromedriver.exe", chrome_options=options)
 
     review_list, rate_list = [], []
-    # 77567
     for url in store_data['kakao_url'][:100]:
         driver.get(url)
         driver.implicitly_wait(10)
-
         rate_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[2]').text
         rate_cnt = re.findall("\d+", rate_cnt)
         rate = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[1]').text
         review_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[2]/span').text
         review_cnt = re.findall("\d+", review_cnt)
-        
-
         review = int(rate_cnt[0]) + int(review_cnt[0])
         review_list.append(review)
         rate_list.append(float(rate))
@@ -185,6 +180,17 @@ def get_rate(request):
     driver.quit()
     review_rate = pd.DataFrame({ 'review_cnt': review_list, 'rate': rate_list})
     review_rate.to_csv('data/review_rate.csv', index=False)
+
+    # selenium: hidden으로 표시되는 부분 문제 해결 필요
+    # store_data = pd.read_csv('data/store_data.csv')
+    # for url in store_data['kakao_url'][:100]:
+    #     html = urlopen(url)
+    #     soup  = BeautifulSoup(html, "html.parser")
+    #     review_list = soup.select('.list_evaluation > li')
+
+    # review_rate = pd.DataFrame({ 'review_cnt': comment_list, 'rate': rate_list})
+    # review_rate.to_csv('data/review_rate.csv', index=False)
+
 
 
 def insta_tag(request):
