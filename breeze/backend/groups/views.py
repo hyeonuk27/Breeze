@@ -52,10 +52,10 @@ def groups(request):
 
     data = []
     for group in groups:
-        group_members = get_list_or_404(Groupmember, group_id=group.pk)
+        group_members = get_list_or_404(Groupmember, group_id=group.id)
         data.append(
             {
-                'group_id': group.pk,
+                'group_id': group.id,
                 'group_name': group.name,
                 'group_members': group_members,
             }
@@ -69,4 +69,6 @@ def groups(request):
 @check_login
 def group_delete(request, group_id):
     group = get_object_or_404(Group, id=group_id)
-    
+    if request.user == group.user:
+        group.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
