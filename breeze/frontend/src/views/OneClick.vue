@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Introduction/>
+    <Introduction class="introduction" />
     <GroupList/>
     <GroupAppointmentBtn/>
     <GroupAppointmentModal/>
@@ -24,6 +24,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.introduction {
+  margin: 5%;
+}
 
 </style>
