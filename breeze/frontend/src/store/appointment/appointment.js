@@ -14,6 +14,9 @@ export default {
     },
     ADDPARTICIPANT (state, data) {
       state.participants.push(data)
+    },
+    DELETEPARTICIPANT (state, data) {
+      state.participants.splice(data, 1)
     }
   },
   actions: {
@@ -22,6 +25,9 @@ export default {
     },
     addParticipant ({ commit }, data) {
       commit('ADDPARTICIPANT', data)
+    },
+    deleteParticipant ({ commit }, data) {
+      commit('DELETEPARTICIPANT', data)
     }
   },
 }

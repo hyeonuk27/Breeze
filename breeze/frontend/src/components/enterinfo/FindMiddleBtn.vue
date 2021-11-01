@@ -19,6 +19,11 @@ export default {
 
 <style>
 .find-middle-btn {
-  
+  background: linear-gradient(to left, #92A3FD, #9DCEFF);
+  border: none;
+  border-radius: 20px;
+  padding: 3%;
+  width: 65%;
+  box-shadow: 1px 1px 5px 0px gray;
 }
 </style>
