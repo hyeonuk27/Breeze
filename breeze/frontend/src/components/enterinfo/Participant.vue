@@ -10,8 +10,8 @@
       </div>
       <div class="col-6">
         <div class="content-box">
-          <div class="participant-name">{{ participant.name }}</div>
-          <div class="participant-location">{{ participant.location }}</div>
+          <div class="participant-name">{{ participant.partName }}</div>
+          <div class="participant-location">{{ participant.partLocation }}</div>
         </div>
       </div>
       <button

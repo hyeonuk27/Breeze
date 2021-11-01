@@ -53,6 +53,8 @@ export default {
       partName: '',
       searchResult: [],
       partLocation: null,
+      partLatitude: null,
+      partLongitude: null,
       isSearchResultOpen: false,
     }
   },
@@ -89,6 +91,8 @@ export default {
       const target = this.searchResult[idx]
       // console.log(target.place_name)
       this.partLocation = target.place_name
+      this.partLatitude = target.x
+      this.partLongitude = target.y
       this.searchWord = target.place_name
       this.searchResult = []
       this.isSearchResultOpen = false
@@ -107,12 +111,16 @@ export default {
       } else {
         const data = {
           'baramiType': this.participants.length,
-          'name': this.partName,
-          'location': this.partLocation
+          'partName': this.partName,
+          'partLocation': this.partLocation,
+          'partLatitude': this.partLatitude,
+          'partLongitude': this.partLongitude,
         }
         this.addParticipant(data)
         this.partName = ''
-        this.partLocation = ''
+        this.partLocation = null
+        this.partLatitude = null
+        this.partLongitude = null
         this.searchWord = ''
       }
     }
