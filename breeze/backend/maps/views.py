@@ -12,8 +12,12 @@ import requests
 import pickle
 import json
 import pandas as pd
+<<<<<<< HEAD
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
+=======
+from selenium import webdriver
+>>>>>>> e866824abd72427459d5c41881a2580f2617fdbb
 import re
 
 
@@ -165,14 +169,27 @@ def get_rate(request):
     driver = webdriver.Chrome(r"C:\Users\multicampus\CHENNI\자율프로젝트\S05P31A202\breeze\backend\maps\chromedriver.exe", chrome_options=options)
 
     review_list, rate_list = [], []
+<<<<<<< HEAD
     for url in store_data['kakao_url'][:100]:
         driver.get(url)
         driver.implicitly_wait(10)
+=======
+    # 77567
+    for url in store_data['kakao_url'][:100]:
+        driver.get(url)
+        driver.implicitly_wait(10)
+
+>>>>>>> e866824abd72427459d5c41881a2580f2617fdbb
         rate_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[2]').text
         rate_cnt = re.findall("\d+", rate_cnt)
         rate = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[1]').text
         review_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[2]/span').text
         review_cnt = re.findall("\d+", review_cnt)
+<<<<<<< HEAD
+=======
+        
+
+>>>>>>> e866824abd72427459d5c41881a2580f2617fdbb
         review = int(rate_cnt[0]) + int(review_cnt[0])
         review_list.append(review)
         rate_list.append(float(rate))
@@ -181,6 +198,7 @@ def get_rate(request):
     review_rate = pd.DataFrame({ 'review_cnt': review_list, 'rate': rate_list})
     review_rate.to_csv('data/review_rate.csv', index=False)
 
+<<<<<<< HEAD
     # selenium: hidden으로 표시되는 부분 문제 해결 필요
     # store_data = pd.read_csv('data/store_data.csv')
     # for url in store_data['kakao_url'][:100]:
@@ -192,6 +210,8 @@ def get_rate(request):
     # review_rate.to_csv('data/review_rate.csv', index=False)
 
 
+=======
+>>>>>>> e866824abd72427459d5c41881a2580f2617fdbb
 
 def insta_tag(request):
     # 전체 가게 정보 불러오기
