@@ -1,13 +1,13 @@
 <template>
   <div>
     <Introduction class="introduction" />
-    <GroupList/>
+    <GroupList class="group-list" />
     <GroupAppointmentBtn
-      @openModal="openModal()"
+      data-bs-toggle="modal" data-bs-target="#groupAppointmentModal"
     />
-    <GroupAppointmentModal
-      @closeModal="closeModal()"
-    />
+    <div class="modal fade" id="groupAppointmentModal" tabindex="-1" aria-labelledby="groupAppointmentModalLabel" aria-hidden="true">      
+      <GroupAppointmentModal/>
+    </div>
   </div>
 </template>
 
@@ -45,5 +45,7 @@ export default {
 .introduction {
   padding: 5%;
 }
-
+.group-list {
+  height: 70%;
+}
 </style>
