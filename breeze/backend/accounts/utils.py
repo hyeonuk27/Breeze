@@ -22,7 +22,8 @@ def check_login(func):
             # elif request.method == 'DELETE':
             #     user_id = request.DELETE.get('id')
             
-            user_id = request.GET.get('id')
+            # user_id = request.GET.get('id')
+            user_id = request.headers["X-Id"]
             access_token = request.headers["Authorization"]
             print(access_token, user_id, '여기다')
             # 토큰 유효성 확인
