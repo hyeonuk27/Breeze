@@ -1,10 +1,10 @@
 <template>
   <div class="footer-items">
-    <router-link to="/home">
+    <router-link to="/home" @click="menuUpdate(0)">
       <img
         src="@/assets/footer/home.png"
         alt="home-button"
-        @click="menuUpdate(0)"
+        
         :style="[selectedMenu == 0 ? {opacity:1} : {opacity:0.5}]"
       />
     </router-link>
@@ -55,7 +55,7 @@ export default {
   }
   .footer-items img {
     height: 100%;
-    width: 25%;
+    width: 20%;
     flex:1;
   }
   .deactivate {

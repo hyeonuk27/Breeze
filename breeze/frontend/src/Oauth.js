@@ -1,4 +1,4 @@
-const CLIENT_ID = "ce604a4bd42d5897fcdbd632423119f3";
+const CLIENT_ID = process.env.VUE_APP_KAKAO_CLIENT_ID;
 
 const REDIRECT_URI =  "http://localhost:8080/oauth/kakao/callback";
 // const REDIRECT_URI =  "https://k5a202.p.ssafy.io/api/v1/oauth/kakao/callback";
