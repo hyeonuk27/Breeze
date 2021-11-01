@@ -42,16 +42,25 @@ def login(request):
     refresh_token = response.get('refresh_token')
     
     token_status = get_token_status(access_token)
-    
-    if token_status == 200:
-        # 바로 회원정보 가져오기
-        user_info = get_user_info(access_token, refresh_token)
-    else:
-        # 토큰 갱신하고 회원정보 가져오기
-        new_access_token, new_refresh_token = update_token(refresh_token)
-        if not new_refresh_token:
-            refresh_token = new_refresh_token
-        user_info = get_user_info(new_access_token, refresh_token)
+    print('로그인 시 토큰상태', token_status)
+
+    user_info = get_user_info(access_token, refresh_token)
+    # print(user_info['id'])
+    user = User.objects.get(id=user_info['id'])
+    if refresh_token != user.token:
+        user.token = refresh_token
+        user.save()
+
+    # if token_status == 200:
+    #     # 바로 회원정보 가져오기
+    #     user_info = get_user_info(access_token, refresh_token)
+    # else:
+    #     # 토큰 갱신하고 회원정보 가져오기
+    #     new_access_token, new_refresh_token = update_token(refresh_token)
+    #     # if not new_refresh_token:
+    #     if new_refresh_token:
+    #         refresh_token = new_refresh_token
+    #     user_info = get_user_info(new_access_token, refresh_token)
         
     return Response(data=user_info, status=status.HTTP_201_CREATED)
 
@@ -88,6 +97,7 @@ def get_user_info(access_token, refresh_token):
         new_user.save()
         
     user_info = {
+        'id': user_id,
         'username': user_name,
         'access_token': access_token,
         'refresh_token': refresh_token,
@@ -120,7 +130,15 @@ def update_token(refresh_token):
 @check_login
 def logout(request):
     # Access Token을 사용하여 로그아웃
-    access_token = request.GET.get('access_token')
+    print('여기까지 들어오긴 하니')
+    # access_token = request.GET.get('access_token')
+    print(request.GET,'자자 보자')
+    print(request.access_token, '이거 확인해보까')
+    if (request.access_token):
+        access_token = request.access_token
+    else:
+        access_token = request.headers["Authorization"]
+        print(access_token, 'access token 잘 가져왔니')
 
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -128,15 +146,33 @@ def logout(request):
     }
 
     response = requests.post('https://kapi.kakao.com/v1/user/logout', headers=headers)
+    print(response, '카카오 답은 어떻게 오니')
+    return Response(response)
 
     # 카카오계정과 함께 로그아웃
-    auth.logout(request)
-    params = (
-        ('client_id', REST_API_KEY),
+    # auth.logout(request)
+    # params = (
+    #     ('client_id', REST_API_KEY),
         # 어디로 보내면 좋을까나..
         # ('logout_redirect_uri', 'auth/login/'),
-    )
+    # )
 
-    response = requests.get('https://kauth.kakao.com/oauth/logout', params=params)
+    # response = requests.get('https://kauth.kakao.com/oauth/logout', params=params)
 
     # return HttpResponseRedirect(response.logout_redirect_uri)
+
+@api_view(['GET'])
+@check_login
+def check(request):
+    if (request.access_token):
+        access_token = request.access_token
+        print(access_token, '갱신된 토큰')
+    else:
+        access_token = request.headers["Authorization"]
+        print(access_token, '갱신되지 않은 토큰')
+
+    response = {
+        'access_token': access_token
+    }
+    
+    return Response(data=response, status=status.HTTP_201_CREATED)
