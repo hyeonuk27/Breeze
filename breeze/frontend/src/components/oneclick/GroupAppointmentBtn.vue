@@ -1,7 +1,9 @@
 <template>
-  <div>
-    이모임으로 약속 만들기 버튼
-  </div>
+  <button
+    type="button"
+    class="btn btn-primary group-appointment-btn"
+    @click="$emit('openModal')"
+    >이 모임으로 약속 만들기</button>
 </template>
 
 <script>
@@ -10,6 +12,13 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.group-appointment-btn {
+  background: linear-gradient(to left, #92A3FD, #9DCEFF);
+  border: none;
+  border-radius: 20px;
+  padding: 2%;
+  width: 60%;
+  box-shadow: 1px 1px 5px 0px gray;
+}
 </style>

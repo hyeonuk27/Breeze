@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .find-middle-btn {
   background: linear-gradient(to left, #92A3FD, #9DCEFF);
   border: none;

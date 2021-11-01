@@ -2,8 +2,12 @@
   <div>
     <Introduction class="introduction" />
     <GroupList/>
-    <GroupAppointmentBtn/>
-    <GroupAppointmentModal/>
+    <GroupAppointmentBtn
+      @openModal="openModal()"
+    />
+    <GroupAppointmentModal
+      @closeModal="closeModal()"
+    />
   </div>
 </template>
 
@@ -20,13 +24,26 @@ export default {
     GroupList,
     GroupAppointmentBtn,
     GroupAppointmentModal
+  },
+  data () {
+    return {
+      isModalOpen: false,
+    }
+  },
+  methods: {
+    openModal() {
+      this.isModalOpen = true
+    },
+    closeModal() {
+      this.isModalOpen = false
+    }
   }
 }
 </script>
 
 <style scoped>
 .introduction {
-  margin: 5%;
+  padding: 5%;
 }
 
 </style>
