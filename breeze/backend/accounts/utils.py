@@ -34,7 +34,7 @@ def check_login(func):
                     user_update = User.objects.get(id=user_id)
                     request.user = user_update
                 request.access_token = new_access_token
-
+                print(request.user)
         except User.DoesNotExist:
             return JsonResponse({'message' : 'INVALID_USER'}, status=400)
         

@@ -1,22 +1,54 @@
+from functools import partial
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.http.response import JsonResponse
+from django.contrib.auth import get_user_model
 
 from .models import Group, Groupmember
-from .serializers import GroupmemeberSerializer
+from .serializers import GroupSerializer, GroupmemberSerializer
+from accounts.utils import check_login
 
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+User = get_user_model()
+
 
 @api_view(['POST'])
+@check_login
 def group_create(request):
-    pass
+    group_data = {
+        'name': request.data.get('groupName')
+    }
+    user = get_object_or_404(User, id=request.user.id)
+    serializer = GroupSerializer(data=group_data, partial=True)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=user)
+    group_id = serializer.data.get('id')
+    group = get_object_or_404(Group, id=group_id)
 
+    # 그룹별 멤버 저장
+    members = request.data.get('groupMembers')
+    print(request.data)
+    for member in members:
+        member_data = {
+            'name': member.get('memName'),
+            'building': member.get('memBuilding'),
+            'latitude': member.get('memLatitude'),
+            'longitude': member.get('memLongitude'),
+            'barami_type': member.get('baramiType')
+        }
+        serializer = GroupmemberSerializer(data=member_data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(group=group)
+
+    return Response(status=status.HTTP_201_CREATED)
+    
 
 @api_view(['GET'])
-def groups(request, user_id):
-    groups = Group.objects.filter(user_id=user_id)
+@check_login
+def groups(request):
+    groups = Group.objects.filter(user_id=request.user.id)
 
     data = []
     for group in groups:
@@ -34,5 +66,7 @@ def groups(request, user_id):
 
 
 @api_view(['DELETE'])
-def group_delete(request):
-    pass
+@check_login
+def group_delete(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    

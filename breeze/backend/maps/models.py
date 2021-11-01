@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 
 class Place(models.Model):
-    id = models.IntegerField(primary_key=True)
+    # id = models.IntegerField(primary_key=True)
     category_num = models.IntegerField()
     name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20)
