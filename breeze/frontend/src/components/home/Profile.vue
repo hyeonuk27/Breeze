@@ -59,7 +59,10 @@ export default {
     this.pickRandomNum();
   },
   computed: {
-    ...mapState(["name"]),
+    // ...mapState(["name"]),
+    ...mapState({
+      name: state => state.user.userName
+    }),
   },
 };
 </script>
