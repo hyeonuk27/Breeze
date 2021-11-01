@@ -8,9 +8,32 @@ import FindPlace from '../views/FindPlace.vue'
 import MakeAppointment from '../views/MakeAppointment.vue'
 import OneClick from '../views/OneClick.vue'
 import LoginRedirect from '../views/LoginRedirect.vue'
+import authApi from '@/api/auth.js'
+import store from "@/store"
 
 
 Vue.use(VueRouter)
+
+const checkToken =  () => async (to, from, next) => {
+  console.log(from, '어디서 왔는가')
+  if (from.name !== 'LoginRedirect') {
+    const userId = store.getters.getUserId
+    const isExpired = await authApi.check(userId)
+    console.log(isExpired, '한 페이지에 너무 오래 머물렀니')
+    if (isExpired) {
+      const response = await authApi.logout(userId)
+      if (response == 'success') {
+        await store.dispatch('removeUser')
+        sessionStorage.clear()
+        next('/')
+      }
+    }
+    else {
+      return next()
+    }
+  }
+  return next()
+}
 
 const routes = [
   {
@@ -21,32 +44,38 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter: checkToken()
   },
   {
     path: '/enterinfo',
     name: 'EnterInfo',
-    component: EnterInfo
+    component: EnterInfo,
+    beforeEnter: checkToken()
   },
   {
     path: '/findmiddle',
     name: 'FindMiddle',
-    component: FindMiddle
+    component: FindMiddle,
+    // beforeEnter: checkToken()
   },
   {
     path: '/findplace',
     name: 'FindPlace',
-    component: FindPlace
+    component: FindPlace,
+    // beforeEnter: checkToken()
   },
   {
     path: '/makeappointment',
     name: 'MakeAppointment',
-    component: MakeAppointment
+    component: MakeAppointment,
+     // beforeEnter: checkToken()
   },
   {
     path: '/oneclick',
     name: 'OneClick',
-    component: OneClick
+    component: OneClick,
+    beforeEnter: checkToken()
   },
   {
     path: '/oauth/kakao/callback',

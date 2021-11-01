@@ -12,19 +12,15 @@ export default {
   methods: {
     async logout() {
       let accessToken = sessionStorage.getItem("access-token");
-      let refreshToken = sessionStorage.getItem("refresh-token");
-      const payload = {
-        "access-token": accessToken,
-        "refresh-token": refreshToken,
-      }
-      const response = await authApi.logout(payload)
-      console.log(response, '로그아웃 response')
-      if (response.data == 'success') {
+      console.log(accessToken, '로그아웃시 액세스토큰')
+      const userId = this.$store.getters.getUserId
+      const response = await authApi.logout(userId)
+      console.log(response, '로그아웃_프론트에서 받은 응답 확인')
+      if (response == 'success') {
         await this.$store.dispatch('removeUser')
         sessionStorage.clear()
-        // this.$router.push('/home')
+        this.$router.push('/')
       }
-      
     }
   }
 }
