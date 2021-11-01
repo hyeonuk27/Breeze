@@ -1,8 +1,8 @@
-// const URL = 'http://localhost:8080'
-const URL = 'https://k5a202.p.ssafy.io/api/v1'
+const URL = 'http://localhost:8000/api/v1'
+// const URL = 'https://k5a202.p.ssafy.io/api/v1'
 
 export default {
-  URL,
+  URL: URL,
   ROUTES: {
     account: '/account',
     map: '/map',
