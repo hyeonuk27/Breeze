@@ -22,8 +22,6 @@ export const requestLogin = async (url, headers) => {
 
 export const requestLogout = async (url, data, headers) => {
   try {
-    // const params = {params: {'id': headers}}
-    // const response = await axios.post(url, data, params);
     const response = await axios.post(url, data, { headers });
     console.log(response, '로그아웃_백에서 받은 응답 확인')
     if (response.status === 200) {
