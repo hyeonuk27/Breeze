@@ -10,7 +10,7 @@ import Profile from "@/components/home/Profile";
 import AppointmentList from "@/components/home/AppointmentList";
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     Profile,
     AppointmentList,
