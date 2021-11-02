@@ -41,6 +41,7 @@ export default {
   border: none;
   border-radius: 20px;
   color: white;
+  font-weight: 600;
 }
 .make-appointment-btn-items img {
   height: inherit;
