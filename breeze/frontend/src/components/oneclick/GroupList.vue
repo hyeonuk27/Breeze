@@ -62,7 +62,7 @@ export default {
 .group-box {
   background-color: rgb(157, 206, 255, 0.2);
   border-radius: 15px;
-  margin: 0 6%;
+  /* margin: 0 6%; */
   padding: 5%;
 }
 
