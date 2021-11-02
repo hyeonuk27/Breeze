@@ -7,6 +7,9 @@
 <script>
 export default {
   name: 'Map',
+  props: {
+    middlePlaces: Array
+  },
   methods: {
     initMap() {
       var container = document.getElementById('map');

@@ -10,6 +10,9 @@
 <script>
 export default {
   name: 'FindMiddleBtn',
+  props: {
+    middlePlaces: Array
+  },
   methods: {
     goToFindPlace: function() {
       this.$router.push({ name: 'FindPlace' })

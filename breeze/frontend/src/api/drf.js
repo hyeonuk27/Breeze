@@ -4,10 +4,9 @@ const URL = 'http://localhost:8000/api/v1'
 export default {
   URL: URL,
   ROUTES: {
-    account: '/account',
+    auth: '/auth',
     map: '/map',
     group: '/group',
     appointment: '/appointment',
-    // login: '/oauth/kakao/callback'
   }
 }
