@@ -1,14 +1,14 @@
 <template>
   <div
     @click="moveToAppointmentNote"
-    class="appointment"
+    class="appointment-items"
     :style="[isDday ? { background: '#B8D0FA' } : { background: '#EBECCA' }]"
   >
     <img
       onclick="event.cancelBubble = true;"
       @click="deleteAppointment(appointment.appointment_id)"
       class="deleteBtn"
-      src="@/assets/close.png"
+      src="@/assets/common/close.png"
       alt="close button"
     />
     <div class="appointment-info">{{ appointment.datetime }}<div>
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style scoped>
-.appointment {
+.appointment-items {
   display: grid;
   grid-template-columns: 4fr 1fr 1fr;
   grid-template-rows: 1fr 4fr;

@@ -1,8 +1,8 @@
 <template>
   <div class="find-place">
-    <Map />
-    <WishPlaceList />
-    <MakeAppointmentBtn />
+    <Map class="map" />
+    <WishPlaceList class="wish-place-list" />
+    <MakeAppointmentBtn class="make-appointment-btn" />
   </div>
 </template>
 
@@ -21,5 +21,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.map {
+  height: 65%;
+    background: rgb(22, 47, 138);
+}
+.wish-place-list {
+  height: 21%;
+  background: rgb(235, 239, 254);
+}
+.make-appointment-btn {
+  height: 14%;
+}
 </style>

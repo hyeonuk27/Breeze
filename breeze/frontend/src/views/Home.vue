@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <Profile :appointmentCnt="appointmentCnt" class="my-profile" />
-    <AppointmentList @set-info="setInfo" class="my-appointment-list" />
+    <Profile :appointmentCnt="appointmentCnt" class="profile" />
+    <AppointmentList @set-info="setInfo" class="appointment-list" />
   </div>
 </template>
 
@@ -28,15 +28,15 @@ export default {
 };
 </script>
 
-<style>
-.home {
-  padding: 8%;
-}
-.my-profile {
-  height: 30%;
-  background: rgb(235, 239, 254);
-}
-.my-appointment-list {
-  height: 66%;
-}
+<style scoped>
+  .home {
+    padding: 8%;
+  }
+  .profile {
+    height: 30%;
+    background: rgb(235, 239, 254);
+  }
+  .appointment-list {
+    height: 66%;
+  }
 </style>
