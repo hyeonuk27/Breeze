@@ -153,13 +153,9 @@ def data_integration(request):
     store_data.to_csv('data/store_data.csv', index=False)
 
 
-
-review_rate = pd.DataFrame(columns=['review', 'rate'])
-
 def get_rate(request):
-    global review_rate
-
-    # chrome driver 사용: forbidden 문제 해결 필요
+    
+    review_rate = pd.read_csv('data/review_rate.csv')
     store_data = pd.read_csv('data/store_data.csv')
     options = webdriver.ChromeOptions()
     options.add_argument("no-sandbox") 
@@ -169,8 +165,8 @@ def get_rate(request):
     
     driver = webdriver.Chrome(r"C:\Users\multicampus\CHENNI\자율프로젝트\S05P31A202\breeze\backend\maps\chromedriver.exe", chrome_options=options)
 
-    # 150개씩 담기
-    for url in store_data['kakao_url'][:10]:
+    # 여기에서 개수를 조정한 후 돌려주세요! (최대 개수 150개)
+    for url in store_data['kakao_url'][:3]:
         driver.get(url)
         driver.implicitly_wait(10)
         rate_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[2]').text
@@ -180,14 +176,13 @@ def get_rate(request):
         review_cnt = re.findall("\d+", review_cnt)
         review = int(rate_cnt[0]) + int(review_cnt[0])
         driver.implicitly_wait(10)
-
         data = {'review': review, 'rate': float(rate)}
-        review_rate.append(data, ignore_index=True)
+        review_rate = review_rate.append(data, ignore_index=True)
 
     driver.quit()
-    
     review_rate.to_csv('data/review_rate.csv', index=False)
 
+    # chrome driver 사용: forbidden 문제 해결 필요
     # selenium: hidden으로 표시되는 부분 문제 해결 필요
     # store_data = pd.read_csv('data/store_data.csv')
     # for url in store_data['kakao_url'][:100]:
