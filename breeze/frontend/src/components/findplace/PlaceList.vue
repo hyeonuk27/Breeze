@@ -1,16 +1,16 @@
 <template>
   <div>
-    <MapPlace />  
+    <Place />  
   </div>
 </template>
 
 <script>
-import MapPlace from "@/components/findplace/MapPlace";
+import Place from "@/components/findplace/Place";
 
 export default {
-  name: 'MapPlaceList',
+  name: 'PlaceList',
   components: {
-    MapPlace,
+    Place,
   },
 }
 </script>

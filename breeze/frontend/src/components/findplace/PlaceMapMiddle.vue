@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'MapMiddle'
+  name: 'PlaceMapMiddle'
 }
 </script>
 

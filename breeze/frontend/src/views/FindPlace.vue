@@ -1,20 +1,20 @@
 <template>
   <div class="find-place">
-    <Map class="map" />
+    <PlaceMap class="place-map" />
     <WishPlaceList class="wish-place-list" />
     <MakeAppointmentBtn class="make-appointment-btn" />
   </div>
 </template>
 
 <script>
-import Map from "@/components/findplace/Map";
+import PlaceMap from "@/components/findplace/PlaceMap";
 import WishPlaceList from "@/components/findplace/WishPlaceList";
 import MakeAppointmentBtn from "@/components/findplace/MakeAppointmentBtn";
 
 export default {
   name: 'FindPlace',
   components: {
-    Map,
+    PlaceMap,
     WishPlaceList,
     MakeAppointmentBtn
   },
@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
 
-.map {
+.place-map {
   height: 65%;
     background: rgb(22, 47, 138);
 }
