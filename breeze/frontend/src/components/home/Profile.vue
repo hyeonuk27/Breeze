@@ -1,5 +1,5 @@
 <template>
-  <div class="profile">
+  <div class="profile-items">
     <LogoutBtn />
     <div class="image-box">
       <img
@@ -9,7 +9,7 @@
       />
     </div>
     <div class="comment-box">
-      <div class="comment-box-greet">안녕하세요 {{ name }} 님</div>
+      <div class="comment-box-greet">안녕하세요 {{ name }}님</div>
       <div>저 {{ baramiName[randomNum] }}{{ baramiComment[randomNum] }}</div>
     </div>
     <div v-if="appointmentCnt" class="remains">예정 약속 {{appointmentCnt}}개가 있습니다.</div>
@@ -72,7 +72,7 @@ export default {
     color: #7b6f72;
     font-size: 12px;
   }
-  .profile {
+  .profile-items {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 2fr 2fr;
@@ -103,7 +103,7 @@ export default {
     margin-bottom: 8px;
   }
   .comment-box-greet {
-    font-size: 15px;
+    font-size: 14px;
   }
   .remains {
     grid-column-start: 2;
