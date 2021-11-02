@@ -136,7 +136,7 @@ export default {
 <style>
 .add-friends-box {
   background-color: #E9EDFE;
-  width: 90%;
+  /* width: 90%; */
   margin: 0 auto;
   border-radius: 15px;
 }
@@ -188,7 +188,7 @@ export default {
   height: 40%;
   overflow-y: scroll;
   /* z-index: 100; */
-  width: 90%;
+  /* width: 90%; */
   margin: 0 auto;
   background-color: white;
   border-radius: 15px;
