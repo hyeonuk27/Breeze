@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <swiper class="swiper">
     <Group
       v-for="(group, idx) in groups"
       :key="idx"
@@ -7,16 +7,19 @@
       :group="group"
       class="group-box"
     />
-  </div>
+  </swiper>
 </template>
 
 <script>
 import Group from '@/components/oneclick/Group.vue'
+import { Swiper } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 
 export default {
   name: 'GroupList',
   components: {
-    Group
+    Group,
+    Swiper
   },
   data () {
     return {
@@ -50,6 +53,42 @@ export default {
               'building': '하우스행복',
             }
           ]
+        },
+        {
+          'group_name': '뽀로로모임',
+          'group_id': 1,
+          'group_members': [
+            {
+              'name': '뽀로로',
+              'building': '남극',
+            },
+            {
+              'name': '루피',
+              'building': '세종기지',
+            },
+            {
+              'name': '에디',
+              'building': '북극',
+            }
+          ]
+        },
+        {
+          'group_name': '뽀로로모임',
+          'group_id': 2,
+          'group_members': [
+            {
+              'name': '뽀로로',
+              'building': '남극',
+            },
+            {
+              'name': '루피',
+              'building': '세종기지',
+            },
+            {
+              'name': '에디',
+              'building': '북극',
+            }
+          ]
         }
       ]
     }
@@ -58,12 +97,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .group-box {
   background-color: rgb(157, 206, 255, 0.2);
   border-radius: 15px;
   /* margin: 0 6%; */
-  padding: 5%;
+  padding: 7%;
 }
-
 </style>

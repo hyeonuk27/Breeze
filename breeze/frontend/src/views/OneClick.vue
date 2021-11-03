@@ -1,7 +1,7 @@
 <template>
   <div class="one-click">
     <Introduction class="introduction" />
-    <GroupList class="group-list d-flex align-items-center" />
+    <GroupList class="group-list d-flex align-items-center justify-content-center" />
     <GroupAppointmentBtn
       class="group-appointment-btn"
       data-bs-toggle="modal" data-bs-target="#groupAppointmentModal"
