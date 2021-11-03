@@ -153,34 +153,18 @@ def data_integration(request):
     store_data.to_csv('data/store_data.csv', index=False)
 
 
+from selenium.common.exceptions import NoSuchElementException
+import time
+
 def get_rate(request):
     
-    review_rate = pd.read_csv('data/review_rate.csv')
-    store_data = pd.read_csv('data/store_data.csv')
-    options = webdriver.ChromeOptions()
-    options.add_argument("no-sandbox") 
-    options.add_argument("disable-gpu") 
-    options.add_argument("--lang=ko_KR") 
-    options.add_argument( 'user-agent=Mozilla/5.0 Chrome/95.0.4638.54')
+    num = 48300
     
-    driver = webdriver.Chrome(r"C:\Users\multicampus\CHENNI\자율프로젝트\S05P31A202\breeze\backend\maps\chromedriver.exe", chrome_options=options)
-
-    # 여기에서 개수를 조정한 후 돌려주세요! (최대 개수 150개)
-    for url in store_data['kakao_url'][:3]:
-        driver.get(url)
-        driver.implicitly_wait(10)
-        rate_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[2]').text
-        rate_cnt = re.findall("\d+", rate_cnt)
-        rate = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[1]').text
-        review_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[2]/span').text
-        review_cnt = re.findall("\d+", review_cnt)
-        review = int(rate_cnt[0]) + int(review_cnt[0])
-        driver.implicitly_wait(10)
-        data = {'review': review, 'rate': float(rate)}
-        review_rate = review_rate.append(data, ignore_index=True)
-
-    driver.quit()
-    review_rate.to_csv('data/review_rate.csv', index=False)
+    while num < 60000:
+        print(num)
+        auto_crawl(num)
+        num += 150
+        time.sleep(600)
 
     # chrome driver 사용: forbidden 문제 해결 필요
     # selenium: hidden으로 표시되는 부분 문제 해결 필요
@@ -194,56 +178,136 @@ def get_rate(request):
     # review_rate.to_csv('data/review_rate.csv', index=False)
 
 
+def auto_crawl(n):
+    review_rate = pd.read_csv('data/review_rate.csv')
+    store_data = pd.read_csv('data/store_data.csv')
+
+    options = webdriver.ChromeOptions()
+    options.add_argument("no-sandbox") 
+    options.add_argument("disable-gpu") 
+    options.add_argument("--lang=ko_KR") 
+    options.add_argument( 'user-agent=Mozilla/5.0 Chrome/95.0.4638.54')
+    
+    driver = webdriver.Chrome(r"C:\Temp\chromedriver.exe", chrome_options=options)
+
+    # 여기에서 개수를 조정한 후 돌려주세요! (최대 개수 150개)
+    for url in store_data['kakao_url'][n:n+150]:
+        driver.get(url)
+        driver.implicitly_wait(10)
+        try:
+            rate_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[2]').text
+            rate_cnt = re.findall("\d+", rate_cnt)
+            rate = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[1]').text
+            review_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[2]/span').text
+            review_cnt = re.findall("\d+", review_cnt)
+            review = int(rate_cnt[0]) + int(review_cnt[0])
+            driver.implicitly_wait(10)
+            data = {'review': review, 'rate': float(rate)}
+            review_rate = review_rate.append(data, ignore_index=True)
+            
+        # 후기 미제공일 때
+        except:
+            try:
+                review_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a/span').text
+                data = {'review': int(review_cnt) , 'rate': 0.0}
+            except:
+                data = {'review': 0.0 , 'rate': 0.0}
+            review_rate = review_rate.append(data, ignore_index=True)
+
+    driver.quit()
+    review_rate.to_csv('data/review_rate.csv', index=False)
+
+
+# def insta_tag(request):
+#     # 전체 가게 정보 불러오기
+#     insta_cnt = pd.read_csv('data/insta_alcohol.csv')
+#     stores = pd.read_csv('data/alcohol.csv')
+#     # store = pd.DataFrame()
+#     # # 태그 개수
+#     # ids = []
+#     # tags = []
+
+#     # 로그인
+#     BASE_URL = 'https://www.instagram.com/'
+#     CHROME_WIN_UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
+#     LOGIN_URL = BASE_URL + 'accounts/login/ajax/'
+#     STORIES_UA = 'Instagram 123.0.0.21.114 (iPhone; CPU iPhone OS 11_4 like Mac OS X; en_US; en-US; scale=2.00; 750x1334) AppleWebKit/605.1.15'
+#     TAGS_URL = BASE_URL + 'explore/tags/{0}/?__a=1'
+
+#     session = requests.Session()
+#     session.headers = {'user-agent': CHROME_WIN_UA}
+#     session.cookies.set('ig_pr', '1')
+
+#     session.headers.update({'Referer': BASE_URL, 'user-agent': STORIES_UA})
+
+#     req = session.get(BASE_URL)
+#     session.headers.update({'X-CSRFToken': req.cookies['csrftoken']})
+
+#     # 인스타그램 아이디/비밀번호
+#     login_data = {'username': 'axxsxbxx', 'password': '!tnqls1624@@'}
+#     login = session.post(LOGIN_URL, data=login_data, allow_redirects=True)
+#     session.headers.update({'X-CSRFToken': login.cookies['csrftoken']})
+#     cookie = login.cookies
+#     session.headers.update({'user-agent': CHROME_WIN_UA})
+
+#     cookie_byte = pickle.dumps(cookie)
+#     session.cookies.update(pickle.loads(cookie_byte))
+    
+#     for index, store in stores.iterrows():
+#         id = store['id']
+#         name = store['name'].replace(' ', '')
+#         print(index)
+
+#         media_url = TAGS_URL.format(name)
+#         try:
+#             response = session.get(media_url).json()
+#             print(response)
+#             tag_cnt = response.get('data').get('media_count')
+#         except:
+#             tag_cnt = 0
+        
+#         data = {'id': id, 'tag': tag_cnt}
+#         insta_cnt = insta_cnt.append(data, ignore_index=True)
+#         insta_cnt.to_csv('data/insta_alcohol.csv', index=False)
+#         time.sleep(5)
 
 def insta_tag(request):
+    header = {
+        'accept': '*/*',
+        'accept-encoding': 'gzip, deflate, br',
+        'accept-language': 'ko,en-US;q=0.9,en;q=0.8,ja;q=0.7,es;q=0.6,zh-CN;q=0.5,zh;q=0.4',
+        'cache-control': 'no-cache',
+        'cookie': 'mid=YXELogALAAGW-NbedLuxCOzv1G8J; ig_did=83EF44F6-2274-4F96-9789-21F816C54784; ig_nrcb=1; shbid="8668\054556550339\0541666881786:01f7d31e0bedbb32daf7c3edc5fba4f492bf893a690a97459657be5df5065b230bb8971c"; shbts="1635345786\054556550339\0541666881786:01f7145a213d9423f909674a74b674db3967824d44cf4a52f1a3b5be35c56cff784e2aa0"; csrftoken=kpKmpBqVllxsAu2Ivb5rFMi6n2gSHLTN; ds_user_id=48695229264; sessionid=48695229264%3ASCto4qBAr2huHI%3A10; rur="PRN\05448695229264\0541667458780:01f725583a8a7e5a92000bb18189e6594bfbb9c0990f6e13bede0f4388b24c4e4b9266f2"',
+        'pragma': 'no-cache',
+        'referer': 'https://www.instagram.com/explore/tags/%EC%99%B8%ED%8F%AC%EB%A6%AC%EB%B2%A4%EB%8C%95%EC%9D%B4/',
+        'sec-ch-ua': '"Google Chrome";v="95", "Chromium";v="95", ";Not A Brand";v="99"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36',
+        'x-asbd-id': '198387',
+        'x-ig-app-id': '936619743392459',
+        'x-ig-www-claim': 'hmac.AR2ymg50QA1njPOe7CeFwIts8GvJrdqr0e_2XTtE6_fUzdJe',
+        'x-requested-with': 'XMLHttpRequest',
+    }
     # 전체 가게 정보 불러오기
     stores = pd.read_csv('data/alcohol.csv')
-    store = pd.DataFrame()
-    # 태그 개수
-    ids = []
-    tags = []
 
-    # 로그인
-    BASE_URL = 'https://www.instagram.com/'
-    CHROME_WIN_UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
-    LOGIN_URL = BASE_URL + 'accounts/login/ajax/'
-    STORIES_UA = 'Instagram 123.0.0.21.114 (iPhone; CPU iPhone OS 11_4 like Mac OS X; en_US; en-US; scale=2.00; 750x1334) AppleWebKit/605.1.15'
-    TAGS_URL = BASE_URL + 'explore/tags/{0}/?__a=1'
-
-    session = requests.Session()
-    session.headers = {'user-agent': CHROME_WIN_UA}
-    session.cookies.set('ig_pr', '1')
-
-    session.headers.update({'Referer': BASE_URL, 'user-agent': STORIES_UA})
-
-    req = session.get(BASE_URL)
-    session.headers.update({'X-CSRFToken': req.cookies['csrftoken']})
-
-    # 인스타그램 아이디/비밀번호
-    login_data = {'username': '', 'password': ''}
-    login = session.post(LOGIN_URL, data=login_data, allow_redirects=True)
-    session.headers.update({'X-CSRFToken': login.cookies['csrftoken']})
-    cookie = login.cookies
-    session.headers.update({'user-agent': CHROME_WIN_UA})
-
-    cookie_byte = pickle.dumps(cookie)
-    session.cookies.update(pickle.loads(cookie_byte))
-    
     for index, store in stores.iterrows():
+        insta_cnt = pd.read_csv('data/insta_alcohol.csv')
         id = store['id']
         name = store['name'].replace(' ', '')
         print(index)
-
-        media_url = TAGS_URL.format(name)
+        url = f'https://www.instagram.com/explore/tags/{name}/?__a=1'
         try:
-            response = session.get(media_url).json()
+            response = requests.get(url, headers=header).json()
             tag_cnt = response.get('data').get('media_count')
         except:
             tag_cnt = 0
 
-        ids.append(id)
-        tags.append(tag_cnt)
-    
-    store['id'] = ids
-    store['tag'] = tags
-    store.to_csv('data/insta_alcohol.csv', index=False)
+        data = {'id': id, 'tag': tag_cnt}
+        insta_cnt = insta_cnt.append(data, ignore_index=True)
+        insta_cnt.to_csv('data/insta_alcohol.csv', index=False)
+        time.sleep(5)
