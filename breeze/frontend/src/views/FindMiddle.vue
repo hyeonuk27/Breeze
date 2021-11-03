@@ -53,7 +53,7 @@ export default {
           participants: [
             {
               barami_type: 0,
-              time: 10
+              time: 40
             },
             {
               barami_type: 1,
@@ -73,7 +73,7 @@ export default {
           participants: [
             {
               barami_type: 0,
-              time: 10
+              time: 60
             },
             {
               barami_type: 1,
@@ -93,7 +93,7 @@ export default {
           participants: [
             {
               barami_type: 0,
-              time: 10
+              time: 90
             },
             {
               barami_type: 1,
@@ -133,7 +133,7 @@ export default {
           participants: [
             {
               barami_type: 0,
-              time: 10
+              time: 50
             },
             {
               barami_type: 1,
@@ -173,7 +173,7 @@ export default {
           participants: [
             {
               barami_type: 0,
-              time: 10
+              time: 70
             },
             {
               barami_type: 1,
@@ -193,7 +193,7 @@ export default {
           participants: [
             {
               barami_type: 0,
-              time: 10
+              time: 0
             },
             {
               barami_type: 1,
