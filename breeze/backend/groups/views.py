@@ -41,8 +41,8 @@ def group_create(request):
         serializer = GroupmemberSerializer(data=member_data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save(group=group)
-
-    return Response(status=status.HTTP_201_CREATED)
+    data = { 'access_token': request.access_token }
+    return Response(data, status=status.HTTP_201_CREATED)
     
 
 @api_view(['GET'])
@@ -50,17 +50,21 @@ def group_create(request):
 def groups(request):
     groups = Group.objects.filter(user_id=request.user.id)
 
-    data = []
+    group_data = []
     for group in groups:
         group_members = get_list_or_404(Groupmember, group_id=group.id)
-        data.append(
+        group_data.append(
             {
                 'group_id': group.id,
                 'group_name': group.name,
                 'group_members': group_members,
             }
         )
-    return JsonResponse(data, safe=False)
+    data = {
+        'access_token': request.access_token,
+        'group_data': group_data
+    }
+    return Response(data, status=status.HTTP_200_OK)
     # serializer = GroupmemeberSerializer(group_members, many=True)
     # return Response(serializer.data)
 
@@ -71,4 +75,5 @@ def group_delete(request, group_id):
     group = get_object_or_404(Group, id=group_id)
     if request.user == group.user:
         group.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        data = { 'access_token': request.access_token }
+        return Response(data, status=status.HTTP_204_NO_CONTENT)
