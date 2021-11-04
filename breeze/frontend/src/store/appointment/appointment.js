@@ -17,6 +17,9 @@ export default {
     },
     DELETEPARTICIPANT (state, data) {
       state.participants.splice(data, 1)
+    },
+    ADDGROUPPARTICIPANTS (state, data) {
+      state.participants = data
     }
   },
   actions: {
@@ -28,6 +31,9 @@ export default {
     },
     deleteParticipant ({ commit }, data) {
       commit('DELETEPARTICIPANT', data)
+    },
+    addGroupParticipants ({ commit }, data) {
+      commit('ADDGROUPPARTICIPANTS', data)
     }
   },
 }

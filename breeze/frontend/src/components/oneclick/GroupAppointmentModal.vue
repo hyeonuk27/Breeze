@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-container">
     <div class="modal-content modal-box">
       <div>
         <div class="d-flex justify-content-end">
@@ -28,24 +28,42 @@
       </div>
       <div class="d-flex justify-content-end">
         <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-        <button type="button" class="btn ok-btn">확인</button>
+        <button type="button" class="btn ok-btn" @click="goToFindMiddle()">확인</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'GroupAppointmentModal',
   data () {
     return {
       date: ''
     }
+  },
+  methods: {
+    ...mapActions([
+      'setDate'
+    ]),
+    goToFindMiddle: function() {
+      this.$router.push({ name: 'FindMiddle' })
+    }
+  },
+  watch: {
+    date(val) {
+      this.setDate(val)
+    }
   }
 }
 </script>
 
 <style scoped>
+.modal-container {
+  margin-top: 30%; 
+}
 .modal-box {
   border-radius: 20px;
   border: none;

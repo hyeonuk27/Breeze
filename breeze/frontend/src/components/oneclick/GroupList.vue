@@ -1,5 +1,5 @@
 <template>
-  <swiper class="swiper">
+  <swiper class="swiper" ref="groupList" @slide-change-transition-end="getActive">
     <Group
       v-for="(group, idx) in groups"
       :key="idx"
@@ -13,6 +13,7 @@
 <script>
 import Group from '@/components/oneclick/Group.vue'
 import { Swiper } from 'vue-awesome-swiper'
+import { mapActions } from 'vuex'
 import 'swiper/css/swiper.css'
 
 export default {
@@ -90,7 +91,32 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      activeIndex: 0
+    }
+  },
+  methods: {
+    ...mapActions([
+      'addGroupParticipants'
+    ]),
+    getActive () {
+      // console.log('바뀌었다')
+      const swiper = this.$refs.groupList.$swiper
+      this.activeIndex = swiper.activeIndex
+      // console.log(this.activeIdx)
+    }
+  },
+  created() {
+    this.addGroupParticipants(this.groups[this.activeIndex])
+  },
+  computed: {
+    activeIdx () {
+      return this.activeIndex
+    }
+  },
+  watch: {
+    activeIdx (val) {
+      this.addGroupParticipants(this.groups[val])
     }
   }
 
