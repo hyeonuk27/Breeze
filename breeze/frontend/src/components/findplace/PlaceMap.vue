@@ -20,6 +20,7 @@ export default {
   },
   data() {
     return {
+      mapContainer: 0,
       placeList: [
         {
           name: '마포소금구이',
@@ -69,36 +70,44 @@ export default {
       var container = document.getElementById("place-map");
       var options = {
         center: new kakao.maps.LatLng(37.54906931328577, 126.91403035281367),
+        // center: new kakao.maps.LatLng(this.middleLatitude, this.middleLongitude),
         level: 5,
       };
-
       var map = new kakao.maps.Map(container, options);
+      
 
-      // 마커 이미지의 이미지 주소입니다
-      var imageSrc = require('@/assets/map/1.png'); 
-      console.log(this.placeList)
-          
+      // 중간 지점 마커 표시
+      var middleMarkerSrc = require('@/assets/map/middle.png');
+      var middelMarkerSize = new kakao.maps.Size(40, 40); 
+      var middleMarkerImage = new kakao.maps.MarkerImage(middleMarkerSrc, middelMarkerSize);
+      var middleMarkerPosition = options.center
+      
+      var middleMarker = new kakao.maps.Marker({ // 마커 생성
+        map: map, // 마커를 표시할 지도
+        image : middleMarkerImage, // 마커 이미지 
+        position: middleMarkerPosition, // 마커를 표시할 위치
+      });
+
+      middleMarker.setMap(map);
+      
+
+      // 장소 마커 표시
       for (var i = 0; i < this.placeList.length; i ++) {
           
-          // 마커 이미지의 이미지 크기 입니다
-          var imageSize = new kakao.maps.Size(30, 30); 
-          
-          // 마커 이미지를 생성합니다    
-          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-          var markerPosition = new kakao.maps.LatLng(this.placeList[i].latitude, this.placeList[i].longitude)
-
-          // 마커를 생성합니다
-          var marker = new kakao.maps.Marker({
-              map: map, // 마커를 표시할 지도
-              position: markerPosition, // 마커를 표시할 위치
-              image : markerImage // 마커 이미지 
-          });
-
-          marker.setMap(map);
-
+        var placeMarkerSrc = require('@/assets/map/' + this.mode2 + '.png');
+        var placeMarkerSize = new kakao.maps.Size(30, 30);  
+        var placeMarkerImage = new kakao.maps.MarkerImage(placeMarkerSrc, placeMarkerSize); 
+        var placeMarkerPosition = new kakao.maps.LatLng(this.placeList[i].latitude, this.placeList[i].longitude)
+        
+        var placeMarker = new kakao.maps.Marker({
+            map: map,
+            image : placeMarkerImage,
+            position: placeMarkerPosition,
+        });
+        
+        placeMarker.setMap(map);
       }
-
-    },
+    }
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -114,10 +123,18 @@ export default {
   },
   computed: {
     ...mapState({
-      mode2: state => state.appointment.mode2,
-      filter: state => state.appointment.filter
+      mode2: state => state.mode.mode2,
+      filter: state => state.mode.filter,
+      middleLatitude: state => state.appointment.middleLatitude,
+      middleLongitude: state => state.appointment.middleLongitude,
     }),
   },
+  watch: {
+    mode2(val) {
+      console.log('변경', val)
+      this.initMap()
+    }
+  }
 };
 </script>
 
