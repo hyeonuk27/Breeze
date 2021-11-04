@@ -1,5 +1,5 @@
 <template>
-  <div class="appointment-list">
+  <div class="appointment-list-items">
     <div v-if="appointmentList.length == 0">
     <div class="nothing"><div>예정된 약속이 없습니다.</div><div> 바라미들과 즐거운 약속을 만들어보세요!</div></div>
     <img class="nothing-image" src="@/assets/barami/baramis.png" alt="">
@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style>
-.appointment-list {
+.appointment-list-items {
   margin-top:6%;
   overflow-y: scroll;
   position: relative;

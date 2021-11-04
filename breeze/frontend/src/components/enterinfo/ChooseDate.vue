@@ -54,11 +54,11 @@ export default {
     color: #ADA4A5;
   }
 .choose-date {
-  margin: 4%;
-  height: 30%;
+  /* margin: 4%; */
+  /* height: 30%; */
 }
 .choose-date-box {
-  width: 90%;
+  /* width: 90%; */
   /* height: 100%; */
   margin: 0 auto;
   border-radius: 15px;
