@@ -36,23 +36,23 @@ export default {
   }
   /* 스크롤 */
   ::-webkit-scrollbar {
-    width: 7px;
+    width: 5px;
     border-radius: 5px;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: rgba(234, 238, 255, 0.7);
-    border-radius: 5px;
+    background-color: #9ABFFF;
+    border-radius: 6px;
   }
   ::-webkit-scrollbar-track {
-    background-color: #9ABFFF;
+    background-color: rgba(234, 238, 255, 0.7); 
     border-radius: 5px;
   }
   #header {
     height: 9%;
-    background: #B8D2FA;;
+    background: #B8D2FA;
   }
   #footer {
     height: 9%;
-    background: #B8D2FA;;
+    background: #B8D2FA;
   }
 </style>

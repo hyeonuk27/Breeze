@@ -2,17 +2,30 @@
 
 export default {
   state: {
-    user: null,
+    userId: null,
+    userName: null,
   },
   mutations: {
-    SET_USER_INFO: function (state, data) {
-      state.user = data
+    SET_USER: function (state, data) {
+      state.userId = data.userId,
+      state.userName = data.userName
+    },
+    REMOVE_USER: function (state) {
+      state.userId = null,
+      state.userName = null
     }
   },
   actions: {
-    setUserInfo: function ({commit}, data) {
-      commit('SET_USER_INFO', data)
-      // router.push({name: 'Home'})
+    setUser: function ({commit}, data) {
+      commit('SET_USER', data)
+    },
+    removeUser: function ({commit}) {
+      commit('REMOVE_USER')
     }
   },
+  getters: {
+    getUserId(state) {
+      return state.userId
+    }
+  }
 }
