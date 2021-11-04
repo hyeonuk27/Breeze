@@ -29,7 +29,7 @@ export default {
           'group_id': 0,
           'group_members': [
             {
-              'name': '수빙수빙수',
+              'name': '수빙수빙수빙',
               'building': '멀티캠퍼스 역삼',
             },
             {
@@ -103,5 +103,6 @@ export default {
   border-radius: 15px;
   /* margin: 0 6%; */
   padding: 7%;
+  height: 95%;
 }
 </style>

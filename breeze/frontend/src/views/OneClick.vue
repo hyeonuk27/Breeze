@@ -49,11 +49,12 @@ export default {
 .introduction {
   /* padding: 5%; */
   /* margin: 1%; */
-  height: 11%;
+  height: 9%;
 }
 .group-list {
   /* margin: auto 0%; */
   height: 80%;
+  margin-top: 5%;
 }
 .group-appointment-btn {
   height: 14%;
