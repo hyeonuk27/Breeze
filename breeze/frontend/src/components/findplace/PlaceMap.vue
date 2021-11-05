@@ -11,6 +11,7 @@ export default {
   name: "PlaceMap",
   data() {
     return {
+      placeOverlays : [],
       placeList: [
         {
           name: "마포소금구이",
@@ -20,7 +21,7 @@ export default {
           latitude: 37.54937608742442,
           phone: "02-324-2198",
           longitude: 126.91234702787905,
-          kakao_url: "https://place.map.kakao.com/17600274",
+          kakao_url: "https://naver.cafe.com",
         },
         {
           name: "교다이야",
@@ -32,36 +33,36 @@ export default {
           longitude: 126.91301221571476,
           kakao_url: "https://place.map.kakao.com/17600274",
         },
-        // {
-        //   name: "우동 카덴",
-        //   score: 3.9,
-        //   review: 984,
-        //   address: "서울특별시 마포구 서교동 양화로7안길 2-1",
-        //   phone: "02-366-4248",
-        //   latitude: 37.55192788156713,
-        //   longitude: 126.91487903318917,
-        //   kakao_url: "https://place.map.kakao.com/17600274",
-        // },
-        // {
-        //   name: "오스테리아샘킴",
-        //   score: 4.1,
-        //   review: 353,
-        //   address: "서울특별시 마포구 합정동 양화로3길 55",
-        //   phone: "02-321-1198",
-        //   latitude: 37.55160471820185,
-        //   longitude: 126.91089245335263,
-        //   kakao_url: "https://place.map.kakao.com/17600274",
-        // },
-        // {
-        //   name: "동무밥상",
-        //   score: 3.9,
-        //   review: 384,
-        //   address: "서울특별시 마포구 합정동 양화진길 10",
-        //   phone: "02-754-5598",
-        //   latitude: 37.54856605316061,
-        //   longitude: 126.91246430159401,
-        //   kakao_url: "https://place.map.kakao.com/17600274",
-        // },
+        {
+          name: "우동 카덴",
+          score: 3.9,
+          review: 984,
+          address: "서울특별시 마포구 서교동 양화로7안길 2-1",
+          phone: "02-366-4248",
+          latitude: 37.55192788156713,
+          longitude: 126.91487903318917,
+          kakao_url: "https://place.map.kakao.com/17600274",
+        },
+        {
+          name: "오스테리아샘킴",
+          score: 1.2,
+          review: 353,
+          address: "서울특별시 마포구 합정동 양화로3길 55",
+          phone: "02-321-1198",
+          latitude: 37.55160471820185,
+          longitude: 126.91089245335263,
+          kakao_url: "https://place.map.kakao.com/17600274",
+        },
+        {
+          name: "동무밥상",
+          score: 3.9,
+          review: 384,
+          address: "서울특별시 마포구 합정동 양화진길 10",
+          phone: "02-754-5598",
+          latitude: 37.54856605316061,
+          longitude: 126.91246430159401,
+          kakao_url: "https://naver.com",
+        },
       ],
     };
   },
@@ -75,8 +76,12 @@ export default {
         level: 5,
       };
       var map = new kakao.maps.Map(container, options);
+      
       this.addMiddleMarker(map);
-      this.addPlaceMarker(map);
+      for(let i = 0; i < this.placeList.length; i++){
+          var place = this.placeList[i];
+          this.addPlaceMarker(map, place);
+      }
     },
     // 중간 지점 마커 표시
     addMiddleMarker(map) {
@@ -94,48 +99,99 @@ export default {
       middleMarker.setMap(map);
     },
     // 장소 마커 표시
-    addPlaceMarker(map) {
-      for (var i = 0; i < this.placeList.length; i++) {
-        var placeMarkerSrc = require("@/assets/map/" + this.mode2 + ".png");
-        var placeMarkerSize = new kakao.maps.Size(30, 30);
-        var placeMarkerImage = new kakao.maps.MarkerImage(placeMarkerSrc, placeMarkerSize);
-        var placeMarkerPosition = new kakao.maps.LatLng(this.placeList[i].latitude, this.placeList[i].longitude);
+    addPlaceMarker(map, place) {
+      var placeMarkerSrc = require("@/assets/map/" + this.mode2 + ".png");
+      var placeMarkerSize = new kakao.maps.Size(30, 30);
+      var placeMarkerImage = new kakao.maps.MarkerImage(placeMarkerSrc, placeMarkerSize);
+      var placeMarkerPosition = new kakao.maps.LatLng(place.latitude, place.longitude);
 
-        var placeMarker = new kakao.maps.Marker({
-          map: map,
-          image: placeMarkerImage,
-          position: placeMarkerPosition,
-        });
+      var placeMarker = new kakao.maps.Marker({
+        map: map,
+        image: placeMarkerImage,
+        position: placeMarkerPosition,
+      });
 
-        placeMarker.setMap(map);
+      var placeOverlay = new kakao.maps.CustomOverlay({
+        map: map,
+        position: placeMarker.getPosition(),
+      });
 
-        const score = this.placeList[i].score * 20 + 1.5;
-        
-        var content = `<div class="place-wrap">`;
-        content +=  `<div class="place-head">`;
-        content +=    `<div>${this.placeList[i].name}</div>`;
-        content +=    `<img src="${require('@/assets/map/add.png')}" alt="">`;
-        content +=  `</div>`;
-        content +=  `<div class="place-body">`
-        content +=    `<div class="star-ratings">`
-        content +=      `<div class="star-ratings-fill" style="width: ${score}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>`;
-        content +=      `<div class="star-ratings-base"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>`;
-        content +=    `</div>`;
-        content +=    `<div class="star-ratings-text">(${this.placeList[i].score}) | 리뷰 ${this.placeList[i].review}개<div>`;
-        content +=    `<div>${this.placeList[i].address}</div>`;
-        content +=    `<div class="place-desc">${this.placeList[i].phone}</div>`;
-        content +=    `<a class="place-desc" href="${this.placeList[i].kakao_url}">상세보기</a>`;
-        content +=  `</div>`;
-        content += `</div>`;
+      // HTMLElement 생성
+      var placeContent = document.createElement('div');
+      placeContent.className = "place-content"
+      
+      var placeHead = document.createElement('div');
+      placeHead.className = "place-head"
 
-        var placeOverlay = new kakao.maps.CustomOverlay({
-          map: map,
-          position: placeMarker.getPosition(),
-          content,
-        });
-        console.log(placeOverlay)
-      }  
-    }
+      var placeBody = document.createElement('div');
+      placeBody.className = "place-body"
+
+      var placeName = document.createElement('div')
+      placeName.innerHTML = place.name;
+
+
+      var placeImg = document.createElement('img')
+      placeImg.setAttribute('src', require('@/assets/map/add2.png'));
+      placeImg.onclick = function () {
+        placeOverlay.setMap(null);
+      };
+
+      var starRatings = document.createElement('div');
+      starRatings.className = "star-ratings"
+
+      var starRatingsText = document.createElement('div')
+      starRatingsText.className = "star-ratings-text"
+      starRatingsText.innerHTML = '(' + place.score + ')| 리뷰 ' + place.review + '개';
+
+      const score = place.score * 20 + 1.5;
+      var starRatingsFill = document.createElement('div')
+      starRatingsFill.className = "star-ratings-fill"
+      starRatingsFill.style.width = score + '%'
+      
+      var starRatingsBase = document.createElement('div')
+      starRatingsBase.className = "star-ratings-base"
+      
+      var star1 = document.createElement('span')
+      star1.innerHTML = '★★★★★'
+      var star2 = document.createElement('span')
+      star2.innerHTML = '★★★★★'
+
+      var placeAddress = document.createElement('div');
+      placeAddress.innerHTML = place.address;
+
+      var placePhone = document.createElement('div')
+      placePhone.className = "place-desc"
+      placePhone.innerHTML = place.phone;
+
+      var placeUrl = document.createElement('a')
+      placeUrl.innerHTML = '상세보기'
+      placeUrl.className = "place-desc"
+      placeUrl.href = place.kakao_url;
+
+      // HTMLElement 구성
+      placeContent.append(placeHead, placeBody);
+      placeHead.append(placeName, placeImg)
+      placeBody.append(starRatings, starRatingsText, placeAddress, placePhone, placeUrl)
+      starRatings.append(starRatingsFill, starRatingsBase)
+      starRatingsFill.append(star1)
+      starRatingsBase.append(star2)
+
+      // 마커 오버레이에 HTMLElement 추가
+      placeOverlay.setContent(placeContent);
+      this.placeOverlays.push(placeOverlay);  
+
+
+      // 마커 클릭 이벤트
+      kakao.maps.event.addListener(placeMarker, 'click', function() {
+        for(let i = 0; i < this.placeOverlays.length; i++){
+          if (this.placeOverlays) {
+            this.placeOverlays[i].setMap(null);
+          }
+          placeOverlay.setMap(map);
+          this.placeOverlays.push(placeOverlay)
+          }
+      });
+    },
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -148,6 +204,9 @@ export default {
       script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${apiKey}`;
       document.head.appendChild(script);
     }
+  },
+  created() {
+
   },
   computed: {
     ...mapState({
@@ -171,17 +230,17 @@ export default {
   height: 100%;
   width: 100%;
 }
-.place-wrap {
+.place-content {
   position: absolute;
-  left: 20px;
-  bottom: 40px;
-  width: 180px;
+  left: 40px;
+  bottom: 35px;
+  width: 200px;
   height: 80px;
   margin-left: -140px;
   text-align: left;
   overflow: hidden;
   color: #3a3c3c;
-  background: rgba(184, 208, 250, 0.8);
+  background: rgba(184, 208, 250, 0.9);
   border-radius: 10px;
 }
 .place-head {
@@ -195,7 +254,7 @@ export default {
   padding: 5% 5% 0 5%;
 }
 .place-head img {
-  height: 70%;
+  height: 15px
 }
 .place-body {
   width: 100%;
@@ -227,7 +286,7 @@ export default {
   overflow: hidden;
   -webkit-text-fill-color: gold;
 }
-.star-ratings-base {
+.star-ratings-base { 
   z-index: 0;
   padding: 0;
   -webkit-text-fill-color: rgb(172, 172, 172);
