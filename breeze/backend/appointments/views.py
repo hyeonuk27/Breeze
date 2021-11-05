@@ -35,19 +35,22 @@ def appointment_mynote(request, note_id):
 @api_view(['GET'])
 @check_login
 def appointment_list(request):
-    # 이미 디데이 지난 약속 지우기로???
+    # 이미 디데이 지난 약속 지우고 시작
+    now = datetime.datetime.now()
+    prevs = Appointment.objects.filter(datetime__lt=now)
+    for prev in prevs:
+        prev.delete()
 
     appointments = Appointment.objects.filter(user_id=request.user.id)
-
     appointment_data = []
     for appointment in appointments:
-        # 디데이 구하기 -- string으로 넘기는게 편한가요?!
-
+        # 디데이 구하기
+        d_day = (now - appointment.datetime).days
         appointment_data.append({
             'appointment_id': appointment.id,
             'datetime': appointment.datetime,
             'middle_place': appointment.middle_place,
-            'd_day': 0,
+            'd_day': d_day,
         })
 
     data = {
