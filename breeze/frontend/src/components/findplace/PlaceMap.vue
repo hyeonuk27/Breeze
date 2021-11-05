@@ -11,7 +11,7 @@ export default {
   name: "PlaceMap",
   data() {
     return {
-      placeOverlays : [],
+      isClicked : [false,false,false,false,false,],
       placeList: [
         {
           name: "마포소금구이",
@@ -129,13 +129,14 @@ export default {
       var placeName = document.createElement('div')
       placeName.innerHTML = place.name;
 
+      var placeAdd = document.createElement('img')
+      placeAdd.setAttribute('src', require('@/assets/map/add2.png'));
 
-      var placeImg = document.createElement('img')
-      placeImg.setAttribute('src', require('@/assets/map/add2.png'));
-      placeImg.onclick = function () {
+      var placeClose = document.createElement('img')
+      placeClose.setAttribute('src', require('@/assets/common/close.png'));
+      placeClose.onclick = function () {
         placeOverlay.setMap(null);
       };
-
       var starRatings = document.createElement('div');
       starRatings.className = "star-ratings"
 
@@ -170,7 +171,7 @@ export default {
 
       // HTMLElement 구성
       placeContent.append(placeHead, placeBody);
-      placeHead.append(placeName, placeImg)
+      placeHead.append(placeName, placeAdd, placeClose)
       placeBody.append(starRatings, starRatingsText, placeAddress, placePhone, placeUrl)
       starRatings.append(starRatingsFill, starRatingsBase)
       starRatingsFill.append(star1)
@@ -178,20 +179,13 @@ export default {
 
       // 마커 오버레이에 HTMLElement 추가
       placeOverlay.setContent(placeContent);
-      this.placeOverlays.push(placeOverlay);  
-
+      placeOverlay.setMap(null)
 
       // 마커 클릭 이벤트
-      kakao.maps.event.addListener(placeMarker, 'click', function() {
-        for(let i = 0; i < this.placeOverlays.length; i++){
-          if (this.placeOverlays) {
-            this.placeOverlays[i].setMap(null);
-          }
-          placeOverlay.setMap(map);
-          this.placeOverlays.push(placeOverlay)
-          }
-      });
-    },
+    kakao.maps.event.addListener(placeMarker, 'click', function() {
+      placeOverlay.setMap(map);
+    });
+    }
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
