@@ -43,6 +43,10 @@ export default {
               barami_type: 2,
               time: 20
             },
+            {
+              barami_type: 3,
+              time: 70
+            },
           ]
         },
         {
@@ -62,6 +66,10 @@ export default {
             {
               barami_type: 2,
               time: 20
+            },
+            {
+              barami_type: 3,
+              time: 40
             },
           ]
         },
@@ -83,6 +91,10 @@ export default {
               barami_type: 2,
               time: 20
             },
+            {
+              barami_type: 3,
+              time: 50
+            },
           ]
         },
         {
@@ -101,6 +113,10 @@ export default {
             },
             {
               barami_type: 2,
+              time: 20
+            },
+            {
+              barami_type: 3,
               time: 20
             },
           ]
@@ -122,6 +138,10 @@ export default {
             {
               barami_type: 2,
               time: 20
+            },
+            {
+              barami_type: 3,
+              time: 25
             },
           ]
         },
@@ -143,6 +163,10 @@ export default {
               barami_type: 2,
               time: 20
             },
+            {
+              barami_type: 3,
+              time: 21
+            },
           ]
         },
         {
@@ -162,6 +186,10 @@ export default {
             {
               barami_type: 2,
               time: 20
+            },
+            {
+              barami_type: 3,
+              time: 22
             },
           ]
         },
@@ -183,6 +211,10 @@ export default {
               barami_type: 2,
               time: 20
             },
+            {
+              barami_type: 3,
+              time: 29
+            },
           ]
         },
         {
@@ -202,6 +234,10 @@ export default {
             {
               barami_type: 2,
               time: 20
+            },
+            {
+              barami_type: 3,
+              time: 19
             },
           ]
         }

@@ -68,10 +68,14 @@ export default {
       var container = document.getElementById('map');
       var options = {
         center: new kakao.maps.LatLng(this.latitude, this.longitude),
-        level: 5
+        level: 3,
+        // draggable: true
       };
 
       var map = new kakao.maps.Map(container, options);
+      
+      var bounds = new kakao.maps.LatLngBounds()
+      var points = []
       
       // var middleMarkerSrc = require('@/assets/map/middle.png')
       var middleMarkerSrc = 'https://previews.123rf.com/images/yupiramos/yupiramos1607/yupiramos160710032/60037776-%ED%99%94%EC%82%B4%ED%91%9C-%EC%9C%84%EC%B9%98-%ED%95%80-%EC%A0%88%EC%97%B0-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%94%94%EC%9E%90%EC%9D%B8-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EA%B7%B8%EB%9E%98%ED%94%BD.jpg'
@@ -83,38 +87,48 @@ export default {
         image: middleMarkerImage,
         position: middleMarkerPosition,
       })
+      points.push(middleMarkerPosition)
       marker.setMap(map)
 
+
       for (var i = 0; i < this.partInfo.length; i++) {
-        // console.log(`@/assets/barami/${this.partInfo[i].baramiType}.png`)
-        console.log(this.partInfo[i], '참여자 정보가 들어는오니 하')
-        var partMarkerSrc = require("@/assets/barami/" + this.partInfo[i].baramiType + ".png")
-        // var partMarkerSrc = 'https://previews.123rf.com/images/yupiramos/yupiramos1607/yupiramos160710032/60037776-%ED%99%94%EC%82%B4%ED%91%9C-%EC%9C%84%EC%B9%98-%ED%95%80-%EC%A0%88%EC%97%B0-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%94%94%EC%9E%90%EC%9D%B8-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EA%B7%B8%EB%9E%98%ED%94%BD.jpg'
-        var partMarkerSize = new kakao.maps.Size(30, 30)
+        console.log(this.partInfo[i], '참여자 정보')
+
+        // var partMarkerSrc = require("@/assets/barami/m" + this.partInfo[i].baramiType + ".png")
+        var partMarkerSrc = require(`@/assets/barami/m${this.partInfo[i].baramiType}.png`)
+        var partMarkerSize = new kakao.maps.Size(45, 45)
         var partMarkerImage = new kakao.maps.MarkerImage(partMarkerSrc, partMarkerSize)
-        var partMarkerPosition = new kakao.maps.LatLng(this.partInfo[i].partLongitude, this.partInfo[i].partLatitude)
+        var partMarkerPosition = new kakao.maps.LatLng(this.partInfo[i].partLatitude, this.partInfo[i].partLongitude)
 
         var partMarker = new kakao.maps.Marker({
             // map: map,
             image : partMarkerImage,
             position: partMarkerPosition,
         })
+        points.push(partMarkerPosition)
         partMarker.setMap(map)
-      }
-      // var bounds = new kakao.maps.LatLngBounds()
-      // var j, markerTest;
-      // var points = []
-      // for (j = 0; j < this.partInfo.length; j++) {
-      //   points.push(new kakao.maps.LatLng(this.partInfo[j].partLongitude, this.partInfo[j].partLatitude ))
-      //   print(points, '각 위치 잘 들어갔나 확인')
-      //   // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-      //   markerTest = new kakao.maps.Marker({ position : points })
-      //   markerTest.setMap(map);
+
+        var content = `<div class="find-middle-overlay">`;
+            content +=  `<div class="desc">`
+            content +=    `<div class="name">${this.partInfo[i].partName}</div>`;
+            content +=    `<div class="time">${this.partInfo[i].time}분</div>`;
+            content +=  `</div>`;
+            content += `</div>`;
         
-      //   // LatLngBounds 객체에 좌표를 추가합니다
-      //   bounds.extend(points[j])
-      // }
-      // map.setBounds(bounds)
+        var customOverlay = new kakao.maps.CustomOverlay({
+          map: map,
+          position: partMarkerPosition,
+          content: content,
+          xAnchor: 0.55,
+          yAnchor: -0.03,
+        })
+        customOverlay.setMap(map)
+      }
+
+      for (var k = 0; k < points.length; k++) {
+        bounds.extend(points[k])
+      }
+      map.setBounds(bounds)
     },
   },
   created() {
@@ -160,5 +174,22 @@ watch: {
 </script>
 
 <style>
+.find-middle-overlay {
+  background-color: #B8D2FA;
+  width: 120%;
+  border-radius: 10px;
+}
+.find-middle-overlay .desc div {
+  font-weight: 900;
+  color: #767373;
+}
+.find-middle-overlay .desc .name {
+  padding-top: 4px;
+  font-size: 12px;
+}
+.find-middle-overlay .desc .time {
+  font-size: 10px;
+}
+
 
 </style>
