@@ -13,7 +13,7 @@
           v-model="selectedMiddle">
         <div class="rad-design"></div>
         <div class="rad-text">{{ place.name }}</div>
-        <div>평균 이동 시간 {{ modeTime[idx]}} 분</div>
+        <div>평균 이동 시간 {{ modeAvgTime[idx]}} 분</div>
       </label>
     </div>
   </div>
@@ -34,7 +34,7 @@ export default {
       //헤더 모드에 따라 분류된 장소 리스트
       modeList: [],
       //헤더 모드에 따라 소요되는 장소별 평균 시간
-      modeTime: [],
+      modeAvgTime: [],
     }
   },
   methods: {
@@ -42,13 +42,12 @@ export default {
       'setMiddle'
     ]),
     filterList(idx) {
-      const modeList = []
+      this.modeList = []
       for (let i = 0; i < this.middleList.length; i++) {
         if (this.middleList[i].middle_place_type === idx) {
-          modeList.push(this.middleList[i])
+          this.modeList.push(this.middleList[i])
         }
       } 
-      return modeList 
     },
     middleUpdate(idx) {
       this.setMiddle(idx)
@@ -56,7 +55,7 @@ export default {
     },
     partAverageTime(data) {
       let temp = []
-      const avgTime = []
+      this.modeAvgTime = []
       const placeCnt = data.length
       for (let i = 0; i < placeCnt; i++) {
         const partCnt = data[i].participants.length
@@ -68,21 +67,22 @@ export default {
           return sum + currVal
         }, 0)
         const avg = Math.round(result / temp.length)
-        avgTime.push(avg)
-        // console.log(avgTime, '장소별 평균 시간')
+        this.modeAvgTime.push(avg)
+        // console.log(this.modeAvgTime, '장소별 평균 시간')
         temp = []
       }
-    return avgTime
     }
   },
   created() {
-    this.modeList =this.filterList(0)
-    this.modeTime = this.partAverageTime(this.modeList)
+    this.filterList(this.mode)
+    this.partAverageTime(this.modeList)
+    this.selectedMiddle = this.middle
   },
   computed: {
-   ...mapState({
-      mode: state => state.mode.mode1
-    }),
+    ...mapState({
+      mode: state => state.mode.mode1,
+      middle: state => state.mode.middle
+    }),  
   },
   watch: {
     selectedMiddle : function (newVal, ) {
@@ -90,8 +90,8 @@ export default {
     },
     mode : function (newVal, ) {
       // console.log('바뀐 값--->' + newVal, '이전 값--->' + oldVal)
-      this.modeList = this.filterList(newVal)
-      this.modeTime = this.partAverageTime(this.modeList)
+      this.filterList(newVal)
+      this.partAverageTime(this.modeList)
       this.middleUpdate(0)
     }
   }

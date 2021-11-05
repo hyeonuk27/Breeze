@@ -7,11 +7,18 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'FindMiddleBtn',
   methods: {
+    ...mapActions([
+      'setMode1',
+      'setMiddle'
+    ]),
     goToFindMiddle: function() {
       this.$router.push({ name: 'FindMiddle' })
+      this.setMode1(0)
+      this.setMiddle(0)
     }
   }
 }

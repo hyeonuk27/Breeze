@@ -17,6 +17,10 @@ export default {
     },
     DELETEPARTICIPANT (state, data) {
       state.participants.splice(data, 1)
+    },
+    //전체 참여자 초기화
+    SETPARTICIPANTS (state) {
+      state.participants = []
     }
   },
   actions: {
@@ -28,6 +32,9 @@ export default {
     },
     deleteParticipant ({ commit }, data) {
       commit('DELETEPARTICIPANT', data)
-    }
+    },
+    setParticipants ({ commit }) {
+      commit('SETPARTICIPANTS')
+    },
   },
 }
