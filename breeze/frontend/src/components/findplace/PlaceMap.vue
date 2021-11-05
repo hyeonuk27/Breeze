@@ -11,9 +11,6 @@ export default {
   name: "PlaceMap",
   data() {
     return {
-      // 카카오맵
-      mapContainer: 0,
-      wishPlaceList: [],
       placeList: [
         {
           name: "마포소금구이",
@@ -25,16 +22,16 @@ export default {
           longitude: 126.91234702787905,
           kakao_url: "https://place.map.kakao.com/17600274",
         },
-        // {
-        //   name: "교다이야",
-        //   score: 4.2,
-        //   review: 787,
-        //   address: "서울특별시 마포구 합정동 성지길 39 빌딩 1층",
-        //   phone: "02-544-2298",
-        //   latitude: 37.547079397998644,
-        //   longitude: 126.91301221571476,
-        //   kakao_url: "https://place.map.kakao.com/17600274",
-        // },
+        {
+          name: "교다이야",
+          score: 4.2,
+          review: 787,
+          address: "서울특별시 마포구 합정동 성지길 39 빌딩 1층",
+          phone: "02-544-2298",
+          latitude: 37.547079397998644,
+          longitude: 126.91301221571476,
+          kakao_url: "https://place.map.kakao.com/17600274",
+        },
         // {
         //   name: "우동 카덴",
         //   score: 3.9,
@@ -69,6 +66,7 @@ export default {
     };
   },
   methods: {
+    // 지도 표시
     initMap() {
       var container = document.getElementById("place-map");
       var options = {
@@ -84,21 +82,14 @@ export default {
     addMiddleMarker(map) {
       var middleMarkerSrc = require("@/assets/map/middle.png");
       var middelMarkerSize = new kakao.maps.Size(40, 40);
-      var middleMarkerImage = new kakao.maps.MarkerImage(
-        middleMarkerSrc,
-        middelMarkerSize
-      );
-      var middleMarkerPosition = new kakao.maps.LatLng(
-        37.54906931328577,
-        126.91403035281367
-      );
+      var middleMarkerImage = new kakao.maps.MarkerImage(middleMarkerSrc, middelMarkerSize);
+      var middleMarkerPosition = new kakao.maps.LatLng(37.54906931328577, 126.91403035281367);
       // var middleMarkerPosition = new kakao.maps.LatLng(this.middleLatitude, this.middleLongitude)
 
       var middleMarker = new kakao.maps.Marker({
-        // 마커 생성
-        map: map, // 마커를 표시할 지도
-        image: middleMarkerImage, // 마커 이미지
-        position: middleMarkerPosition, // 마커를 표시할 위치
+        map: map,
+        image: middleMarkerImage,
+        position: middleMarkerPosition,
       });
       middleMarker.setMap(map);
     },
@@ -107,14 +98,8 @@ export default {
       for (var i = 0; i < this.placeList.length; i++) {
         var placeMarkerSrc = require("@/assets/map/" + this.mode2 + ".png");
         var placeMarkerSize = new kakao.maps.Size(30, 30);
-        var placeMarkerImage = new kakao.maps.MarkerImage(
-          placeMarkerSrc,
-          placeMarkerSize
-        );
-        var placeMarkerPosition = new kakao.maps.LatLng(
-          this.placeList[i].latitude,
-          this.placeList[i].longitude
-        );
+        var placeMarkerImage = new kakao.maps.MarkerImage(placeMarkerSrc, placeMarkerSize);
+        var placeMarkerPosition = new kakao.maps.LatLng(this.placeList[i].latitude, this.placeList[i].longitude);
 
         var placeMarker = new kakao.maps.Marker({
           map: map,
@@ -126,39 +111,31 @@ export default {
 
         const score = this.placeList[i].score * 20 + 1.5;
         
-        var content = `<div class="wrap">`;
-        content +=  `<div class="head">`;
-        content +=    `<div class="name">${this.placeList[i].name}</div>`;
-        content +=    `<img class="add" src="${require('@/assets/map/add.png')}" alt="">`;
+        var content = `<div class="place-wrap">`;
+        content +=  `<div class="place-head">`;
+        content +=    `<div>${this.placeList[i].name}</div>`;
+        content +=    `<img src="${require('@/assets/map/add.png')}" alt="">`;
         content +=  `</div>`;
-        content +=  `<div class="body">`
+        content +=  `<div class="place-body">`
         content +=    `<div class="star-ratings">`
         content +=      `<div class="star-ratings-fill" style="width: ${score}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>`;
         content +=      `<div class="star-ratings-base"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>`;
         content +=    `</div>`;
         content +=    `<div class="star-ratings-text">(${this.placeList[i].score}) | 리뷰 ${this.placeList[i].review}개<div>`;
         content +=    `<div>${this.placeList[i].address}</div>`;
-        content +=    `<div class="desc">${this.placeList[i].phone}</div>`;
-        content +=    `<a class="desc" href="${this.placeList[i].kakao_url}">상세보기</a>`;
+        content +=    `<div class="place-desc">${this.placeList[i].phone}</div>`;
+        content +=    `<a class="place-desc" href="${this.placeList[i].kakao_url}">상세보기</a>`;
         content +=  `</div>`;
         content += `</div>`;
 
-        var customOverlay = new kakao.maps.CustomOverlay({
+        var placeOverlay = new kakao.maps.CustomOverlay({
           map: map,
-          position: placeMarkerPosition,
-          content: content,
-          xAnchor: 0.5,
-          yAnchor: 1.1,
-          clickable: true,
+          position: placeMarker.getPosition(),
+          content,
         });
-
-        kakao.maps.event.addListener(placeMarker, "click", function () {
-          customOverlay.setMap(map);
-        });
-        // function closeOverlay() {
-        // customOverlay.setMap(null);
-      }
-    },
+        console.log(placeOverlay)
+      }  
+    }
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -194,20 +171,20 @@ export default {
   height: 100%;
   width: 100%;
 }
-.wrap {
+.place-wrap {
   position: absolute;
   left: 20px;
   bottom: 40px;
   width: 180px;
   height: 80px;
-  margin-left: -144px;
+  margin-left: -140px;
   text-align: left;
   overflow: hidden;
-  color: #3A3C3C;
-  background: rgba(184, 208, 250, 0.7);
+  color: #3a3c3c;
+  background: rgba(184, 208, 250, 0.8);
   border-radius: 10px;
 }
-.head {
+.place-head {
   width: 100%;
   height: 32%;
   font-size: 11px;
@@ -217,27 +194,27 @@ export default {
   justify-content: space-between;
   padding: 5% 5% 0 5%;
 }
-.head img {
+.place-head img {
   height: 70%;
 }
-.body {
+.place-body {
   width: 100%;
   height: 68%;
   font-size: 10px;
   overflow: hidden;
   padding: 0 5% 5% 5%;
 }
-.body .desc {
+.place-desc {
   display: inline;
   margin-right: 5%;
 }
 .star-ratings {
   display: inline-block;
-  color: #aaa9a9; 
+  color: #aaa9a9;
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;
-  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-fill-color: transparent;
 }
 .star-ratings-fill {
   color: #fff58c;
@@ -250,15 +227,13 @@ export default {
   overflow: hidden;
   -webkit-text-fill-color: gold;
 }
-  .star-ratings-base {
-    z-index: 0;
-    padding: 0;
-    -webkit-text-fill-color: rgb(172, 172, 172);
-  }
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+  -webkit-text-fill-color: rgb(172, 172, 172);
+}
 .star-ratings-text {
   display: inline;
   font-size: 9px;
 }
-
-
 </style>
