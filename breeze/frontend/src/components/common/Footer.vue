@@ -36,6 +36,10 @@ export default {
     ...mapActions([
       'setDate',
       'setParticipants',
+      'setPartMidTime',
+      'setMiddleName',
+      'setMiddleLat',
+      'setMiddleLong',
       'setMode1',
       'setMode2',
       'setFilter',
@@ -49,6 +53,10 @@ export default {
       if (idx !== 1) {
         this.setDate(new Date())
         this.setParticipants()
+        this.setPartMidTime([])
+        this.setMiddleName('')
+        this.setMiddleLat(0)
+        this.setMiddleLong(0)
         this.setMode1(0)
         this.setMode2(0)
         this.setFilter(0)
