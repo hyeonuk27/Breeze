@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <ChooseDate/>
-    <AddFriends/>
+  <div class="enterinfo">
+    <ChooseDate class="choose-date"/>
+    <AddFriends class="add-friends"/>
     <ParticipantList class="participant-list"/>
-    <FindMiddleBtn/>
+    <FindMiddleBtn class="find-middle-btn"/>
   </div>
 </template>
 
@@ -25,7 +25,22 @@ export default {
 </script>
 
 <style scoped>
+.enterinfo {
+  padding: 8%;
+}
+.choose-date {
+  height: 16%;
+}
+.add-friends {
+  height: 30%;
+  margin-top: 4%;
+}
 .participant-list {
-  height: 38%;
+  height: 45%;
+  margin-top: 4%;
+}
+.find-middle-btn {
+  height: 14%;
+  margin-top: 4%;
 }
 </style>
