@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+import datetime
 
 @api_view(['POST'])
 @check_login
@@ -34,4 +35,24 @@ def appointment_mynote(request, note_id):
 @api_view(['GET'])
 @check_login
 def appointment_list(request):
-    pass
+    # 이미 디데이 지난 약속 지우기로???
+
+    appointments = Appointment.objects.filter(user_id=request.user.id)
+
+    appointment_data = []
+    for appointment in appointments:
+        # 디데이 구하기 -- string으로 넘기는게 편한가요?!
+
+        appointment_data.append({
+            'appointment_id': appointment.id,
+            'datetime': appointment.datetime,
+            'middle_place': appointment.middle_place,
+            'd_day': 0,
+        })
+
+    data = {
+        'access_token': request.access_token,
+        'my_appointment': appointment_data,
+    }
+
+    return Response(data, status=status.HTTP_200_OK)
