@@ -1,8 +1,8 @@
 <template>
   <div>
-    <MiddleMap :middlePlaces="middlePlaces"/>
-    <MiddleList :middlePlaces="middlePlaces"/>
-    <FindPlaceBtn :middlePlaces="middlePlaces"/>
+    <MiddleMap :middlePlaces="middlePlaces" class="find-middle"/>
+    <MiddleList :middlePlaces="middlePlaces" class="middle-lists"/>
+    <FindPlaceBtn :middlePlaces="middlePlaces" class="find-place-btn"/>
   </div>
 </template>
 
@@ -281,6 +281,16 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.find-middle {
+  /* height: 65%; */
+  height: 57%;
+}
+.middle-lists {
+  /* height: 21%; */
+  height: 29%;
+}
+.find-place-btn {
+  height: 14%;
+}
 </style>

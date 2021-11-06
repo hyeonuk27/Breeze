@@ -1,20 +1,24 @@
 <template>
-  <div>
-    <div 
-      v-for="(place, idx) in modeList" 
-      :key="idx"
-    >
-      <label class="rad-label">
-        <input 
-          type="radio" 
-          class="rad-input" 
-          name="rad" 
-          :value="idx" 
-          v-model="selectedMiddle">
-        <div class="rad-design"></div>
-        <div class="rad-text">{{ place.name }}</div>
-        <div>평균 이동 시간 {{ modeAvgTime[idx]}} 분</div>
-      </label>
+  <div class="middle-list-container">
+    <div class="middle-list-items">
+      <div 
+        v-for="(place, idx) in modeList" 
+        :key="idx"
+      >
+        <label class="middle-select-label">
+          <input 
+            type="radio" 
+            class="circle-input" 
+            name="circle" 
+            :value="idx" 
+            v-model="selectedMiddle">
+          <div class="circle-design"></div>
+          <div class="desc-text">
+            <div class="select-text name">{{ place.name }}</div>
+            <div class="select-text time">평균 이동 시간 {{ modeAvgTime[idx]}} 분</div>
+          </div>
+        </label>
+      </div>
     </div>
   </div>
 </template>
@@ -99,24 +103,32 @@ export default {
 </script>
 
 <style scoped>
-.rad-label {
+.middle-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.middle-list-container .middle-list-items {
+  width: 75%;
+  height: 90%;
+  padding-top: 5%;
+}
+
+.middle-select-label {
   display: flex;
   align-items: center;
-
   border-radius: 25px;
-  padding: 14px 16px;
-  margin: 10px 0;
-
-  cursor: pointer;
+  padding: 10px;
   transition: .3s;
 }
 
-.rad-label:hover,
-.rad-label:focus-within {
+.middle-select-label:hover,
+.middle-select-label:focus-within {
   background: hsla(0, 0%, 80%, .14);
 }
 
-.rad-input {
+.circle-input {
   position: absolute;
   left: 0;
   top: 0;
@@ -126,42 +138,53 @@ export default {
   z-index: -1;
 }
 
-.rad-design {
-  width: 22px;
-  height: 22px;
+.circle-design {
+  width: 18px;
+  height: 18px;
   border-radius: 100px;
-
-  background: linear-gradient(to right bottom, hsl(154, 97%, 62%), hsl(225, 97%, 62%));
+  background: linear-gradient(to right bottom, #92a3fd, #9dceff);
   position: relative;
 }
 
-.rad-design::before {
+.circle-design::before {
   content: '';
-
   display: inline-block;
   width: inherit;
   height: inherit;
   border-radius: inherit;
-
   background: hsl(0, 0%, 90%);
-  transform: scale(1.1);
   transition: .3s;
 }
 
-.rad-input:checked+.rad-design::before {
+.circle-input:checked+.circle-design::before {
   transform: scale(0);
 }
 
-.rad-text {
+.desc-text {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.desc-text .select-text {
   color: hsl(0, 0%, 60%);
   margin-left: 14px;
-  letter-spacing: 3px;
-  font-size: 12px;
+  letter-spacing: 2px;
   font-weight: 900;
   transition: .3s;
 }
 
-.rad-input:checked~.rad-text {
+.desc-text .name {
+  font-size: 12px;
+}
+
+.desc-text .time {
+  font-size: 10px;
+}
+
+.circle-input:checked~.select-text {
   color: hsl(0, 0%, 40%);
 }
 
