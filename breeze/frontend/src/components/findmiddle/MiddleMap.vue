@@ -25,6 +25,7 @@ export default {
       middleIdx: 0,
       latitude: 0,
       longitude: 0,
+      color: ['#f39bab', '#f3cb9b', '#f3e3b3', '#bbd3ab', '#a3d3fb', '#ab9be3'],
     }
   },
   methods: {
@@ -48,7 +49,8 @@ export default {
               "partLongitude": this.participants[j].partLongitude,
               "baramiType": this.participants[j].baramiType,
               "partName": this.participants[j].partName,
-              "time": selectedMiddle.participants[i].time
+              "time": selectedMiddle.participants[i].time,
+              "route": selectedMiddle.participants[i].route,
             })
           }
         }
@@ -124,6 +126,24 @@ export default {
           yAnchor: -0.03,
         })
         customOverlay.setMap(map)
+
+        var linePath = []
+        const routesList = this.partInfo[i].route
+
+        for (var j = 0; j < routesList.length; j++) {
+          var routesLat = routesList[j][0]
+          var routesLng = routesList[j][1]
+          linePath.push(new kakao.maps.LatLng(routesLat, routesLng))
+        }
+        // console.log(linePath, '내가 찍을 좌표들')
+        var polyline = new kakao.maps.Polyline({
+          path: linePath,
+          strokeWeight: 7, 
+          strokeColor: this.color[this.partInfo[i].baramiType], 
+          strokeOpacity: 1, 
+          strokeStyle: 'solid'
+        })
+        polyline.setMap(map);
       }
 
       for (var k = 0; k < points.length; k++) {
