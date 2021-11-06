@@ -110,7 +110,7 @@ export default {
 }
 
 .middle-list-container .middle-list-items {
-  width: 75%;
+  width: 70%;
   height: 90%;
   padding-top: 5%;
 }
