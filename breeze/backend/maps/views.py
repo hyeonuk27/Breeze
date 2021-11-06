@@ -2,12 +2,15 @@ from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from .serializers import PlaceListSerializer
+from accounts.utils import check_login
+from .models import Place
 
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from decouple import config
 
+import random
 import requests
 import pickle
 import json
@@ -26,8 +29,31 @@ def get_middle(request):
 
 
 @api_view(['POST'])
-def get_store(request):
-    pass
+@check_login
+def get_store(request, category_id, filter_id):
+    # 중간역에 해당하는 가게들 선택, 그 중 해당 카테고리 선택
+    category_store = Place.objects.filter(middle_name=request.data['middlePlace'], category_num=category_id)
+    
+    # 전체 결과가 10개 이하면 다 반환
+    if len(category_store) < 11:
+        stores = category_store
+    else:
+        if filter_id == 0:
+            # 인기순
+            stores = category_store.order_by('review').desc()[:10]
+        elif filter_id == 1:
+            # 평점순
+            stores = category_store.order_by('score').desc()[:10]
+        elif filter_id == 2:
+            # 랜덤
+            random.shuffle(category_store)
+            stores = category_store[:10]
+    
+    data = {
+        'access_token': request.access_token,
+        'stores': stores
+    }
+    return Response(data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET'])
@@ -153,34 +179,18 @@ def data_integration(request):
     store_data.to_csv('data/store_data.csv', index=False)
 
 
+from selenium.common.exceptions import NoSuchElementException
+import time
+
 def get_rate(request):
     
-    review_rate = pd.read_csv('data/review_rate.csv')
-    store_data = pd.read_csv('data/store_data.csv')
-    options = webdriver.ChromeOptions()
-    options.add_argument("no-sandbox") 
-    options.add_argument("disable-gpu") 
-    options.add_argument("--lang=ko_KR") 
-    options.add_argument( 'user-agent=Mozilla/5.0 Chrome/95.0.4638.54')
+    num = 48300
     
-    driver = webdriver.Chrome(r"C:\Users\multicampus\CHENNI\자율프로젝트\S05P31A202\breeze\backend\maps\chromedriver.exe", chrome_options=options)
-
-    # 여기에서 개수를 조정한 후 돌려주세요! (최대 개수 150개)
-    for url in store_data['kakao_url'][:3]:
-        driver.get(url)
-        driver.implicitly_wait(10)
-        rate_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[2]').text
-        rate_cnt = re.findall("\d+", rate_cnt)
-        rate = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[1]').text
-        review_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[2]/span').text
-        review_cnt = re.findall("\d+", review_cnt)
-        review = int(rate_cnt[0]) + int(review_cnt[0])
-        driver.implicitly_wait(10)
-        data = {'review': review, 'rate': float(rate)}
-        review_rate = review_rate.append(data, ignore_index=True)
-
-    driver.quit()
-    review_rate.to_csv('data/review_rate.csv', index=False)
+    while num < 60000:
+        print(num)
+        auto_crawl(num)
+        num += 150
+        time.sleep(600)
 
     # chrome driver 사용: forbidden 문제 해결 필요
     # selenium: hidden으로 표시되는 부분 문제 해결 필요
@@ -194,56 +204,41 @@ def get_rate(request):
     # review_rate.to_csv('data/review_rate.csv', index=False)
 
 
+def auto_crawl(n):
+    review_rate = pd.read_csv('data/review_rate.csv')
+    store_data = pd.read_csv('data/store_data.csv')
 
-def insta_tag(request):
-    # 전체 가게 정보 불러오기
-    stores = pd.read_csv('data/alcohol.csv')
-    store = pd.DataFrame()
-    # 태그 개수
-    ids = []
-    tags = []
-
-    # 로그인
-    BASE_URL = 'https://www.instagram.com/'
-    CHROME_WIN_UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
-    LOGIN_URL = BASE_URL + 'accounts/login/ajax/'
-    STORIES_UA = 'Instagram 123.0.0.21.114 (iPhone; CPU iPhone OS 11_4 like Mac OS X; en_US; en-US; scale=2.00; 750x1334) AppleWebKit/605.1.15'
-    TAGS_URL = BASE_URL + 'explore/tags/{0}/?__a=1'
-
-    session = requests.Session()
-    session.headers = {'user-agent': CHROME_WIN_UA}
-    session.cookies.set('ig_pr', '1')
-
-    session.headers.update({'Referer': BASE_URL, 'user-agent': STORIES_UA})
-
-    req = session.get(BASE_URL)
-    session.headers.update({'X-CSRFToken': req.cookies['csrftoken']})
-
-    # 인스타그램 아이디/비밀번호
-    login_data = {'username': '', 'password': ''}
-    login = session.post(LOGIN_URL, data=login_data, allow_redirects=True)
-    session.headers.update({'X-CSRFToken': login.cookies['csrftoken']})
-    cookie = login.cookies
-    session.headers.update({'user-agent': CHROME_WIN_UA})
-
-    cookie_byte = pickle.dumps(cookie)
-    session.cookies.update(pickle.loads(cookie_byte))
+    options = webdriver.ChromeOptions()
+    options.add_argument("no-sandbox") 
+    options.add_argument("disable-gpu") 
+    options.add_argument("--lang=ko_KR") 
+    options.add_argument( 'user-agent=Mozilla/5.0 Chrome/95.0.4638.54')
     
-    for index, store in stores.iterrows():
-        id = store['id']
-        name = store['name'].replace(' ', '')
-        print(index)
+    driver = webdriver.Chrome(r"C:\Temp\chromedriver.exe", chrome_options=options)
 
-        media_url = TAGS_URL.format(name)
+    # 여기에서 개수를 조정한 후 돌려주세요! (최대 개수 150개)
+    for url in store_data['kakao_url'][n:n+150]:
+        driver.get(url)
+        driver.implicitly_wait(10)
         try:
-            response = session.get(media_url).json()
-            tag_cnt = response.get('data').get('media_count')
+            rate_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[2]').text
+            rate_cnt = re.findall("\d+", rate_cnt)
+            rate = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[1]/span[1]').text
+            review_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a[2]/span').text
+            review_cnt = re.findall("\d+", review_cnt)
+            review = int(rate_cnt[0]) + int(review_cnt[0])
+            driver.implicitly_wait(10)
+            data = {'review': review, 'rate': float(rate)}
+            review_rate = review_rate.append(data, ignore_index=True)
+            
+        # 후기 미제공일 때
         except:
-            tag_cnt = 0
+            try:
+                review_cnt = driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div[1]/div[2]/div/div/a/span').text
+                data = {'review': int(review_cnt) , 'rate': 0.0}
+            except:
+                data = {'review': 0.0 , 'rate': 0.0}
+            review_rate = review_rate.append(data, ignore_index=True)
 
-        ids.append(id)
-        tags.append(tag_cnt)
-    
-    store['id'] = ids
-    store['tag'] = tags
-    store.to_csv('data/insta_alcohol.csv', index=False)
+    driver.quit()
+    review_rate.to_csv('data/review_rate.csv', index=False)

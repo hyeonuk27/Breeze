@@ -1,35 +1,22 @@
 <template>
-  <div class="find-middle-btn">
+  <div class="group-appointment-btn">
     <button
       type="button"
-      @click="goToFindMiddle()"
-      >중간 장소 찾기</button>
+      >이 모임으로 약속 만들기</button>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 export default {
-  name: 'FindMiddleBtn',
-  methods: {
-    ...mapActions([
-      'setMode1',
-      'setMiddle'
-    ]),
-    goToFindMiddle: function() {
-      this.$router.push({ name: 'FindMiddle' })
-      this.setMode1(0)
-      this.setMiddle(0)
-    }
-  }
+  name: 'GroupAppointmentBtn'
 }
 </script>
 
 <style scoped>
-.find-middle-btn {
+.group-appointment-btn {
   position: relative;
 }
-.find-middle-btn button {
+.group-appointment-btn button {
   position: absolute;
   top: 50%;
   left: 50%;

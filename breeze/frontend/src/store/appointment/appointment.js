@@ -40,6 +40,9 @@ export default {
     SETMIDDLELONG (state, data) {
       state.middleLongitude = data
     },
+    ADDGROUPPARTICIPANTS (state, data) {
+      state.participants = data
+    }
   },
   actions: {
     setDate ({ commit }, data) {
@@ -66,5 +69,8 @@ export default {
     setMiddleLong ({ commit }, data) {
       commit('SETMIDDLELONG', data)
     },
+    addGroupParticipants ({ commit }, data) {
+      commit('ADDGROUPPARTICIPANTS', data)
+    }
   },
 }
