@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 User = settings.AUTH_USER_MODEL
 
 class Appointment(models.Model):
@@ -10,7 +11,10 @@ class Appointment(models.Model):
 
 
 class Appointmentplace(models.Model):
-    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, related_name='Appointmentplaces')
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, related_name='appointment_places')
+    name = models.CharField(max_length=20)
+    category = models.IntegerField()
+    url = models.TextField()
 
 
 class Participant(models.Model):
