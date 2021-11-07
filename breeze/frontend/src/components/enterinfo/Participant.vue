@@ -48,7 +48,7 @@ export default {
 
 <style scoped>
 .participant {
-  width: 95%;
+  /* width: 95%; */
   /* height: 30%; */
 }
 .image-box {

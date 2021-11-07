@@ -132,6 +132,7 @@ export default {
       
       var placeAddImg = document.createElement('img')
       placeAddImg.setAttribute('src', require('@/assets/map/add2.png'));
+      // 담기 버튼 클릭 로직
       placeAddImg.addEventListener('click', () => {
         const wishPlace = {name : place.name, address: place.address, longitude: place.longitude, latitude: place.latitude, kakao_url: place.kakao_url}
         this.wishPlaceList.push(wishPlace)
@@ -184,6 +185,7 @@ export default {
       kakao.maps.event.addListener(placeMarker, 'click', function() {
         placeOverlay.setMap(map)      
       })
+      // 맵 클릭 이벤트
       kakao.maps.event.addListener(map, 'click', function() {
         placeOverlay.setMap(null)      
       })
