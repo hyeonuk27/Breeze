@@ -5,14 +5,13 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "PlaceMap",
   data() {
     return {
       clickedOveray : null,
-      wishPlaceList: [],
       placeList: [
         {
           name: "마포소금구이",
@@ -68,6 +67,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions([
+      'addWishPlace',
+      'deleteWishPlace'
+    ]),
     // 지도 표시
     initMap() {
       var container = document.getElementById("place-map");
@@ -131,11 +134,27 @@ export default {
       placeName.innerHTML = place.name;
       
       var placeAddImg = document.createElement('img')
-      placeAddImg.setAttribute('src', require('@/assets/map/add2.png'));
-      // 담기 버튼 클릭 로직
+      placeAddImg.setAttribute('src', require('@/assets/map/add.png'));
+
+      var placeDeleteImg = document.createElement('img')
+      placeDeleteImg.setAttribute('src', require('@/assets/map/add2.png'));
+      placeDeleteImg.style.display ='none';
+
+
+      // Wish 담기 이벤트
       placeAddImg.addEventListener('click', () => {
         const wishPlace = {name : place.name, address: place.address, longitude: place.longitude, latitude: place.latitude, kakao_url: place.kakao_url}
-        this.wishPlaceList.push(wishPlace)
+        this.addWishPlace(wishPlace)
+        placeAddImg.style.display ='none';
+        placeDeleteImg.style.display ='block';
+      });
+      
+      // Wish 삭제 이벤트
+      placeDeleteImg.addEventListener('click', () => {
+        const wishPlace = {name : place.name, address: place.address, longitude: place.longitude, latitude: place.latitude, kakao_url: place.kakao_url}
+        this.deleteWishPlace(wishPlace)
+        placeDeleteImg.style.display ='none';
+        placeAddImg.style.display ='block';
       });
 
       var starRatings = document.createElement('div');
@@ -170,15 +189,15 @@ export default {
       placeUrl.className = "place-desc"
       placeUrl.href = place.kakao_url;
 
-      // HTMLElement 구성
+      // HTML Element 구성
       placeContent.append(placeHead, placeBody);
-      placeHead.append(placeName, placeAddImg)
+      placeHead.append(placeName, placeAddImg, placeDeleteImg)
       placeBody.append(starRatings, starRatingsText, placeAddress, placePhone, placeUrl)
       starRatings.append(starRatingsFill, starRatingsBase)
       starRatingsFill.append(star1)
       starRatingsBase.append(star2)
 
-      // 마커 오버레이에 HTMLElement 추가
+      // 마커 오버레이에 HTML Element 추가
       placeOverlay.setContent(placeContent);
 
       // 마커 클릭 이벤트
