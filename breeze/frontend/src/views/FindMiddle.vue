@@ -45,7 +45,7 @@ export default {
                 ]
             },
             {
-              barami_type: 1,
+              barami_type: 4,
               time: 30,
               route: [
                 [37.55514699555886, 126.9225650989563], 
