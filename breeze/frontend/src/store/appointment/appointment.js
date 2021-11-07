@@ -7,7 +7,9 @@ export default {
     partMiddleTime: [],
     middleName: '',
     middleLatitude: 0,
-    middleLongitude: 0
+    middleLongitude: 0,
+    groupName: '',
+    groupId: null
   },
   getters: {
     date: state => state.date,
@@ -18,15 +20,16 @@ export default {
     SETDATE (state, data) {
       state.date = data
     },
+    //enterinfo에서 참여자 추가할 때마다 사용
     ADDPARTICIPANT (state, data) {
       state.participants.push(data)
     },
     DELETEPARTICIPANT (state, data) {
       state.participants.splice(data, 1)
     },
-    //전체 참여자 초기화
-    SETPARTICIPANTS (state) {
-      state.participants = []
+    //전체 참여자 초기화 or 그룹 참여자 세팅 시 사용
+    SETPARTICIPANTS (state, data) {
+      state.participants = data
     },
     SETPARTMIDTIME (state, data) {
       state.partMiddleTime = data
@@ -40,9 +43,12 @@ export default {
     SETMIDDLELONG (state, data) {
       state.middleLongitude = data
     },
-    ADDGROUPPARTICIPANTS (state, data) {
-      state.participants = data
-    }
+    SETGROUPNAME (state, data) {
+      state.groupName = data
+    },
+    SETGROUPID (state, data) {
+      state.groupId = data
+    },
   },
   actions: {
     setDate ({ commit }, data) {
@@ -54,8 +60,8 @@ export default {
     deleteParticipant ({ commit }, data) {
       commit('DELETEPARTICIPANT', data)
     },
-    setParticipants ({ commit }) {
-      commit('SETPARTICIPANTS')
+    setParticipants ({ commit }, data) {
+      commit('SETPARTICIPANTS', data)
     },
     setPartMidTime ({ commit }, data) {
       commit('SETPARTMIDTIME', data)
@@ -69,8 +75,11 @@ export default {
     setMiddleLong ({ commit }, data) {
       commit('SETMIDDLELONG', data)
     },
-    addGroupParticipants ({ commit }, data) {
-      commit('ADDGROUPPARTICIPANTS', data)
+    setGroupName ({ commit }, data) {
+      commit('SETGROUPNAME', data)
+    },
+    setGroupId ({ commit }, data) {
+      commit('SETGROUPID', data)
     }
   },
 }

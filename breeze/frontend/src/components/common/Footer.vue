@@ -40,6 +40,8 @@ export default {
       'setMiddleName',
       'setMiddleLat',
       'setMiddleLong',
+      'setGroupName',
+      'setGroupId',
       'setMode1',
       'setMode2',
       'setFilter',
@@ -52,11 +54,13 @@ export default {
       //홈이나 원클릭으로 이동 시, 약속/모드 스토어 초기화
       if (idx !== 1) {
         this.setDate(new Date())
-        this.setParticipants()
+        this.setParticipants([])
         this.setPartMidTime([])
         this.setMiddleName('')
         this.setMiddleLat(0)
         this.setMiddleLong(0)
+        this.setGroupName('')
+        this.setGroupId(null)
         this.setMode1(0)
         this.setMode2(0)
         this.setFilter(0)
