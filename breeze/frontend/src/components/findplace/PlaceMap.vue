@@ -11,7 +11,8 @@ export default {
   name: "PlaceMap",
   data() {
     return {
-      isClicked : [false,false,false,false,false,],
+      clickedOveray : null,
+      wishPlaceList: [],
       placeList: [
         {
           name: "마포소금구이",
@@ -86,7 +87,7 @@ export default {
     // 중간 지점 마커 표시
     addMiddleMarker(map) {
       var middleMarkerSrc = require("@/assets/map/middle.png");
-      var middelMarkerSize = new kakao.maps.Size(40, 40);
+      var middelMarkerSize = new kakao.maps.Size(30, 30);
       var middleMarkerImage = new kakao.maps.MarkerImage(middleMarkerSrc, middelMarkerSize);
       var middleMarkerPosition = new kakao.maps.LatLng(37.54906931328577, 126.91403035281367);
       // var middleMarkerPosition = new kakao.maps.LatLng(this.middleLatitude, this.middleLongitude)
@@ -101,7 +102,7 @@ export default {
     // 장소 마커 표시
     addPlaceMarker(map, place) {
       var placeMarkerSrc = require("@/assets/map/" + this.mode2 + ".png");
-      var placeMarkerSize = new kakao.maps.Size(30, 30);
+      var placeMarkerSize = new kakao.maps.Size(28, 28);
       var placeMarkerImage = new kakao.maps.MarkerImage(placeMarkerSrc, placeMarkerSize);
       var placeMarkerPosition = new kakao.maps.LatLng(place.latitude, place.longitude);
 
@@ -112,8 +113,8 @@ export default {
       });
 
       var placeOverlay = new kakao.maps.CustomOverlay({
-        map: map,
         position: placeMarker.getPosition(),
+        clickable: true,
       });
 
       // HTMLElement 생성
@@ -128,15 +129,14 @@ export default {
 
       var placeName = document.createElement('div')
       placeName.innerHTML = place.name;
+      
+      var placeAddImg = document.createElement('img')
+      placeAddImg.setAttribute('src', require('@/assets/map/add2.png'));
+      placeAddImg.addEventListener('click', () => {
+        const wishPlace = {name : place.name, address: place.address, longitude: place.longitude, latitude: place.latitude, kakao_url: place.kakao_url}
+        this.wishPlaceList.push(wishPlace)
+      });
 
-      var placeAdd = document.createElement('img')
-      placeAdd.setAttribute('src', require('@/assets/map/add2.png'));
-
-      var placeClose = document.createElement('img')
-      placeClose.setAttribute('src', require('@/assets/common/close.png'));
-      placeClose.onclick = function () {
-        placeOverlay.setMap(null);
-      };
       var starRatings = document.createElement('div');
       starRatings.className = "star-ratings"
 
@@ -171,7 +171,7 @@ export default {
 
       // HTMLElement 구성
       placeContent.append(placeHead, placeBody);
-      placeHead.append(placeName, placeAdd, placeClose)
+      placeHead.append(placeName, placeAddImg)
       placeBody.append(starRatings, starRatingsText, placeAddress, placePhone, placeUrl)
       starRatings.append(starRatingsFill, starRatingsBase)
       starRatingsFill.append(star1)
@@ -179,13 +179,15 @@ export default {
 
       // 마커 오버레이에 HTMLElement 추가
       placeOverlay.setContent(placeContent);
-      placeOverlay.setMap(null)
 
       // 마커 클릭 이벤트
-    kakao.maps.event.addListener(placeMarker, 'click', function() {
-      placeOverlay.setMap(map);
-    });
-    }
+      kakao.maps.event.addListener(placeMarker, 'click', function() {
+        placeOverlay.setMap(map)      
+      })
+      kakao.maps.event.addListener(map, 'click', function() {
+        placeOverlay.setMap(null)      
+      })
+    },
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -212,9 +214,13 @@ export default {
   },
   watch: {
     mode2(val) {
-      console.log("변경", val);
+      console.log("모드변경", val);
       this.initMap();
     },
+    filter(val) {
+      console.log("필터변경", val);
+      this.initMap();
+    }
   },
 };
 </script>
@@ -232,10 +238,10 @@ export default {
   height: 80px;
   margin-left: -140px;
   text-align: left;
-  overflow: hidden;
   color: #3a3c3c;
   background: rgba(184, 208, 250, 0.9);
   border-radius: 10px;
+
 }
 .place-head {
   width: 100%;
@@ -287,6 +293,5 @@ export default {
 }
 .star-ratings-text {
   display: inline;
-  font-size: 9px;
 }
 </style>
