@@ -9,7 +9,7 @@
       />
     </div>
     <div class="comment-box">
-      <div class="comment-box-greet">안녕하세요 {{ name }}님</div>
+      <div class="comment-box-greet">안녕하세요 {{ userName }}님</div>
       <div>저 {{ baramiName[randomNum] }}{{ baramiComment[randomNum] }}</div>
     </div>
     <div v-if="appointmentCnt" class="remains">예정 약속 {{appointmentCnt}}개가 있습니다.</div>
@@ -19,7 +19,7 @@
 
 <script>
 import LogoutBtn from "@/components/home/LogoutBtn";
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Myprofile",
@@ -59,10 +59,7 @@ export default {
     this.pickRandomNum();
   },
   computed: {
-    // ...mapState(["name"]),
-    ...mapState({
-      name: state => state.user.userName
-    }),
+    ...mapGetters(["userName"])
   },
 };
 </script>

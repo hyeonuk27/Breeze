@@ -182,8 +182,12 @@ export default {
       placeOverlay.setContent(placeContent);
 
       // 마커 클릭 이벤트
-      kakao.maps.event.addListener(placeMarker, 'click', function() {
-        placeOverlay.setMap(map)      
+      kakao.maps.event.addListener(placeMarker, 'click', () => {
+        if ( this.clickedOveray ) {
+          this.clickedOveray.setMap(null)
+        }
+        placeOverlay.setMap(map)
+        this.clickedOveray = placeOverlay
       })
       // 맵 클릭 이벤트
       kakao.maps.event.addListener(map, 'click', function() {

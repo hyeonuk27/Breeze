@@ -3,10 +3,12 @@ export default {
     date: new Date(),
     timezone: 'Asia/Seoul',
     participants: [],
+    wishPlaces: []
   },
   getters: {
     date: state => state.date,
     participants: state => state.participants,
+    wishPlaces: state => state.wishPlaces,
   },
   mutations: {
     SETDATE (state, data) {
@@ -20,7 +22,13 @@ export default {
     },
     ADDGROUPPARTICIPANTS (state, data) {
       state.participants = data
-    }
+    },
+    ADD_WISH_PLACE (state, data) {
+      state.wishPlaces.push(data)
+    },
+    DELETE_WISH_PLACE (state, data) {
+      state.wishPlaces.splice(data, 1)
+    },
   },
   actions: {
     setDate ({ commit }, data) {
@@ -34,6 +42,12 @@ export default {
     },
     addGroupParticipants ({ commit }, data) {
       commit('ADDGROUPPARTICIPANTS', data)
-    }
+    },
+    addWishPlace ({ commit }, data) {
+      commit('ADD_WISH_PLACE', data)
+    },
+    deleteWishPlace ({ commit }, data) {
+      commit('DELETE_WISH_PLACE', data)
+    },
   },
 }
