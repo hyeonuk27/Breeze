@@ -1,8 +1,8 @@
 from os import stat
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_list_or_404, get_object_or_404
 from django.contrib.auth import get_user_model
 from .serializers import AppointmentSerializer, AppointmentplaceSerializer, ParticipantSerializer
-from .models import Appointment
+from .models import Appointment, Appointmentplace, Participant
 from accounts.utils import check_login
 
 from rest_framework import status
@@ -58,7 +58,17 @@ def appointment(request):
 @api_view(['GET'])
 def appointment_note(request, note_id):
     note = get_object_or_404(Appointment, id=note_id)
+    places = get_list_or_404(Appointmentplace, appointment_id=note_id)
+    participants = get_list_or_404(Participant, appointment_id=note_id)
     
+    data = {
+        'datetime': note.datetime,
+        'middle_place': note.middle_place,
+        'places': places,
+        'participants': participants,
+    }
+    
+    return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(['DELETE'])
