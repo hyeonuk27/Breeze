@@ -8,7 +8,6 @@ class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments')
     datetime = models.DateTimeField()
     middle_place = models.CharField(max_length=50)
-    is_remember = models.BooleanField(default=0)
 
 
 class Appointmentplace(models.Model):
