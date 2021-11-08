@@ -28,7 +28,7 @@
       </div>
       <div class="d-flex justify-content-end">
         <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-        <button type="button" class="btn ok-btn" @click="goToFindMiddle()">확인</button>
+        <button type="button" class="btn ok-btn" @click="goToFindMiddle()" data-bs-dismiss="modal">확인</button>
       </div>
     </div>
   </div>
@@ -46,10 +46,16 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setDate'
+      'setDate',
+      'setMode1',
+      'setMiddle',
+      'setMenu',
     ]),
     goToFindMiddle: function() {
       this.$router.push({ name: 'FindMiddle' })
+      this.setMode1(0)
+      this.setMiddle(0)
+      this.setMenu(1)
     }
   },
   watch: {
