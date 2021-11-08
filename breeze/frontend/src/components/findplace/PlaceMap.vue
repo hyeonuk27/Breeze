@@ -71,6 +71,10 @@ export default {
       'addWishPlace',
       'deleteWishPlace'
     ]),
+    // 모드 & 필터에 따른 장소 리스트 조회
+    getPlaceList(){
+
+    },
     // 지도 표시
     initMap() {
       var container = document.getElementById("place-map");
@@ -214,6 +218,9 @@ export default {
       })
     },
   },
+  created() {
+    this.getPlaceList()
+  },
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap()
@@ -226,9 +233,6 @@ export default {
       document.head.appendChild(script);
     }
   },
-  created() {
-
-  },
   computed: {
     ...mapState({
       mode2: (state) => state.mode.mode2,
@@ -240,10 +244,12 @@ export default {
   watch: {
     mode2(val) {
       console.log("모드변경", val);
+      this.getPlaceList()
       this.initMap();
     },
     filter(val) {
       console.log("필터변경", val);
+      this.getPlaceList()
       this.initMap();
     }
   },
