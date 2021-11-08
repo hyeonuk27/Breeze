@@ -1,5 +1,5 @@
 <template>
-  <v-date-picker mode="dateTime" v-model="date" class="choose-date">
+  <v-date-picker mode="dateTime" v-model="date" class="choose-date" :min-date="startDate" :model-config="modelConfig">
     <template v-slot="{ inputValue, togglePopover }">
       <div
         class="choose-date-box"
@@ -20,15 +20,19 @@
 
 <script>
 import { mapActions } from 'vuex'
-// const popOver = document.getElementsByClassName('vc-popover-content-wrapper')
-// popOver.style.transform = 'translate3d(20px, 120.667px, 0px)'
+import dayjs from 'dayjs'
 
 export default {
   name: 'ChooseDate',
   data() {
     return {
       date: '',
-      timezone: 'Asia/Seoul'
+      timezone: 'Asia/Seoul',
+      startDate: dayjs().toISOString(),
+      modelConfig: {
+        type: 'string',
+        mask: 'YYYY-MM-DD HH:mm'
+      }
     }
   },
   methods: {
@@ -58,7 +62,7 @@ export default {
   /* height: 30%; */
 }
 .choose-date-box {
-  /* width: 90%; */
+  /* width: 100%; */
   /* height: 100%; */
   margin: 0 auto;
   border-radius: 15px;

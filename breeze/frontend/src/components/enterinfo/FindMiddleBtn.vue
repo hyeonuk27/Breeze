@@ -8,7 +8,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import dayjs from 'dayjs'
+import  customParseFormat from 'dayjs/plugin/customParseFormat'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+dayjs.extend(customParseFormat)
+dayjs.extend(isSameOrBefore)
+
 export default {
   name: 'FindMiddleBtn',
   methods: {
@@ -17,10 +23,22 @@ export default {
       'setMiddle'
     ]),
     goToFindMiddle: function() {
-      this.$router.push({ name: 'FindMiddle' })
-      this.setMode1(0)
-      this.setMiddle(0)
+      if (dayjs(this.date, 'YYYY-MM-DD HH:mm').isSameOrBefore(dayjs())) {
+        alert('약속 날짜를 올바르게 선택해주세요')
+      } else if (this.participants.length < 2) {
+        alert('2명 이상의 친구를 추가해주세요')
+      } else {
+        this.$router.push({ name: 'FindMiddle' })
+        this.setMode1(0)
+        this.setMiddle(0)
+      }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'participants', 
+      'date'
+    ])
   }
 }
 </script>
