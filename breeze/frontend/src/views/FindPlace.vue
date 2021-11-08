@@ -24,12 +24,11 @@ export default {
 <style scoped>
 
 .place-map {
-  height: 65%;
+  height: 64%;
     background: rgb(22, 47, 138);
 }
 .wish-place-list {
-  height: 21%;
-  background: rgb(235, 239, 254);
+  height: 22%;
 }
 .make-appointment-btn {
   height: 14%;

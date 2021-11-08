@@ -11,6 +11,13 @@ export default {
     // 0: 홈 1: 약속만들기 2: 원클릭
     menu: 0,
   },
+  getters: {
+    mode1: state => state.mode1,
+    mode2: state => state.mode2,
+    filter: state => state.filter,
+    middle: state => state.middle,
+    menu: state => state.menu,
+  },
   mutations: {
     SET_MODE1: (state, idx) => {
       state.mode1 = idx

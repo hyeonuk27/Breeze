@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default {
   state: {
     date: new Date(),
@@ -35,9 +37,10 @@ export default {
     },
     ADD_WISH_PLACE (state, data) {
       state.wishPlaces.push(data)
+      state.wishPlaces = _.uniqBy(state.wishPlaces, 'name')
     },
     DELETE_WISH_PLACE (state, data) {
-      state.wishPlaces.splice(data, 1)
+      _.remove(state.wishPlaces, {name: data.name})
     },  
     SETPARTMIDTIME (state, data) {
       state.partMiddleTime = data

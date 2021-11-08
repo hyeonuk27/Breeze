@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+
 
 export default {
   name: "PlaceMap",
@@ -140,25 +141,10 @@ export default {
       var placeAddImg = document.createElement('img')
       placeAddImg.setAttribute('src', require('@/assets/map/add.png'));
 
-      var placeDeleteImg = document.createElement('img')
-      placeDeleteImg.setAttribute('src', require('@/assets/map/add2.png'));
-      placeDeleteImg.style.display ='none';
-
-
       // Wish 담기 이벤트
       placeAddImg.addEventListener('click', () => {
-        const wishPlace = {name : place.name, address: place.address, longitude: place.longitude, latitude: place.latitude, kakao_url: place.kakao_url}
+        const wishPlace = {name : place.name, kakao_url: place.kakao_url, mode2: this.mode2}
         this.addWishPlace(wishPlace)
-        placeAddImg.style.display ='none';
-        placeDeleteImg.style.display ='block';
-      });
-      
-      // Wish 삭제 이벤트
-      placeDeleteImg.addEventListener('click', () => {
-        const wishPlace = {name : place.name, address: place.address, longitude: place.longitude, latitude: place.latitude, kakao_url: place.kakao_url}
-        this.deleteWishPlace(wishPlace)
-        placeDeleteImg.style.display ='none';
-        placeAddImg.style.display ='block';
       });
 
       var starRatings = document.createElement('div');
@@ -195,7 +181,7 @@ export default {
 
       // HTML Element 구성
       placeContent.append(placeHead, placeBody);
-      placeHead.append(placeName, placeAddImg, placeDeleteImg)
+      placeHead.append(placeName, placeAddImg)
       placeBody.append(starRatings, starRatingsText, placeAddress, placePhone, placeUrl)
       starRatings.append(starRatingsFill, starRatingsBase)
       starRatingsFill.append(star1)
@@ -234,12 +220,13 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      mode2: (state) => state.mode.mode2,
-      filter: (state) => state.mode.filter,
-      middleLatitude: (state) => state.appointment.middleLatitude,
-      middleLongitude: (state) => state.appointment.middleLongitude,
-    }),
+    ...mapGetters([
+      'mode2', 
+      'filter', 
+      'middleLatitude', 
+      'middleLongitude',
+      'wishPlaces',
+    ])
   },
   watch: {
     mode2(val) {
