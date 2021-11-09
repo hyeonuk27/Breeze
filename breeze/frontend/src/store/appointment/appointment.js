@@ -40,10 +40,7 @@ export default {
       state.wishPlaces = _.uniqBy(state.wishPlaces, 'name')
     },
     DELETE_WISH_PLACE (state, data) {
-      _.remove(state.wishPlaces, {name: data.name})
-      // console.log(data)
-      // console.log(state.wishPlaces[1])
-      // state.wishPlaces.splice(1, 1)
+      state.wishPlaces.splice(data, 1)
     },  
     SETPARTMIDTIME (state, data) {
       state.partMiddleTime = data

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 
 
 export default {
@@ -202,7 +202,7 @@ export default {
       kakao.maps.event.addListener(map, 'click', function() {
         placeOverlay.setMap(null)      
       })
-    },
+    }
   },
   created() {
     this.getPlaceList()
@@ -225,8 +225,11 @@ export default {
       'filter', 
       'middleLatitude', 
       'middleLongitude',
-      'wishPlaces',
-    ])
+      // 'wishPlaces',
+    ]),
+    ...mapState({
+      wishPlaces: state => state.wishPlaces,  
+    }),
   },
   watch: {
     mode2(val) {

@@ -9,6 +9,7 @@
       <WishPlace 
         v-for="(wishPlace, idx) in wishPlaces"
         :key="idx"
+        :idx="idx"
         :wishPlace="wishPlace"
         class="wish-place"
       />
@@ -25,6 +26,10 @@ export default {
   name: "WishPlaceList",
   components: {
     WishPlace,
+  },
+  data() {
+    return {
+    }
   },
   computed: {
     ...mapGetters(["wishPlaces"]),

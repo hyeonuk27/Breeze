@@ -1,10 +1,10 @@
 <template>
   <div class="wish-place-items" :style="{background: this.placeTypeColor[mode2]}">
-    <img class="wish-place-delete-btn" @click="deleteWishPlace(wishPlace)" src="@/assets/map/minus.png" alt="">
+    <img class="wish-place-delete-btn" @click="deleteWishPlace(idx)" src="@/assets/map/minus.png" alt="">
     <div class="wish-place-image-box">
       <img class="wish-place-image" :src="require('@/assets/map/' + mode2 + '.png')" alt="" />
     </div>
-    <div class="wish-place-name">{{newName }}</div>
+    <div class="wish-place-name">{{ placeName }}</div>
   </div>
 </template>
 
@@ -15,12 +15,13 @@ export default {
   name: "WishPlace",
   props: {
     wishPlace: Object,
+    idx: Number,
   },
   data() {
     return {
-      newName: '',
-      mode2: this.wishPlace.mode2,
-      placeTypeColor: ["#ADA6AD", "#FBF5E7", "#BFD5F8", "#EBECCA"],
+      mode2: 0,
+      placeName:'',
+      placeTypeColor: ["#ADA6AD", "#BFD5F8", "#EBECCA"],
     };
   },
   methods: {
@@ -28,15 +29,22 @@ export default {
       'deleteWishPlace'
     ]),
     sliceName(name) {
-      if(name.length > 7) {
-      this.newName = name.substr(0, 7) + "..";
+      if (name.length > 7) {
+      return name.substr(0, 7) + "..";
     } else {
-      this.newName = name
+      return name
     }}
   },
   created() {
-    this.sliceName(this.wishPlace.name)
-  }
+    this.mode2 = this.wishPlace.mode2
+    this.placeName = this.sliceName(this.wishPlace.name)
+  },
+  watch: {
+    wishPlace() {
+      this.mode2 = this.wishPlace.mode2
+      this.placeName = this.sliceName(this.wishPlace.name)
+    },
+  },
 };
 </script>
 
