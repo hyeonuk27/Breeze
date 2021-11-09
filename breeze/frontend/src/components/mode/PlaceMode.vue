@@ -3,7 +3,6 @@
     <button @click="modeUpdate(0)" :style="[selectedMode == 0 ? {color:'#4F5B9A'} : {color:'#FFFFFF'}]">식당</button>
     <button @click="modeUpdate(1)" :style="[selectedMode == 1 ? {color:'#4F5B9A'} : {color:'#FFFFFF'}]">카페</button>
     <button @click="modeUpdate(2)" :style="[selectedMode == 2 ? {color:'#4F5B9A'} : {color:'#FFFFFF'}]">술집</button>
-    <button @click="modeUpdate(3)" :style="[selectedMode == 3 ? {color:'#4F5B9A'} : {color:'#FFFFFF'}]">문화</button>
     <select v-model="selectedFilter" class="select" name="filter">
       <option value=0 selected >인기순</option>
       <option value=1>평점순</option>
@@ -48,7 +47,7 @@ export default {
 <style scoped>
   .mode2-items button {
     height: 100%;
-    width:18%;
+    width:23%;
     background-color: rgba(256, 256, 256, 0);
     border: none;
     font-weight: 600;
@@ -56,7 +55,9 @@ export default {
   }
   .select {
     height: 100%;
-    width: 18%;
+    width: 20%;
+    margin-right: 4%;
+    margin-left: 2%;
     font-weight: 600;
     font-size: 15px;
     background: transparent;

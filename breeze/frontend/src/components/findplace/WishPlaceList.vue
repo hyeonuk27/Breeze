@@ -27,17 +27,8 @@ export default {
   components: {
     WishPlace,
   },
-  data() {
-    return {
-    }
-  },
   computed: {
     ...mapGetters(["wishPlaces"]),
-  },
-  watch: {
-    wishPlaces(val) {
-      console.log("변경", val);
-    },
   },
 };
 </script>
