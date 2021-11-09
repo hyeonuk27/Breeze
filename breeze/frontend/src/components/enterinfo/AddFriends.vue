@@ -91,8 +91,8 @@ export default {
       const target = this.searchResult[idx]
       // console.log(target.place_name)
       this.partLocation = target.place_name
-      this.partLatitude = target.x
-      this.partLongitude = target.y
+      this.partLatitude = target.y
+      this.partLongitude = target.x
       this.searchWord = target.place_name
       this.searchResult = []
       this.isSearchResultOpen = false
@@ -136,7 +136,7 @@ export default {
 <style>
 .add-friends-box {
   background-color: #E9EDFE;
-  width: 90%;
+  /* width: 90%; */
   margin: 0 auto;
   border-radius: 15px;
 }
@@ -188,7 +188,7 @@ export default {
   height: 40%;
   overflow-y: scroll;
   /* z-index: 100; */
-  width: 90%;
+  /* width: 90%; */
   margin: 0 auto;
   background-color: white;
   border-radius: 15px;
