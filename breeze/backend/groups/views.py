@@ -53,11 +53,16 @@ def groups(request):
     group_data = []
     for group in groups:
         group_members = get_list_or_404(Groupmember, group_id=group.id)
+        members_data = []
+        for member in group_members:
+            serializer = GroupmemberSerializer(member)
+            members_data.append(serializer.data)
+        
         group_data.append(
             {
                 'group_id': group.id,
                 'group_name': group.name,
-                'group_members': group_members,
+                'group_members': members_data,
             }
         )
     data = {
@@ -65,8 +70,6 @@ def groups(request):
         'group_data': group_data
     }
     return Response(data, status=status.HTTP_200_OK)
-    # serializer = GroupmemeberSerializer(group_members, many=True)
-    # return Response(serializer.data)
 
 
 @api_view(['DELETE'])
