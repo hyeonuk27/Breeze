@@ -311,7 +311,7 @@ export default {
     },
     async findMiddle() {
       const data = await this.setData()
-      // console.log(data, '내가 axios에 data로 담아 보내는 정보')
+      console.log(data, '내가 axios에 data로 담아 보내는 정보')
       const response = await mapApi.middle(data)
       console.log(response.middle_data, '중간 장소 관련 data들이 넘어오겠지')
       // this.middlePlaces = response.middle_data

@@ -12,6 +12,7 @@ import ChooseDate from '@/components/enterinfo/ChooseDate.vue'
 import AddFriends from '@/components/enterinfo/AddFriends.vue'
 import ParticipantList from '@/components/enterinfo/ParticipantList.vue'
 import FindMiddleBtn from '@/components/enterinfo/FindMiddleBtn.vue'
+import store from "@/store"
 
 export default {
   name: 'EnterInfo',
@@ -20,7 +21,25 @@ export default {
     AddFriends,
     ParticipantList,
     FindMiddleBtn,
-  }
+  },
+  beforeRouteEnter(to, from, next) {
+    if (from.name == 'OneClick' || from.name == 'MakeAppointment') {
+      // console.log('oneclick에서 온다')
+      store.dispatch('setDate', new Date())
+      store.dispatch('setParticipants', [])
+      store.dispatch('setPartMidTime', [])
+      store.dispatch('setMiddleName', '')
+      store.dispatch('setMiddleLat', 0)
+      store.dispatch('setMiddleLong', 0)
+      store.dispatch('setGroupName', '')
+      store.dispatch('setGroupId', null)
+      store.dispatch('setIsFirst', false)
+      next()
+    }  else {
+      // console.log('정상적으로 진입한 경우')
+      next()
+    }
+  },
 }
 </script>
 

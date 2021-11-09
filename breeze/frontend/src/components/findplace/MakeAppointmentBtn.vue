@@ -18,7 +18,8 @@ export default {
   name: "MakeAppointmentBtn",
   methods: {
     goToMakeAppointment: function () {
-      this.$router.push({ name: "MakeAppointment" });
+      // this.$router.push({ name: "MakeAppointment" });
+      this.$router.push('/makeappointment/0')
     },
   },
 };

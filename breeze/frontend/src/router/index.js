@@ -66,7 +66,7 @@ const routes = [
     // beforeEnter: checkToken()
   },
   {
-    path: '/makeappointment',
+    path: '/makeappointment/:noteId',
     name: 'MakeAppointment',
     component: MakeAppointment,
      // beforeEnter: checkToken()
