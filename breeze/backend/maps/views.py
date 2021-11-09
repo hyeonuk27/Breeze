@@ -83,7 +83,7 @@ def get_middle(request):
                 route.append([guide.get('y'), guide.get('x')])
                 
             participants.append({
-                'barami_type': participant.baramiType,
+                'barami_type': participant['baramiType'],
                 'time': time,
                 'route': route
             })
@@ -110,7 +110,7 @@ def get_middle(request):
                 route.append([guide.get('y'), guide.get('x')])
                 
             participants.append({
-                'barami_type': participant.baramiType,
+                'barami_type': participant['baramiType'],
                 'time': time,
                 'route': route
             })
@@ -137,7 +137,7 @@ def get_middle(request):
                 route.append([guide.get('y'), guide.get('x')])
                 
             participants.append({
-                'barami_type': participant.baramiType,
+                'barami_type': participant['baramiType'],
                 'time': time,
                 'route': route
             })
