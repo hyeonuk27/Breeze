@@ -32,10 +32,10 @@ def group_create(request):
     print(request.data)
     for member in members:
         member_data = {
-            'name': member.get('memName'),
-            'building': member.get('memBuilding'),
-            'latitude': member.get('memLatitude'),
-            'longitude': member.get('memLongitude'),
+            'name': member.get('partName'),
+            'building': member.get('partLocation'),
+            'latitude': member.get('partLatitude'),
+            'longitude': member.get('partLongitude'),
             'barami_type': member.get('baramiType')
         }
         serializer = GroupmemberSerializer(data=member_data, partial=True)
