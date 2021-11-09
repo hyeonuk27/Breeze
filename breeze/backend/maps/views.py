@@ -34,7 +34,6 @@ def get_store(request, category_id, filter_id):
     # 중간역에 해당하는 가게들 선택, 그 중 해당 카테고리 선택
     category_store = Place.objects.filter(middle_name=request.data['middlePlace'][:-1], category_num=category_id)
     
-    stores = []
     # 전체 결과가 10개 이하면 다 반환
     if len(category_store) < 11:
         stores = category_store
@@ -49,9 +48,15 @@ def get_store(request, category_id, filter_id):
             # 랜덤
             random.shuffle(category_store)
             stores = category_store[:10]
+    
+    store_data = []
+    for store in stores:
+        serializer = PlaceListSerializer(store)
+        store_data.append(serializer.data)
+
     data = {
         'access_token': request.access_token,
-        'stores': stores
+        'stores': store_data
     }
 
     return Response(data, status=status.HTTP_201_CREATED)
