@@ -16,7 +16,7 @@
       </div>
       <button
         class="col-3 cancel-btn"
-        @click="deleteParticipant(idx)">
+        @click="deleteParticipant([idx, participant.baramiType])">
         <i class="fas fa-times"></i>
       </button>
     </div>

@@ -76,7 +76,6 @@ export default {
           }
         })
         .then((res) => {
-          // console.log(res.data.documents)
           this.isSearchResultOpen = true
           this.searchResult = res.data.documents
         })
@@ -89,7 +88,6 @@ export default {
     },
     setLocation (idx) {
       const target = this.searchResult[idx]
-      // console.log(target.place_name)
       this.partLocation = target.place_name
       this.partLatitude = target.y
       this.partLongitude = target.x
