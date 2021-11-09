@@ -17,8 +17,11 @@ export default {
   getters: {
     date: state => state.date,
     participants: state => state.participants,
-    wishPlaces: state => state.wishPlaces,
     partMiddleTime: state => state.partMiddleTime,
+    wishPlaces: state => state.wishPlaces,
+    middleName: state => state.middleName,
+    middleLatitude: state => state.middleLatitude,
+    middleLongitude: state => state.middleLongitude,
   },
   mutations: {
     SETDATE (state, data) {

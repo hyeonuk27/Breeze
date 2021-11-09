@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
-
+import { mapGetters, mapActions } from "vuex";
+import mapApi from '@/api/map.js'
 
 export default {
   name: "PlaceMap",
@@ -73,8 +73,16 @@ export default {
       'deleteWishPlace'
     ]),
     // 모드 & 필터에 따른 장소 리스트 조회
-    getPlaceList(){
-
+    async getPlaceList() {
+      let data = {
+        middlePlace: this.middleName, 
+        latitude: this.middleLatitude, 
+        longitude: this.middleLongitude,
+        categoryType: this.mode2,
+        filterType: this.filter, 
+      }
+      const response = await mapApi.getPlaceList(data)
+      console.log(response.data, '장소 넘어옴')
     },
     // 지도 표시
     initMap() {
@@ -222,14 +230,12 @@ export default {
   computed: {
     ...mapGetters([
       'mode2', 
-      'filter', 
+      'filter',
+      'middleName', 
       'middleLatitude', 
       'middleLongitude',
-      // 'wishPlaces',
+      'wishPlaces',
     ]),
-    ...mapState({
-      wishPlaces: state => state.wishPlaces,  
-    }),
   },
   watch: {
     mode2(val) {
