@@ -51,7 +51,10 @@ def appointment(request):
         if sereializer.is_valid(raise_exception=True):
             sereializer.save(appointment=appointment)
 
-    data = { 'access_token': request.access_token }
+    data = { 
+        'access_token': request.access_token,
+        'note_id': note_id,
+    }
     return Response(data, status=status.HTTP_201_CREATED)
 
 

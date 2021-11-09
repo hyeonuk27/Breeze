@@ -91,8 +91,8 @@ export default {
       const target = this.searchResult[idx]
       // console.log(target.place_name)
       this.partLocation = target.place_name
-      this.partLatitude = target.x
-      this.partLongitude = target.y
+      this.partLatitude = target.y
+      this.partLongitude = target.x
       this.searchWord = target.place_name
       this.searchResult = []
       this.isSearchResultOpen = false

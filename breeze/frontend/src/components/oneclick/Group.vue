@@ -2,7 +2,7 @@
   <swiper-slide class="group">
     <div class="d-flex justify-content-between align-items-center">
       <div class="group-name">{{ group.group_name }}</div>
-      <button type="button" class="btn-close"></button>
+      <button type="button" class="btn-close" @click="deleteGroup()"></button>
     </div>
     <div class="row group-container">
       <div
@@ -12,7 +12,7 @@
         <div class="group-member">
           <div class="image-box">
             <img
-              :src="require('@/assets/barami/' + idx + '.png')"
+              :src="require('@/assets/barami/' + member.barami_type + '.png')"
               class="image-box-barami"
               alt="barami-character"
             />
@@ -28,6 +28,7 @@
 <script>
 import { SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
+import groupApi from '@/api/group.js'
 
 export default {
   name: 'Group',
@@ -37,6 +38,21 @@ export default {
   },
   components: {
     SwiperSlide
+  },
+  data() {
+    return {
+      groupIdx: this.idx
+    }
+  },
+  methods: {
+    deleteGroup() {
+      alert('정말 삭제하시겠습니까?')
+      const response = groupApi.deleteGroup(this.groupIdx)
+      console.log(response)
+      if (response == 'success') {
+        this.$emit('renew-grouplist')
+      }
+    }
   }
 
 }
