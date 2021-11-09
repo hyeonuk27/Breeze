@@ -70,84 +70,86 @@ def get_middle(request):
     middle_data = []
 
     # mode1 = 0 완벽한 중간: 중간 지점에서 거리차가 제일 적은 지하철 역
-    subway = final_subway.iloc[0]
-    name = subway['name']
-    latitude = subway['latitude']
-    longitude = subway['longitude']
-    participants = []
-    for participant in participants_info:
-        time, guides_list = get_time(longitude, latitude, participant)
-        route = []
-        for guide in guides_list:
-            route.append([guide.get('y'), guide.get('x')])
-            
-        participants.append({
-            'barami_type': participant.baramiType,
-            'time': time,
-            'route': route
+    for i in range(3):
+        subway = final_subway.iloc[i]
+        name = subway['name']
+        latitude = subway['latitude']
+        longitude = subway['longitude']
+        participants = []
+        for participant in participants_info:
+            time, guides_list = get_time(longitude, latitude, participant)
+            route = []
+            for guide in guides_list:
+                route.append([guide.get('y'), guide.get('x')])
+                
+            participants.append({
+                'barami_type': participant.baramiType,
+                'time': time,
+                'route': route
+            })
+        
+        middle_data.append({
+            'middle_place_type': 0,
+            'name': name,
+            'latitude': latitude,
+            'longitude': longitude,
+            'participants': participants,
         })
-    
-    middle_data.append({
-        'middle_place_type': 0,
-        'name': name,
-        'latitude': latitude,
-        'longitude': longitude,
-        'participants': participants,
-    })
 
     # mode1 = 1 핫플레이스: 지하철 승하차승객수가 가장 많은 역
-    subway = subway_list.sort_values('passenger', ascending=False).iloc[0]
-    name = subway['name']
-    latitude = subway['latitude']
-    longitude = subway['longitude']
-    participants = []
-    for participant in participants_info:
-        time, guides_list = get_time(longitude, latitude, participant)
-        route = []
-        for guide in guides_list:
-            route.append([guide.get('y'), guide.get('x')])
-            
-        participants.append({
-            'barami_type': participant.baramiType,
-            'time': time,
-            'route': route
+    for i in range(3):
+        subway = subway_list.sort_values('passenger', ascending=False).iloc[i]
+        name = subway['name']
+        latitude = subway['latitude']
+        longitude = subway['longitude']
+        participants = []
+        for participant in participants_info:
+            time, guides_list = get_time(longitude, latitude, participant)
+            route = []
+            for guide in guides_list:
+                route.append([guide.get('y'), guide.get('x')])
+                
+            participants.append({
+                'barami_type': participant.baramiType,
+                'time': time,
+                'route': route
+            })
+        
+        middle_data.append({
+            'middle_place_type': 1,
+            'name': name,
+            'latitude': latitude,
+            'longitude': longitude,
+            'participants': participants,
         })
-    
-    middle_data.append({
-        'middle_place_type': 1,
-        'name': name,
-        'latitude': latitude,
-        'longitude': longitude,
-        'participants': participants,
-    })
     
     # mode1 = 2 코로나멈춰: 지하철 승하차승객수가 가장 적은 역
-    subway = subway_list.sort_values('passenger').iloc[0]
-    name = subway['name']
-    latitude = subway['latitude']
-    longitude = subway['longitude']
-    participants = []
-    for participant in participants_info:
-        time, guides_list = get_time(longitude, latitude, participant)
-        route = []
-        for guide in guides_list:
-            route.append([guide.get('y'), guide.get('x')])
-            
-        participants.append({
-            'barami_type': participant.baramiType,
-            'time': time,
-            'route': route
+    for i in range(3):
+        subway = subway_list.sort_values('passenger').iloc[i]
+        name = subway['name']
+        latitude = subway['latitude']
+        longitude = subway['longitude']
+        participants = []
+        for participant in participants_info:
+            time, guides_list = get_time(longitude, latitude, participant)
+            route = []
+            for guide in guides_list:
+                route.append([guide.get('y'), guide.get('x')])
+                
+            participants.append({
+                'barami_type': participant.baramiType,
+                'time': time,
+                'route': route
+            })
+        
+        middle_data.append({
+            'middle_place_type': 2,
+            'name': name,
+            'latitude': latitude,
+            'longitude': longitude,
+            'participants': participants,
         })
-    
-    middle_data.append({
-        'middle_place_type': 2,
-        'name': name,
-        'latitude': latitude,
-        'longitude': longitude,
-        'participants': participants,
-    })
 
-    print(middle_data)
     data = {
         'access_token': request.access_token,
         'middle_data': middle_data,
