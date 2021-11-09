@@ -20,8 +20,8 @@ REST_API_KEY = config('REST_API_KEY')
 User = get_user_model()
 
 
-@check_login
 @api_view(['POST'])
+@check_login
 def get_middle(request):
     passenger = pd.read_csv('data/passenger.csv')
     participants_info = request.data # 프론트로부터 받는 참여자 정보
@@ -34,25 +34,38 @@ def get_middle(request):
     if len(participants_loc) >= 3:
         P = Polygon(participants_loc)
         center = P.centroid
+        # 위도 기준으로 차이가 적은 후보 역들 추리기
+        diff = []
+        for lat in passenger['latitude']:
+            diff.append(abs(lat - center.x)) 
+        passenger['diff'] = diff
+        subway_list = passenger.sort_values('diff')[:20]
+        # 후보 역들과 중간 지점의 거리 구하기
+        dis = []
+        for lat, long in zip(subway_list['latitude'], subway_list['longitude']):
+            dis.append(np.sqrt((float(lat) - center.x)**2 + (float(long) - center.y)**2))
+        subway_list['dis'] = dis
+        final_subway = subway_list.sort_values('dis')[:10]
+        final_subway = final_subway.drop(['diff'], axis=1)
+        final_subway = final_subway.drop(['id'], axis=1)
+        print(final_subway)
     else:
         center = [sum(list(map(lambda x: x[0], participants_loc))) / 2, sum(list(map(lambda x: x[1], participants_loc))) / 2]
-
-    # 위도 기준으로 차이가 적은 후보 역들 추리기
-    diff = []
-    for lat in passenger['latitude']:
-        diff.append(abs(lat - center.x)) 
-    passenger['diff'] = diff
-    subway_list = passenger.sort_values('diff')[:20]
-
-    # 후보 역들과 중간 지점의 거리 구하기
-    dis = []
-    for lat, long in zip(subway_list['latitude'], subway_list['longitude']):
-        dis.append(np.sqrt((float(lat) - center.x)**2 + (float(long) - center.y)**2))
-    subway_list['dis'] = dis
-    final_subway = subway_list.sort_values('dis')[:10]
-    final_subway = final_subway.drop(['diff'], axis=1)
-    final_subway = final_subway.drop(['id'], axis=1)
-    print(final_subway)
+        # 위도 기준으로 차이가 적은 후보 역들 추리기
+        diff = []
+        for lat in passenger['latitude']:
+            diff.append(abs(lat - center[0])) 
+        passenger['diff'] = diff
+        subway_list = passenger.sort_values('diff')[:20]
+        # 후보 역들과 중간 지점의 거리 구하기
+        dis = []
+        for lat, long in zip(subway_list['latitude'], subway_list['longitude']):
+            dis.append(np.sqrt((float(lat) - center[0])**2 + (float(long) - center[1])**2))
+        subway_list['dis'] = dis
+        final_subway = subway_list.sort_values('dis')[:10]
+        final_subway = final_subway.drop(['diff'], axis=1)
+        final_subway = final_subway.drop(['id'], axis=1)
+        print(final_subway)
 
     middle_data = []
 
