@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import auth
 
 from decouple import config
+from accounts.utils import check_login
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -19,15 +20,22 @@ REST_API_KEY = config('REST_API_KEY')
 User = get_user_model()
 
 
-@api_view(['GET'])
+@check_login
+@api_view(['POST'])
 def get_middle(request):
     passenger = pd.read_csv('data/passenger.csv')
-    participants = request.data.get('participants')
-    # participants = [[37.52, 126.88], [37.68, 127.06], [37.53, 126.96]]
+    participants_info = request.data # 프론트로부터 받는 참여자 정보
+    participants_loc = [] # 참여자 좌표 모음
+
+    for participant in participants_info:
+        participants_loc.append([float(participant.get('partLatitude')), float(participant.get('partLongitude'))])
     
     # 중간 지점 찾기 (연산 줄이기가 필요하다면 그라함 스캔 알고리즘)
-    P = Polygon(participants)
-    center = P.centroid
+    if len(participants_loc) >= 3:
+        P = Polygon(participants_loc)
+        center = P.centroid
+    else:
+        center = [sum(list(map(lambda x: x[0], participants_loc))) / 2, sum(list(map(lambda x: x[1], participants_loc))) / 2]
 
     # 위도 기준으로 차이가 적은 후보 역들 추리기
     diff = []
@@ -46,72 +54,121 @@ def get_middle(request):
     final_subway = final_subway.drop(['id'], axis=1)
     print(final_subway)
 
-    mode1 = request.data.get('mode1')
-    name, latitude, longitude = '', '' ,''
-    # 완벽한 중간: 중간 지점에서 거리차가 제일 적은 지하철 역
-    if mode1 == 0:
-        subway = final_subway.iloc[0]
-        name = subway['name']
-        latitude = subway['latitude']
-        longitude = subway['longitude']
-        print(subway)
-    # 핫플레이스: 지하철 승하차승객수가 가장 많은 역
-    elif mode1 == 1:
-        subway = subway_list.sort_values('passenger', ascending=False).iloc[0]
-        name = subway['name']
-        latitude = subway['latitude']
-        longitude = subway['longitude']
-    # 코로나멈춰: 지하철 승하차승객수가 가장 적은 역
-    else:
-        subway = subway_list.sort_values('passenger').iloc[0]
-        name = subway['name']
-        latitude = subway['latitude']
-        longitude = subway['longitude']
+    middle_data = []
 
+    # mode1 = 0 완벽한 중간: 중간 지점에서 거리차가 제일 적은 지하철 역
+    subway = final_subway.iloc[0]
+    name = subway['name']
+    latitude = subway['latitude']
+    longitude = subway['longitude']
+    participants = []
+    for participant in participants_info:
+        time, guides_list = get_time(longitude, latitude, participant)
+        route = []
+        for guide in guides_list:
+            route.append([guide.get('y'), guide.get('x')])
+            
+        participants.append({
+            'barami_type': participant.baramiType,
+            'time': time,
+            'route': route
+        })
     
-    # 중간 지점 찾고 사용자가 중간 지점으로 오는 거리와 시간
-    participant_info_list = []
-    for participant in participants:
-        participant_lat = participant.get('partLatitude ')
-        participant_long = participant.get('partLongitude ')
-
-        headers = {
-        'Authorization': f'KakaoAK {REST_API_KEY}',
-        }
-
-        params = (
-            ('origin', f'{participant_long},{participant_lat}'),
-            ('destination', f'{longitude},{latitude}'),
-            ('waypoints', ''),
-            ('priority', 'RECOMMEND'),
-            ('car_fuel', 'GASOLINE'),
-            ('car_hipass', 'false'),
-            ('alternatives', 'false'),
-            ('road_details', 'false'),
-        )
-
-        response = requests.get('https://apis-navi.kakaomobility.com/v1/directions', headers=headers, params=params).json()
-        time_min = response.get('routes')[0].get('summary').get('duration')
-        time_sec = round(time_min/60)
-        participant_info = [{
-            'barami_type': participant.get('baramiType'),
-            'time': time_sec,
-        }]
-        participant_info_list.append(participant_info)
-
-    middle_data = [{
-        'middle_place_type': mode1,
+    middle_data.append({
+        'middle_place_type': 0,
         'name': name,
         'latitude': latitude,
         'longitude': longitude,
         'participants': participants,
-    }]
+    })
 
+    # mode1 = 1 핫플레이스: 지하철 승하차승객수가 가장 많은 역
+    subway = subway_list.sort_values('passenger', ascending=False).iloc[0]
+    name = subway['name']
+    latitude = subway['latitude']
+    longitude = subway['longitude']
+    participants = []
+    for participant in participants_info:
+        time, guides_list = get_time(longitude, latitude, participant)
+        route = []
+        for guide in guides_list:
+            route.append([guide.get('y'), guide.get('x')])
+            
+        participants.append({
+            'barami_type': participant.baramiType,
+            'time': time,
+            'route': route
+        })
+    
+    middle_data.append({
+        'middle_place_type': 1,
+        'name': name,
+        'latitude': latitude,
+        'longitude': longitude,
+        'participants': participants,
+    })
+    
+    # mode1 = 2 코로나멈춰: 지하철 승하차승객수가 가장 적은 역
+    subway = subway_list.sort_values('passenger').iloc[0]
+    name = subway['name']
+    latitude = subway['latitude']
+    longitude = subway['longitude']
+    participants = []
+    for participant in participants_info:
+        time, guides_list = get_time(longitude, latitude, participant)
+        route = []
+        for guide in guides_list:
+            route.append([guide.get('y'), guide.get('x')])
+            
+        participants.append({
+            'barami_type': participant.baramiType,
+            'time': time,
+            'route': route
+        })
+    
+    middle_data.append({
+        'middle_place_type': 2,
+        'name': name,
+        'latitude': latitude,
+        'longitude': longitude,
+        'participants': participants,
+    })
+
+    print(middle_data)
     data = {
         'access_token': request.access_token,
         'middle_data': middle_data,
     }
     return Response(data, status=status.HTTP_200_OK)
+
+
+# 중간 지점 찾고 사용자가 중간 지점으로 오는 시간과 경로 가져오는 함수
+def get_time(longitude, latitude, participant):
+    participant_lat = participant.get('partLatitude')
+    participant_long = participant.get('partLongitude')
+
+    headers = {
+    'Authorization': f'KakaoAK {REST_API_KEY}',
+    }
+
+    params = (
+        ('origin', f'{participant_long},{participant_lat}'),
+        ('destination', f'{longitude},{latitude}'),
+        ('waypoints', ''),
+        ('priority', 'RECOMMEND'),
+        ('car_fuel', 'GASOLINE'),
+        ('car_hipass', 'false'),
+        ('alternatives', 'false'),
+        ('road_details', 'false'),
+    )
+
+    response = requests.get('https://apis-navi.kakaomobility.com/v1/directions', headers=headers, params=params).json()
+    time_sec = response.get('routes')[0].get('summary').get('duration')
+    time_min = round(time_sec/60)
+    
+    guides_list = response.get('routes')[0].get('sections')[0].get('guides')
+        
+    return (time_min, guides_list)
 
 
 @api_view(['POST'])
