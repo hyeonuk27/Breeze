@@ -43,7 +43,7 @@ def appointment(request):
     # 참가자 저장
     for paricipant in request.data.participants:
         paricipant_data = {
-            'name': paricipant.partiname,
+            'name': paricipant.partName,
             'time': paricipant.time,
             'barami_type': paricipant.baramiType,
         }
@@ -61,11 +61,21 @@ def appointment_note(request, note_id):
     places = get_list_or_404(Appointmentplace, appointment_id=note_id)
     participants = get_list_or_404(Participant, appointment_id=note_id)
     
+    place_data = []
+    for place in places:
+        serializer = AppointmentplaceSerializer(place)
+        place_data.append(serializer.data)
+    
+    participant_data = []
+    for participant in participants:
+            serializer = ParticipantSerializer(participant)
+            participant_data.append(serializer.data)
+
     data = {
         'datetime': note.datetime,
         'middle_place': note.middle_place,
-        'places': places,
-        'participants': participants,
+        'places': place_data,
+        'participants': participant_data,
     }
     
     return Response(data, status=status.HTTP_200_OK)
