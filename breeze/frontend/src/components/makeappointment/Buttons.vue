@@ -36,8 +36,11 @@ export default {
         var rememberBtn = document.getElementById('remember-first-btn')
         if (this.isGroupSaved == true) {
           rememberBtn.disabled = true
+          rememberBtn.style.color = '#B3B3B3'
+          rememberBtn.style.textDecoration = 'underline'
         } else {
           rememberBtn.disabled = false
+          rememberBtn.style.textDecoration = null
           }
        }
     }

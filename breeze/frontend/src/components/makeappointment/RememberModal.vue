@@ -1,12 +1,12 @@
 <template>
   <div class="modal-dialog modal-container">
     <div class="modal-content modal-box">
-      <div>
+      <div class="modal-head-content">
         <div class="d-flex justify-content-end">
           <button type="button" class="btn-close cancel-btn" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <h5 class="modal-title" id="rememberModalLabel">이멤버 리멤버</h5>
-        <p>이 멤버 그대로 저장하여 다음에도 약속을 잡을 수 있어요.</p>
+        <p class="modal-desc">이 멤버 그대로 다음에도 약속을 잡을 수 있어요!</p>
       </div>
       <div
         class="choose-name-box">
@@ -15,7 +15,7 @@
           type="text"
           placeholder="모임 이름을 입력해주세요."
           v-model="groupName"
-          class="choose-name-input text-gray-700 w-full py-1 px-2 appearance-none rounded-r focus:outline-none focus:border-blue-500"
+          class="choose-name-input text-gray-700 w-full py-1 px-2 appearance-none rounded-r"
         />
       </div>
       <div class="d-flex justify-content-end">
@@ -72,7 +72,7 @@ export default {
 
 <style scoped>
 .modal-container {
-  margin-top: 30%; 
+  margin-top: 40%; 
 }
 .modal-box {
   border-radius: 20px;
@@ -80,6 +80,10 @@ export default {
   width: 95%;
   margin: 0 auto;
   box-shadow: 1px 1px 5px 0px gray;
+}
+.modal-desc {
+  font-size: 14px;
+  margin: 10px;
 }
 .cancel-btn {
   text-align: left;
@@ -93,16 +97,14 @@ export default {
   font-size: 10pt;
   border-radius: 10px;
   padding: 1%;
+  margin-top: 3%;
   margin-bottom: 5%;
   margin-right: 5%;
   width: 20%;
+  height: 37px;
   /* box-shadow: 1px 1px 5px 0px gray; */
   color: white;
 }
-/* .choose-date {
-  margin: 4%;
-  height: 30%;
-} */
 .choose-name-box {
   width: 90%;
   /* height: 100%; */
@@ -113,15 +115,13 @@ export default {
   padding-left: 3%;
   text-align: left;
 }
-/* .choose-name-btn {
-  border: none;
-  background-color: #F7F8F8;
-  color: #ADA4A5;
-} */
 .choose-name-input {
   background-color: #F7F8F8;
   border: none;
   text-align: left;
   color: #ADA4A5;
+}
+.choose-name-input:focus {
+  outline: none;
 }
 </style>

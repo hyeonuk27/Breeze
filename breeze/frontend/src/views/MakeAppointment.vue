@@ -1,7 +1,7 @@
 <template>
   <div class="note">
     <Participants 
-      class="participants" 
+      class="participants"
       :noteParticipants="noteInfo.participants"/>
     <AppointmentDate 
       class="appointment-date"
@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       userId: '',
-      noteId : '',
+      secretCode : '',
       // noteInfo: {},
       noteInfo: {
         participants: [
@@ -83,13 +83,13 @@ export default {
             barami_type: 1
           },
         ],
-      datetime: '2017-08-03',
+      datetime: '2021-11-26T14:12:09.268Z',
       middle_place: '역삼역',
       places: [
         {
-          name: '가게1',
+          name: '가게1dddddddddd',
           category: 0,
-          url: ''
+          url: 'https://www.naver.com/'
         },
         {
           name: '가게2',
@@ -147,14 +147,20 @@ export default {
     }
   },
   methods: {
+    async setInfo () {
+      console.log('$$$$$$$$$$$$$$$$$$$$$$$$$')
+      this.secretCode = this.$route.params.secretCode
+      console.log(this.secretCode, '노트아이디 확인')
+      // const response = await appointmentApi.getAppointment(this.secretCode)
+      // console.log(response)
+      // this.noteInfo = response
+      console.log(this.noteInfo)
+    }
 
   },
   created() {
     this.userId = this.$store.getters.getUserId
-    this.noteId = this.$route.params.noteId
-    // const response = appointmentApi.getAppointment(this.noteId)
-    // console.log(response)
-    // this.noteInfo = response
+    this.setInfo() 
   },
   computed: {
   ...mapGetters([
@@ -166,23 +172,23 @@ export default {
 </script>
 
 <style scoped>
-.note {
+/* .note {
 
-}
+} */
 .participants {
   padding-left: 8%;
   padding-right: 8%;
-  height: 10%; 
+  height: 22%; 
 }
 .appointment-date {
   padding-left: 8%;
   padding-right: 8%;
-  height: 20%;
+  height: 14%;
 }
 .wish-place-list {
   padding-left: 8%;
   padding-right: 8%;
-  height: 56%;
+  height: 50%;
 }
 .btn-group {
   width:100%;
