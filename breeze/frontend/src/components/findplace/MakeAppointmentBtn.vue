@@ -14,16 +14,43 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import mapApi from '@/api/map.js'
 export default {
   name: "MakeAppointmentBtn",
   methods: {
-    // saveAppointment() {
-
-    // },
+    async saveAppointment() {
+      const data = {
+        dateTime: this.date,
+        middlePlace: this.middleName,
+        participants: this.partMiddleTime,
+        places: this.wishPlaces,
+      }
+      console.log(data)
+      const response = await mapApi.saveAppointment(data)
+      console.log(response, '노트 아이디 받음')
+    },
     goToMakeAppointment: function () {
-      this.$router.push({ name: "MakeAppointment" });
+      if ( this.wishPlaces.length == 0 ) {
+        alert('한 개 이상의 장소를 선택하세요.')
+      } else {
+        this.saveAppointment()
+        this.$router.push({ name: "MakeAppointment" });
+      }
     },
   },
+  computed: {
+    ...mapGetters([
+      'date',
+      'middleName',
+      'partMiddleTime',
+      'wishPlaces',
+    ]),
+  },
+  created() {
+    console.log(this.date)
+    console.log(this.participants)
+  }
 };
 </script>
 

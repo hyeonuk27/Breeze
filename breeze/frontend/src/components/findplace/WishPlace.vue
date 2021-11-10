@@ -4,7 +4,7 @@
     <div class="wish-place-image-box">
       <img class="wish-place-image" :src="require('@/assets/map/' + mode2 + '.png')" alt="" />
     </div>
-    <div class="wish-place-name">{{ placeName }}</div>
+    <div class="wish-place-name">{{ name }}</div>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       mode2: 0,
-      placeName:'',
+      name:'',
       placeTypeColor: ["#ADA6AD", "#EBECCA", "#BFD5F8"],
     };
   },
@@ -36,13 +36,14 @@ export default {
     }}
   },
   created() {
-    this.mode2 = this.wishPlace.mode2
-    this.placeName = this.sliceName(this.wishPlace.name)
+    console.log(this.wishPlace)
+    this.mode2 = this.wishPlace.placeCategory
+    this.name = this.sliceName(this.wishPlace.placeName)
   },
   watch: {
     wishPlace() {
-      this.mode2 = this.wishPlace.mode2
-      this.placeName = this.sliceName(this.wishPlace.name)
+      this.mode2 = this.wishPlace.placeCategory
+      this.name = this.sliceName(this.wishPlace.placeName)
     },
   },
 };

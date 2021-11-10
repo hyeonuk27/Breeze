@@ -100,7 +100,7 @@ export default {
 
       // Wish 담기 이벤트
       placeAddImg.addEventListener('click', () => {
-        const wishPlace = {name : place.name, kakao_url: place.kakao_url, mode2: place.category_num}
+        const wishPlace = {placeName : place.name, placeCategory: place.category_num, placeUrl: place.kakao_url, }
         this.addWishPlace(wishPlace)
       });
 

@@ -43,7 +43,7 @@ export default {
     },
     ADD_WISH_PLACE (state, data) {
       state.wishPlaces.push(data)
-      state.wishPlaces = _.uniqBy(state.wishPlaces, 'name')
+      state.wishPlaces = _.uniqBy(state.wishPlaces, 'placeName')
     },
     DELETE_WISH_PLACE (state, data) {
       state.wishPlaces.splice(data, 1)
