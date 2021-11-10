@@ -17,6 +17,9 @@
 export default {
   name: "MakeAppointmentBtn",
   methods: {
+    // saveAppointment() {
+
+    // },
     goToMakeAppointment: function () {
       this.$router.push({ name: "MakeAppointment" });
     },

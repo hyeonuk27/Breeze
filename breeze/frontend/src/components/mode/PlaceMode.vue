@@ -4,22 +4,22 @@
     <button @click="modeUpdate(1)" :style="[selectedMode == 1 ? {color:'#4F5B9A'} : {color:'#FFFFFF'}]">카페</button>
     <button @click="modeUpdate(2)" :style="[selectedMode == 2 ? {color:'#4F5B9A'} : {color:'#FFFFFF'}]">술집</button>
     <select v-model="selectedFilter" class="select" name="filter">
-      <option value=0 selected >인기순</option>
+      <option value=0>인기순</option>
       <option value=1>평점순</option>
       <option value=2>랜 덤</option>
+      {{selectedFilter}}
     </select>
 
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState} from 'vuex'
 
 export default {
   name: 'PlaceMode',
   data() {
     return {
-      selectedMode: 0,
       selectedFilter: 0,
     }
   },
@@ -30,17 +30,26 @@ export default {
     ]),
     modeUpdate: function (idx) {
       this.setMode2(idx)
-      this.selectedMode = idx
     },
+    filterUpdate(idx) {
+      this.setFilter(idx)
+      this.selectedFilter = idx
+    }
   },
   created() {
-    this.selectedMode = 0
+    this.selectedFilter = this.filter 
+  },
+  computed: {
+   ...mapState({
+      selectedMode: state => state.mode.mode2,
+      filter: state => state.mode.filter,
+    }),
   },
   watch: {
-    selectedFilter: function (idx) {
-      this.setFilter(idx)
+    selectedFilter(val){
+      this.filterUpdate(val)
     }
-  }
+  },
 }
 </script>
 

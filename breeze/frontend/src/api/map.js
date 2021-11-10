@@ -9,9 +9,11 @@ const mapApi = {
     return requestPost('/middle/', data)
   },
   getPlaceList: (data) => {
-    console.log(typeof(data.categoryType))
     return requestPost('/store/' + `${data.categoryType}/` + `${data.filterType}/`, data)
-  }
+  },
+  // saveAppointment (data) => {
+  //   return requestPost('/appointment/', data)
+  // }
 };
 
 export default mapApi;
