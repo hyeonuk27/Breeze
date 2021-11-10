@@ -6,7 +6,7 @@
       class="group-appointment-btn"
       data-bs-toggle="modal" data-bs-target="#groupAppointmentModal"
     />
-    <div class="modal fade" id="groupAppointmentModal" tabindex="-1" aria-labelledby="groupAppointmentModalLabel" aria-hidden="true">      
+    <div class="modal fade" id="groupAppointmentModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="groupAppointmentModalLabel" aria-hidden="true">      
       <GroupAppointmentModal/>
     </div>
   </div>
