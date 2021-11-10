@@ -1,5 +1,5 @@
 <template>
-  <v-date-picker mode="dateTime" v-model="date" class="choose-date" :min-date="startDate" :model-config="modelConfig">
+  <v-date-picker mode="dateTime" v-model="date" class="choose-date-picker" :min-date="startDate" :model-config="modelConfig">
     <template v-slot="{ inputValue, togglePopover }">
       <div
         class="choose-date-box"
@@ -57,13 +57,13 @@ export default {
 * {
     color: #ADA4A5;
   }
-.choose-date {
-  /* margin: 4%; */
-  /* height: 30%; */
+.choose-date-picker {
+  /* margin-top: 8%;
+  height: 30%; */
+  /* margin: 0%; */
 }
 .choose-date-box {
-  /* width: 100%; */
-  /* height: 100%; */
+  width: 95%;
   margin: 0 auto;
   border-radius: 15px;
   background-color: #F7F8F8;

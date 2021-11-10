@@ -1,9 +1,11 @@
 <template>
-  <div class="find-middle-btn">
+  <div class="find-middle-btn-items">
     <button
       type="button"
+      class="find-middle-btn"
       @click="goToFindMiddle()"
-      >중간 장소 찾기</button>
+      >중간 장소 찾기
+    </button>
   </div>
 </template>
 
@@ -44,10 +46,10 @@ export default {
 </script>
 
 <style scoped>
-.find-middle-btn {
+.find-middle-btn-items {
   position: relative;
 }
-.find-middle-btn button {
+.find-middle-btn-items .find-middle-btn {
   position: absolute;
   top: 50%;
   left: 50%;
