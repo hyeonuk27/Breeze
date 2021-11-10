@@ -26,21 +26,25 @@ export default {
 
 <style scoped>
 .enterinfo {
-  padding: 8%;
+  /* padding-top: 2%; */
 }
 .choose-date {
-  height: 16%;
+  height: 12%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .add-friends {
-  height: 30%;
-  margin-top: 4%;
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 4%;
 }
 .participant-list {
   height: 45%;
-  margin-top: 4%;
 }
 .find-middle-btn {
   height: 14%;
-  margin-top: 4%;
 }
 </style>

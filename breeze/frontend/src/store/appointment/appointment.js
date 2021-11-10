@@ -5,6 +5,7 @@ export default {
     date: new Date(),
     timezone: 'Asia/Seoul',
     participants: [],
+    barami: [],
     wishPlaces: [],
     //약속쪽지에서 필요한 참여자 정보 리스트(타입, 이름, 시간)
     partMiddleTime: [],
@@ -29,10 +30,14 @@ export default {
     },
     //enterinfo에서 참여자 추가할 때마다 사용
     ADDPARTICIPANT (state, data) {
+      if (state.barami.length != 0) {
+        data['baramiType'] = state.barami.shift()
+      }
       state.participants.push(data)
     },
     DELETEPARTICIPANT (state, data) {
-      state.participants.splice(data, 1)
+      state.barami.push(data[1])
+      state.participants.splice(data[0], 1)
     },
     //전체 참여자 초기화 or 그룹 참여자 세팅 시 사용
     SETPARTICIPANTS (state, data) {
