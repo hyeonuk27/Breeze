@@ -4,8 +4,12 @@
       <img class="wish-place-list-image" src="@/assets/map/add2.png" alt="">
       <div class="wish-place-list-title">약속 장소 후보</div>
     </div>
-      
-    <div class="wish-place-list-body">
+
+    <div v-if="wishPlaces.length == 0" class="wish-place-list-nothing">
+      <img src="@/assets/barami/4.png" alt="">
+      <div>지도에서 원하는 약속 장소를 찾아보세요!</div>
+    </div> 
+    <div v-if="wishPlaces" class="wish-place-list-body">
       <WishPlace 
         v-for="(wishPlace, idx) in wishPlaces"
         :key="idx"
@@ -68,4 +72,24 @@ export default {
     height: 13vh;
     width: 13vh;
   }
+  .wish-place-list-nothing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3.5vw;
+    width: 93vw;
+    height: 13vh;
+    border-radius: 10px;
+    border: solid 2px #E9EDFE;
+    /* background: #F8EED7; */
+}
+  .wish-place-list-nothing div {
+    font-size: 0.85rem;
+    text-align: start;
+  }
+  .wish-place-list-nothing img {
+    height: 7vh;
+    padding: 1%;
+  }
+
 </style>

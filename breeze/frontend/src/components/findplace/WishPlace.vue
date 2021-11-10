@@ -21,7 +21,7 @@ export default {
     return {
       mode2: 0,
       placeName:'',
-      placeTypeColor: ["#ADA6AD", "#BFD5F8", "#EBECCA"],
+      placeTypeColor: ["#ADA6AD", "#EBECCA", "#BFD5F8"],
     };
   },
   methods: {

@@ -36,12 +36,13 @@ export default {
 
 .place-map {
   height: 64%;
-    background: rgb(22, 47, 138);
 }
 .wish-place-list {
   height: 22%;
+  background: rgba(233, 237, 252, 0.1);
 }
 .make-appointment-btn {
   height: 14%;
+  background: rgba(233, 237, 252, 0.1);
 }
 </style>
