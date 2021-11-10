@@ -18,6 +18,11 @@ import { mapGetters } from "vuex";
 import mapApi from '@/api/map.js'
 export default {
   name: "MakeAppointmentBtn",
+  data() {
+    return {
+      secretCode: 0,
+    }
+  },
   methods: {
     async saveAppointment() {
       const data = {
@@ -26,18 +31,16 @@ export default {
         participants: this.partMiddleTime,
         places: this.wishPlaces,
       }
+
       const response = await mapApi.saveAppointment(data)
-      // 수정 필요
-      console.log(response)
-      return response.noteId
+      this.secretCode = response.secret_code
     },
-    goToMakeAppointment: function () {
+    async goToMakeAppointment() {
       if ( this.wishPlaces.length == 0 ) {
         alert('한 개 이상의 장소를 선택하세요.')
       } else {
-        // secretCode = this.saveAppointment()
-        const secretCode = 1
-        this.$router.push({ name: "MakeAppointment", params: {secretCode: secretCode} });
+        await this.saveAppointment()
+        this.$router.push({ name: "MakeAppointment", params: {secretCode: this.secretCode} });
       }
     },
   },
