@@ -8,7 +8,7 @@
                     바라미들과는 갈 수 없는 곳이에요<br>
                     다른 길을 찾아볼까요?
                 </p>
-                <button class="btn" onclick="history.back()">Back</button>
+                <button class="btn" @click="goToHome">Home</button>
             </div>
         </div>
         <div class="wave-set">
@@ -28,6 +28,11 @@
 <script>
 export default {
   name: 'NotFound',
+  methods: {
+    goToHome() {
+      this.$router.push({ name: 'Home' })
+    }
+  }
 }
 </script>
 
