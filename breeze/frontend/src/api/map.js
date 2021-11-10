@@ -12,7 +12,6 @@ const mapApi = {
     return requestPost('/store/' + `${data.categoryType}/` + `${data.filterType}/`, data)
   },
   saveAppointment: (data) => {
-    console.log(data)
     return requestPost('/appointment/', data)
   },
 };

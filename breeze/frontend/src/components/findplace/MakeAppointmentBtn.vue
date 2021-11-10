@@ -26,16 +26,18 @@ export default {
         participants: this.partMiddleTime,
         places: this.wishPlaces,
       }
-      console.log(data)
       const response = await mapApi.saveAppointment(data)
-      console.log(response, '노트 아이디 받음')
+      // 수정 필요
+      console.log(response)
+      return response.noteId
     },
     goToMakeAppointment: function () {
       if ( this.wishPlaces.length == 0 ) {
         alert('한 개 이상의 장소를 선택하세요.')
       } else {
-        this.saveAppointment()
-        this.$router.push({ name: "MakeAppointment" });
+        // secretCode = this.saveAppointment()
+        const secretCode = 1
+        this.$router.push({ name: "MakeAppointment", params: {secretCode: secretCode} });
       }
     },
   },
