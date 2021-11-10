@@ -154,7 +154,7 @@ def get_middle(request):
         'access_token': request.access_token,
         'middle_data': middle_data,
     }
-    return Response(data, status=status.HTTP_200_OK)
+    return Response(data, status=status.HTTP_201_CREATED)
 
 
 # 중간 지점 찾고 사용자가 중간 지점으로 오는 시간과 경로 가져오는 함수
