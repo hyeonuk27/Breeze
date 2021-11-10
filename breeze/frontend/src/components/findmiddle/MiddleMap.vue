@@ -7,16 +7,14 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import mapApi from '@/api/map.js'
 
 export default {
   name: 'Map',
-  props: {
-    middlePlaces: Array
-  },
   data() {
     return {
-      //props로 받은 전체 중간 장소 리스트
-      middleList: this.middlePlaces,
+      //전체 중간 장소 리스트
+      middleList: [],
       //모드에 따라 분류된 중간 장소 리스트
       modeList: [],
       //중간장소 정해진 후, 참여자들의 정보 리스트
@@ -58,12 +56,29 @@ export default {
       // console.log(this.partInfo, '참여자 정보')
 
     },
-    initMap() {
+    async initMap() {
+      // console.log('%%%%%%%%%%%%%%%%%%%%%%%')
+      const cnt = this.participants.length
+      const data = []
+      for (let i = 0; i < cnt; i++) {
+        const part = {
+          baramiType: this.participants[i].baramiType,
+          partLatitude: this.participants[i].partLatitude,
+          partLongitude: this.participants[i].partLongitude
+        }
+      data.push(part)
+      }
+      // console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
+      const response = await mapApi.middle(data)
+      // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
+      this.middleList = response.middle_data
+      // console.log('**************************')
+
       const modes = this.filterList(this.modeIdx)
       this.concateArray(modes)
 
       const selectedMiddle = modes[this.middleIdx]
-      console.log(selectedMiddle, '중간장소 확인')
+      // console.log(selectedMiddle, '중간장소 확인')
       this.latitude = selectedMiddle.latitude
       this.longitude = selectedMiddle.longitude
       
@@ -95,7 +110,7 @@ export default {
 
 
       for (var i = 0; i < this.partInfo.length; i++) {
-        console.log(this.partInfo[i], '참여자 정보')
+        // console.log(this.partInfo[i], '참여자 정보')
 
         // var partMarkerSrc = require("@/assets/barami/m" + this.partInfo[i].baramiType + ".png")
         var partMarkerSrc = require(`@/assets/barami/m${this.partInfo[i].baramiType}.png`)

@@ -24,17 +24,16 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
+import mapApi from '@/api/map.js'
+
 export default {
   name: 'MiddleList',
-  props: {
-    middlePlaces: Array
-  },
   data() {
     return {
       selectedMiddle: 0,
-      //props로 받은 전체 중간 장소 리스트
-      middleList: this.middlePlaces,
+      //전체 중간 장소 리스트
+      middleList: [],
       //헤더 모드에 따라 분류된 장소 리스트
       modeList: [],
       //헤더 모드에 따라 소요되는 장소별 평균 시간
@@ -75,18 +74,42 @@ export default {
         // console.log(this.modeAvgTime, '장소별 평균 시간')
         temp = []
       }
+    },
+    async setInfo() {
+      // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
+      const cnt = this.participants.length
+      const data = []
+      for (let i = 0; i < cnt; i++) {
+        const part = {
+          baramiType: this.participants[i].baramiType,
+          partLatitude: this.participants[i].partLatitude,
+          partLongitude: this.participants[i].partLongitude
+        }
+      data.push(part)
+      }
+      // console.log(data, '내가 axios에 data로 담아 보내는 정보. 리스트')
+      const response = await mapApi.middle(data)
+      // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 리스트')
+      this.middleList = response.middle_data
+      // console.log(this.middleList, '마지막 확인')
+      // console.log('**************************')
+      
+      this.filterList(this.mode)
+      this.partAverageTime(this.modeList)
+      this.selectedMiddle = this.middle
     }
   },
   created() {
-    this.filterList(this.mode)
-    this.partAverageTime(this.modeList)
-    this.selectedMiddle = this.middle
+   this.setInfo()
   },
   computed: {
     ...mapState({
       mode: state => state.mode.mode1,
       middle: state => state.mode.middle
-    }),  
+    }), 
+    ...mapGetters([
+      'participants'
+    ]) 
   },
   watch: {
     selectedMiddle : function (newVal, ) {

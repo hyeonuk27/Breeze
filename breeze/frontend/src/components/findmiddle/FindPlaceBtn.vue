@@ -11,15 +11,13 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import mapApi from '@/api/map.js'
 
 export default {
-  name: 'FindMiddleBtn',
-  props: {
-    middlePlaces: Array
-  },
+  name: 'FindPlaceBtn',
   data() {
     return {
-      middleList: this.middlePlaces,
+      middleList: [],
       modeList: [],
       partInfo: [],
     }
@@ -54,7 +52,27 @@ export default {
         }
       }
     },
+    async setInfo() {
+      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+      const cnt = this.participants.length
+      const data = []
+      for (let i = 0; i < cnt; i++) {
+        const part = {
+          baramiType: this.participants[i].baramiType,
+          partLatitude: this.participants[i].partLatitude,
+          partLongitude: this.participants[i].partLongitude
+        }
+      data.push(part)
+      }
+      // console.log(data, '내가 axios에 data로 담아 보내는 정보. 버튼')
+      const response = await mapApi.middle(data)
+      // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 버튼')
+      this.middleList = response.middle_data
+      // console.log(this.middleList, '마지막 확인')
+      // console.log('**************************')
+    },
     async goToFindPlace() {
+      // console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
       const middleInfo = await this.findMiddle(this.mode, this.middle)
       await this.concateArray(middleInfo)
       this.setMiddleName(middleInfo.name)
@@ -74,6 +92,9 @@ export default {
     'participants'
   ])
 },
+created() {
+  this.setInfo()
+}
 
 }
 </script>
