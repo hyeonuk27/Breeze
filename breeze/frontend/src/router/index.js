@@ -8,6 +8,7 @@ import FindPlace from '../views/FindPlace.vue'
 import MakeAppointment from '../views/MakeAppointment.vue'
 import OneClick from '../views/OneClick.vue'
 import LoginRedirect from '../views/LoginRedirect.vue'
+import NotFound from '@/views/NotFound.vue'
 import authApi from '@/api/auth.js'
 import store from "@/store"
 
@@ -66,7 +67,7 @@ const routes = [
     // beforeEnter: checkToken()
   },
   {
-    path: '/makeappointment',
+    path: '/makeappointment/:secretCode',
     name: 'MakeAppointment',
     component: MakeAppointment,
      // beforeEnter: checkToken()
@@ -81,7 +82,16 @@ const routes = [
     path: '/oauth/kakao/callback',
     name: 'LoginRedirect',
     component: LoginRedirect
-  }
+  },
+  {
+    path: '/404',
+    name: 'NotFound',
+    component: NotFound
+  },
+  { path: '*',
+    name: 'NotFound',
+    component: NotFound
+  },
 ]
 
 const router = new VueRouter({

@@ -8,7 +8,12 @@ const mapApi = {
     // return requestPost(SERVER.ROUTES.map + '/middle/', data)
     return requestPost('/middle/', data)
   },
-
+  getPlaceList: (data) => {
+    return requestPost('/store/' + `${data.categoryType}/` + `${data.filterType}/`, data)
+  },
+  saveAppointment: (data) => {
+    return requestPost('/appointment/', data)
+  },
 };
 
 export default mapApi;

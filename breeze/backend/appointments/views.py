@@ -19,8 +19,8 @@ def appointment(request):
     user = get_object_or_404(User, id=request.user.id)
     # 쪽지 저장
     note_data = {
-        'datetime': request.data.dateTime,
-        'middle_place': request.data.middlePlace,
+        'datetime': request.data['dateTime'],
+        'middle_place': request.data['middlePlace'],
     }
     sereializer = AppointmentSerializer(data=note_data, partial=True)
     if sereializer.is_valid(raise_exception=True):
@@ -30,22 +30,22 @@ def appointment(request):
     note_id = sereializer.data.get('id')
     appointment = get_object_or_404(Appointment, id=note_id)
     
-    for place in request.data.places:
+    for place in request.data['places']:
         place_data = {
-            'name': place.placeName,
-            'category': place.placeCategory,
-            'url': place.placeUrl,
+            'name': place['placeName'],
+            'category': place['placeCategory'],
+            'url': place['placeUrl'],
         }
         sereializer = AppointmentplaceSerializer(data=place_data, partial=True)
         if sereializer.is_valid(raise_exception=True):
             sereializer.save(appointment=appointment)
 
     # 참가자 저장
-    for paricipant in request.data.participants:
+    for paricipant in request.data['participants']:
         paricipant_data = {
-            'name': paricipant.partiname,
-            'time': paricipant.time,
-            'barami_type': paricipant.baramiType,
+            'name': paricipant['partName'],
+            'time': paricipant['time'],
+            'barami_type': paricipant['baramiType'],
         }
         sereializer = ParticipantSerializer(data=paricipant_data, partial=True)
         if sereializer.is_valid(raise_exception=True):
@@ -64,11 +64,21 @@ def appointment_note(request, note_id):
     places = get_list_or_404(Appointmentplace, appointment_id=note_id)
     participants = get_list_or_404(Participant, appointment_id=note_id)
     
+    place_data = []
+    for place in places:
+        serializer = AppointmentplaceSerializer(place)
+        place_data.append(serializer.data)
+    
+    participant_data = []
+    for participant in participants:
+            serializer = ParticipantSerializer(participant)
+            participant_data.append(serializer.data)
+
     data = {
         'datetime': note.datetime,
         'middle_place': note.middle_place,
-        'places': places,
-        'participants': participants,
+        'places': place_data,
+        'participants': participant_data,
     }
     
     return Response(data, status=status.HTTP_200_OK)

@@ -1,9 +1,12 @@
+import _ from 'lodash'
+
 export default {
   state: {
     date: new Date(),
     timezone: 'Asia/Seoul',
     participants: [],
     barami: [],
+    wishPlaces: [],
     //약속쪽지에서 필요한 참여자 정보 리스트(타입, 이름, 시간)
     partMiddleTime: [],
     middleName: '',
@@ -15,7 +18,11 @@ export default {
   getters: {
     date: state => state.date,
     participants: state => state.participants,
-    partMiddleTime: state => state.partMiddleTime
+    partMiddleTime: state => state.partMiddleTime,
+    wishPlaces: state => state.wishPlaces,
+    middleName: state => state.middleName,
+    middleLatitude: state => state.middleLatitude,
+    middleLongitude: state => state.middleLongitude,
   },
   mutations: {
     SETDATE (state, data) {
@@ -36,6 +43,16 @@ export default {
     SETPARTICIPANTS (state, data) {
       state.participants = data
     },
+    SET_WISH_PLACE (state, data) {
+      state.wishPlaces = data
+    },
+    ADD_WISH_PLACE (state, data) {
+      state.wishPlaces.push(data)
+      state.wishPlaces = _.uniqBy(state.wishPlaces, 'placeName')
+    },
+    DELETE_WISH_PLACE (state, data) {
+      state.wishPlaces.splice(data, 1)
+    },  
     SETPARTMIDTIME (state, data) {
       state.partMiddleTime = data
     },
@@ -64,6 +81,18 @@ export default {
     },
     deleteParticipant ({ commit }, data) {
       commit('DELETEPARTICIPANT', data)
+    },
+    addGroupParticipants ({ commit }, data) {
+      commit('ADDGROUPPARTICIPANTS', data)
+    },
+    setWishPlace ( {commit}, data) {
+      commit('SET_WISH_PLACE', data)
+    },
+    addWishPlace ({ commit }, data) {
+      commit('ADD_WISH_PLACE', data)
+    },
+    deleteWishPlace ({ commit }, data) {
+      commit('DELETE_WISH_PLACE', data)
     },
     setParticipants ({ commit }, data) {
       commit('SETPARTICIPANTS', data)
