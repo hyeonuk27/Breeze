@@ -1,13 +1,12 @@
-// const URL = 'http://localhost:8080'
-const URL = 'https://k5a202.p.ssafy.io/api/v1'
+const URL = 'http://localhost:8000/api/v1'
+// const URL = 'https://k5a202.p.ssafy.io/api/v1'
 
 export default {
-  URL,
+  URL: URL,
   ROUTES: {
-    account: '/account',
+    auth: '/auth',
     map: '/map',
     group: '/group',
     appointment: '/appointment',
-    // login: '/oauth/kakao/callback'
   }
 }

@@ -6,6 +6,10 @@ export default {
     mode2: 0,
     // 0: 인기순 1: 평점순 2: 랜덤
     filter: 0,
+    // mode1에서 고른 중간 장소 인덱스
+    middle: 0,
+    // 0: 홈 1: 약속만들기 2: 원클릭
+    menu: 0,
   },
   mutations: {
     SET_MODE1: (state, idx) => {
@@ -16,6 +20,12 @@ export default {
     },
     SET_FILTER: (state, idx) => {
       state.filter = idx
+    },
+    SET_MIDDLE: (state, idx) => {
+      state.middle = idx
+    },
+    SET_MENU: (state, idx) => {
+      state.menu = idx
     }
   },
   actions: {
@@ -27,6 +37,12 @@ export default {
     },
     setFilter({commit}, idx) {
       commit('SET_FILTER', idx)
+    },
+    setMiddle({commit}, idx) {
+      commit('SET_MIDDLE', idx)
+    },
+    setMenu({commit}, idx) {
+      commit('SET_MENU', idx)
     }
   }
 }

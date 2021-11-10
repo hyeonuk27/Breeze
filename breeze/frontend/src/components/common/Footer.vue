@@ -28,21 +28,51 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: "Footer",
-  data() {
-    return {
-      selectedMenu: 0,
-    }
-  },
   methods: {
+    ...mapActions([
+      'setDate',
+      'setParticipants',
+      'setPartMidTime',
+      'setMiddleName',
+      'setMiddleLat',
+      'setMiddleLong',
+      'setGroupName',
+      'setGroupId',
+      'setMode1',
+      'setMode2',
+      'setFilter',
+      'setMiddle',
+      'setMenu',
+    ]),
     menuUpdate: function (idx) {
-      this.selectedMenu = idx
+      //메뉴 업데이트
+      this.setMenu(idx)
+      //홈이나 원클릭으로 이동 시, 약속/모드 스토어 초기화
+      if (idx !== 1) {
+        this.setDate(new Date())
+        this.setParticipants([])
+        this.setPartMidTime([])
+        this.setMiddleName('')
+        this.setMiddleLat(0)
+        this.setMiddleLong(0)
+        this.setGroupName('')
+        this.setGroupId(null)
+        this.setMode1(0)
+        this.setMode2(0)
+        this.setFilter(0)
+        this.setMiddle(0)
+      }     
     },
   },
-  created() {
-    this.selectedMenu = 0
-  },
+  computed: {
+    ...mapState({
+      selectedMenu: state => state.mode.menu,
+    }),
+  }
 };
 </script>
 
@@ -50,12 +80,12 @@ export default {
   .footer-items {
     width: 100%;
     height: 100%;
-     display: flex;
-     align-items: center;
+    display: flex;
+    align-items: center;
   }
   .footer-items img {
     height: 100%;
-    width: 25%;
+    width: 20%;
     flex:1;
   }
   .deactivate {
