@@ -24,7 +24,7 @@ export default {
 
     async initMap() {
       // 장소 데이터 가져오기
-      let data = {
+      const data = {
         middlePlace: this.middleName, 
         latitude: this.middleLatitude, 
         longitude: this.middleLongitude,

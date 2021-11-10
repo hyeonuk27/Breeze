@@ -46,8 +46,8 @@ export default {
     }),
   },
   watch: {
-    selectedFilter(val){
-      this.filterUpdate(val)
+    selectedFilter(idx){
+      this.filterUpdate(idx)
     }
   },
 }

@@ -38,6 +38,9 @@ export default {
     SETPARTICIPANTS (state, data) {
       state.participants = data
     },
+    SET_WISH_PLACE (state, data) {
+      state.wishPlaces = data
+    },
     ADD_WISH_PLACE (state, data) {
       state.wishPlaces.push(data)
       state.wishPlaces = _.uniqBy(state.wishPlaces, 'name')
@@ -76,6 +79,9 @@ export default {
     },
     addGroupParticipants ({ commit }, data) {
       commit('ADDGROUPPARTICIPANTS', data)
+    },
+    setWishPlace ( {commit}, data) {
+      commit('SET_WISH_PLACE', data)
     },
     addWishPlace ({ commit }, data) {
       commit('ADD_WISH_PLACE', data)

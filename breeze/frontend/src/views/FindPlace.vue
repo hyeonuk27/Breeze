@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import store from "@/store"
 import PlaceMap from "@/components/findplace/PlaceMap";
 import WishPlaceList from "@/components/findplace/WishPlaceList";
 import MakeAppointmentBtn from "@/components/findplace/MakeAppointmentBtn";
@@ -18,7 +19,17 @@ export default {
     WishPlaceList,
     MakeAppointmentBtn
   },
-}
+  beforeRouteEnter(to, from, next) {
+    if (from.name == 'FindMiddle') {
+      store.dispatch('setMode2', 0)
+      store.dispatch('setFilter', 0)
+      store.dispatch('setWishPlace', [])
+      next()
+    } else {
+      next()
+    }
+  }
+} 
 </script>
 
 <style scoped>
