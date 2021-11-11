@@ -16,6 +16,7 @@
 <script>
 import { mapGetters } from "vuex";
 import mapApi from '@/api/map.js'
+import Swal from 'sweetalert2'
 export default {
   name: "MakeAppointmentBtn",
   data() {
@@ -37,7 +38,12 @@ export default {
     },
     async goToMakeAppointment() {
       if ( this.wishPlaces.length == 0 ) {
-        alert('한 개 이상의 장소를 선택하세요.')
+        Swal.fire({
+          icon: 'error',
+          html: '<b>한 개 이상의 장소를 선택하세요</b>',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } else {
         await this.saveAppointment()
         this.$router.push({ name: "MakeAppointment", params: {secretCode: this.secretCode} });
@@ -82,4 +88,5 @@ export default {
   height: inherit;
   margin-left: 2%;
 }
+
 </style>

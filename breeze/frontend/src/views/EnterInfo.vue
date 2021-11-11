@@ -57,7 +57,7 @@ export default {
   height: 11%;
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: flex-end;
   margin-bottom: 3%;
 }
 .add-friends {

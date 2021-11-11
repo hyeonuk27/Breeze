@@ -39,6 +39,7 @@ import { mapActions } from 'vuex'
 import dayjs from 'dayjs'
 import  customParseFormat from 'dayjs/plugin/customParseFormat'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import Swal from 'sweetalert2'
 dayjs.extend(customParseFormat)
 dayjs.extend(isSameOrBefore)
 
@@ -64,9 +65,19 @@ export default {
     ]),
     goToFindMiddle: function() {
       if (!this.date) {
-        alert('약속 날짜를 입력해야 합니다.')
+        Swal.fire({
+          icon: 'error',
+          html: '<b>약속 날짜를 입력해야 합니다</b>',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } else if (dayjs(this.date, 'YYYY-MM-DD HH:mm').isSameOrBefore(dayjs())) {
-        alert('약속 날짜를 올바르게 선택해주세요')
+        Swal.fire({
+          icon: 'error',
+          html: '<b>약속 날짜를 올바르게 선택해주세요</b>',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } else {
         this.$router.push({ name: 'FindMiddle' })
         this.setMode1(0)
