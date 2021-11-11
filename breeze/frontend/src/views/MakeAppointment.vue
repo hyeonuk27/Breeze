@@ -50,76 +50,76 @@ export default {
     return {
       userId: '',
       secretCode : '',
-      // noteInfo: {},
-      noteInfo: {
-        participants: [
-          {
-            name: '지미짐',
-            time: 30,
-            barami_type: 0
-          },
-          {
-            name: '수빙수',
-            time: 30,
-            barami_type: 2
-          },
-          {
-            name: '라라라라라라',
-            time: 30,
-            barami_type: 4
-          },
-          {
-            name: '현욱킴',
-            time: 30,
-            barami_type: 5
-          },
-          {
-            name: '채니챈',
-            time: 30,
-            barami_type: 3
-          },
-          {
-            name: '교저스',
-            time: 30,
-            barami_type: 1
-          },
-        ],
-      datetime: '2021-11-26T14:12:09.268Z',
-      middle_place: '역삼역',
-      places: [
-        {
-          name: '가게1dddddddddd',
-          category: 0,
-          url: 'https://www.naver.com/'
-        },
-        {
-          name: '가게2',
-          category: 0,
-          url: ''
-        },
-        {
-          name: '가게3',
-          category: 2,
-          url: ''
-        },
-        {
-          name: '가게4',
-          category: 1,
-          url: ''
-        },
-        {
-          name: '가게5',
-          category: 2,
-          url: ''
-        },
-        {
-          name: '가게6',
-          category: 0,
-          url: ''
-        },
-      ]
+      noteInfo: {},
+      // noteInfo: {
+      //   participants: [
+      //     {
+      //       name: '뽀로로',
+      //       time: 30,
+      //       barami_type: 0
+      //     },
+      //     {
+      //       name: '크롱',
+      //       time: 30,
+      //       barami_type: 2
+      //     },
+      //     // {
+      //     //   name: '라라라라라라',
+      //     //   time: 30,
+      //     //   barami_type: 4
+      //     // },
+      //     // {
+      //     //   name: '현욱킴',
+      //     //   time: 30,
+      //     //   barami_type: 5
+      //     // },
+      //     // {
+      //     //   name: '채니챈',
+      //     //   time: 30,
+      //     //   barami_type: 3
+      //     // },
+      //     {
+      //       name: '루피',
+      //       time: 30,
+      //       barami_type: 1
+      //     },
+      //   ],
+      // datetime: '2021-11-26T14:12:09.268Z',
+      // middle_place: '역삼역',
+      // places: [
+      //   {
+      //     name: '가게1dddddddddd',
+      //     category: 0,
+      //     url: 'https://www.naver.com/'
+      //   },
+      //   {
+      //     name: '가게2',
+      //     category: 0,
+      //     url: ''
+      //   },
+      //   {
+      //     name: '가게3',
+      //     category: 2,
+      //     url: ''
+      //   },
+      //   {
+      //     name: '가게4',
+      //     category: 1,
+      //     url: ''
+      //   },
+      //   {
+      //     name: '가게5',
+      //     category: 2,
+      //     url: ''
+      //   },
+      //   {
+      //     name: '가게6',
+      //     category: 0,
+      //     url: ''
+      //   },
+      // ]
 
-      }
+      // }
     }
   },
   beforeRouteEnter(to, from, next) {

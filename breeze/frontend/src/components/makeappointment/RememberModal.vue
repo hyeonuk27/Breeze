@@ -28,7 +28,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// import groupApi from '@/api/group.js'
+import groupApi from '@/api/group.js'
 
 export default {
   name: 'RememberModal',
@@ -46,12 +46,12 @@ export default {
         alert('그룹 이름을 입력해주세요')
       }
       console.log(this.participants, this.groupName)
-      // const data = {
-      //   groupName: this.groupName,
-      //   groupMembers: this.participants
-      // }
-      // const response = await groupApi.createGroup(data)
-      // console.log(response)
+      const data = {
+        groupName: this.groupName,
+        groupMembers: this.participants
+      }
+      const response = await groupApi.createGroup(data)
+      console.log(response)
       this.groupName = ''
       this.setIsGroupSaved(true)
     }

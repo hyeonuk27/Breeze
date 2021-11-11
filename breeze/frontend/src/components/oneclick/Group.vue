@@ -29,6 +29,7 @@
 import { SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import groupApi from '@/api/group.js'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Group',
@@ -41,18 +42,35 @@ export default {
   },
   data() {
     return {
-      groupIdx: this.idx
+      groupIdx: 0,
     }
   },
   methods: {
-    deleteGroup() {
+     ...mapActions([
+      'setParticipants',
+      'setGroupName',
+      'setGroupId',
+    ]),
+    async deleteGroup() {
+      console.log(this.groupIdx)
       alert('정말 삭제하시겠습니까?')
-      const response = groupApi.deleteGroup(this.groupIdx)
-      console.log(response)
+      const response = await groupApi.deleteGroup(this.groupIdx)
+      // console.log(response)
       if (response == 'success') {
+        this.setParticipants([])
+        this.setGroupName('')
+        this.setGroupId(null)
         this.$emit('renew-grouplist')
       }
     }
+  },
+  created() {
+    this.groupIdx = this.groupId
+  },
+  computed: {
+  ...mapGetters([
+      'groupId',
+    ])
   }
 
 }

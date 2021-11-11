@@ -10,7 +10,7 @@ const groupApi = {
 
   createGroup: (data) => {
     console.log('그룹 생성 axios 보내기 1초 전')
-    return requestPost(SERVER.ROUTES.group, data)
+    return requestPost(SERVER.ROUTES.group + '/', data)
   },
 
   deleteGroup: (id) => {
