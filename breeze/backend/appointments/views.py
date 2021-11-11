@@ -14,9 +14,9 @@ import datetime
 # import sys
 # sys.modules['Crypto'] = crypto
 
-import base64
-from Crypto import Random
-from Crypto.Cipher import AES
+# import base64
+# from Crypto import Random
+# from Crypto.Cipher import AES
 
 
 User = get_user_model()
