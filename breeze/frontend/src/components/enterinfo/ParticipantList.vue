@@ -31,7 +31,9 @@ export default {
 
 <style>
 .participant-list {
-  margin: 4%;
+  /* margin: 4%; */
+  width: 88%;
+  margin: auto;
   overflow-y: scroll;
 }
 </style>

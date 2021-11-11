@@ -21,23 +21,24 @@
           @click="setLocation(idx)"
           >
           <h3 class="col-2"><i class="fas fa-map-marker-alt"></i></h3>
-          <div>
-            <p>{{ result.place_name }}</p>
-            <p>{{ result.address_name }}</p>
+          <div class="search-item">
+            <p class="search-place">{{ result.place_name }}</p>
+            <p class="search-address">{{ result.address_name }}</p>
           </div>
         </div>
+        <hr class="search-divide">
       </div>
     </div>
-      <div class="row d-flex justify-content-between add-friends-name-btn-container">
-        <input
-          type="text"
-          class="col-10 name-input"
-          v-model="partName"
-          placeholder="이름을 1~6자로 입력해주세요.">
-        <button @click="addPart" class="col-2 add-friends-btn">
-          <i class="fas fa-plus"></i>
-        </button>
-      </div>
+    <div class="row d-flex justify-content-between add-friends-name-btn-container">
+      <input
+        type="text"
+        class="col-10 name-input"
+        v-model="partName"
+        placeholder="이름을 1~6자로 입력해주세요.">
+      <button @click="addPart" class="col-2 add-friends-btn">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -76,7 +77,6 @@ export default {
           }
         })
         .then((res) => {
-          // console.log(res.data.documents)
           this.isSearchResultOpen = true
           this.searchResult = res.data.documents
         })
@@ -89,10 +89,9 @@ export default {
     },
     setLocation (idx) {
       const target = this.searchResult[idx]
-      // console.log(target.place_name)
       this.partLocation = target.place_name
-      this.partLatitude = target.x
-      this.partLongitude = target.y
+      this.partLatitude = target.y
+      this.partLongitude = target.x
       this.searchWord = target.place_name
       this.searchResult = []
       this.isSearchResultOpen = false
@@ -136,13 +135,13 @@ export default {
 <style>
 .add-friends-box {
   background-color: #E9EDFE;
-  width: 90%;
+  width: 88%;
   margin: 0 auto;
   border-radius: 15px;
 }
 .add-friends-title {
   text-align: left;
-  padding: 4%;
+  padding: 3% 4% 2% 4%;
 }
 .add-friends-icon {
   margin-left: 1%;
@@ -157,27 +156,27 @@ export default {
   margin: 0 auto;
   border-radius: 15px;
   border: none;
-  padding: 3%;
+  padding: 2%;
   padding-left: 5%;
   margin-bottom: 2%;
 }
 .name-input {
   border-radius: 15px;
   border: none;
-  padding: 3%;
+  padding: 2%;
   padding-left: 5%;
   margin-bottom: 2%;
-
 }
 .add-friends-name-btn-container {
   width: 95%;
   margin: 0 auto;
+  padding-bottom: 2%;
 }
 .add-friends-btn {
   background: linear-gradient(to left, #92A3FD, #9DCEFF);
   border: none;
   border-radius: 15px;
-  padding: 3% 2%;
+  padding: 1.5% 2%;
   color: white;
   font-size: 10pt;
   margin-bottom: 2%;
@@ -185,12 +184,31 @@ export default {
 }
 .search-result {
   position: absolute;
-  height: 40%;
+  height: 45%;
   overflow-y: scroll;
-  /* z-index: 100; */
-  width: 90%;
+  z-index: 100;
+  width: 95%;
   margin: 0 auto;
   background-color: white;
   border-radius: 15px;
+  margin-top: 90%;
+}
+.search-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 4% 0;
+}
+p {
+  margin-bottom: 0;
+}
+.search-divide {
+  margin: 0 auto;
+}
+.search-place {
+  font-weight: bold;
+}
+.search-address {
+  color: #ADA4A5;
 }
 </style>

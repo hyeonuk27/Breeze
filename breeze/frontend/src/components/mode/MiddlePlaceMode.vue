@@ -7,27 +7,23 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'MiddlePlaceMode',
-  data() {
-    return {
-      selectedMode: 0
-    }
-  },
   methods: {
     ...mapActions([
       'setMode1'
     ]),
     modeUpdate: function (idx) {
       this.setMode1(idx)
-      this.selectedMode = idx
     }
   },
-  created() {
-    this.selectedMode = 0
-  },
+  computed: {
+   ...mapState({
+      selectedMode: state => state.mode.mode1,
+    })
+  }
 }
 </script>
 

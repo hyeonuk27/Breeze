@@ -1,17 +1,17 @@
 <template>
   <div
     @click="moveToAppointmentNote"
-    class="appointment"
+    class="appointment-items"
     :style="[isDday ? { background: '#B8D0FA' } : { background: '#EBECCA' }]"
   >
     <img
       onclick="event.cancelBubble = true;"
-      @click="deleteAppointment(appointment.appointment_id)"
+      @click="deleteAppointment(appointment.secret_code)"
       class="deleteBtn"
-      src="@/assets/close.png"
+      src="@/assets/common/close.png"
       alt="close button"
     />
-    <div class="appointment-info">{{ appointment.datetime }}<div>
+    <div class="appointment-info">{{ calDate }}<div>
     </div>{{ appointment.middle_place }}</div>
     <div class="appointment-d-day">
       <div v-if="isDday" class="appointment-d-day-text">오늘</div>
@@ -31,32 +31,39 @@ export default {
   data() {
     return {
       isDday: false,
+      datetime: this.appointment.datetime,
+      calDate: ''
     };
   },
   methods: {
+    async deleteAppointment(secret_code) {
+      const data = {
+        secretCode: secret_code,
+      };
+      await appointmentApi.deleteAppointment(data);
+      this.$emit("get-appointmentlist");
+      console.log("삭제");
+    },
     moveToAppointmentNote: function () {
       this.$router.push({
         name: "MakeAppointment",
         params: {
-          noteId: this.appointment.appointment_id,
+          noteId: this.appointment.secret_code,
         },
       });
     },
-    async deleteAppointment(noteId) {
-      let accessToken = sessionStorage.getItem("access-token");
-      let refreshToken = sessionStorage.getItem("refresh-token");
-      let data = {
-        noteId,
-      };
-      await appointmentApi.deleteAppointment(data, {
-        "access-token": accessToken,
-        "refresh-token": refreshToken,
-      });
-      this.$emit("get-appointmentlist");
-      console.log("삭제");
-    },
+    toLocalDate(data) {
+      const date = data.substr(0, 4) + '년 ' + data.substr(5, 2) + '월 ' + data.substr(8, 2) + '일 '
+      var localDate = new Date(data)
+      // console.log(localDate, typeof(localDate))
+      const local = localDate.toString()
+      // console.log(typeof(local))
+      const cal = date + local.substr(16, 2) + '시 ' + local.substr(19, 2) + '분' 
+      this.calDate = cal
+    }
   },
   created() {
+    this.toLocalDate(this.datetime)
     if (this.appointment.d_day == 0) {
       this.isDday = true;
     }
@@ -65,7 +72,7 @@ export default {
 </script>
 
 <style scoped>
-.appointment {
+.appointment-items {
   display: grid;
   grid-template-columns: 4fr 1fr 1fr;
   grid-template-rows: 1fr 4fr;
@@ -82,7 +89,7 @@ export default {
   align-self: center;
   margin-left: 5%;
   color: #7b6f72;
-  font-size: 13px;
+  font-size: 0.85em;
   text-align: start;
   letter-spacing: -0.5px;
 }
@@ -94,16 +101,17 @@ export default {
   grid-row-end: span 2;
   align-self: center;
   justify-self: end;
-  height: 50px;
-  width: 50px;
+  height: 9.5vh;
+  width: 9.5vh;
   margin: 5% 15% 0 0;
   border-radius: 70%;
   background: rgba(256, 256, 256, 0.5);
   color: rgb(80, 79, 79);
-  font-size: 13px;
   font-weight: 700;
 }
 .appointment-d-day-text {
+  width: 100%;
+  font-size: 0.8em;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -113,7 +121,7 @@ export default {
   grid-column: 3;
   grid-row: 1;
   justify-self: end;
-  height: 10px;
-  width: 10px;
+  height: 1.5vh;
+  width: 1.5vh;
 }
 </style>
