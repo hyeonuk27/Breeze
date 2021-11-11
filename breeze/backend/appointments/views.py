@@ -53,10 +53,9 @@ def appointment(request):
         sereializer = ParticipantSerializer(data=paricipant_data, partial=True)
         if sereializer.is_valid(raise_exception=True):
             sereializer.save(appointment=appointment)
-            
+
     data = { 
         'access_token': request.access_token,
-        'note_id': note_id,
         'secret_code': secret_code,
     }
     return Response(data, status=status.HTTP_201_CREATED)
@@ -90,8 +89,8 @@ def appointment_note(request, secret_code):
 
 @api_view(['DELETE'])
 @check_login
-def appointment_mynote(request, note_id):
-    note = get_object_or_404(Appointment, id=note_id)
+def appointment_mynote(request, secret_code):
+    note = get_object_or_404(Appointment, secret_code=secret_code)
     if request.user == note.user:
         note.delete()
         data = { 'access_token': request.access_token }
@@ -113,9 +112,9 @@ def appointment_list(request):
         # 디데이 구하기
         d_day = (now - appointment.datetime).days
         appointment_data.append({
-            'appointment_id': appointment.id,
             'datetime': appointment.datetime,
             'middle_place': appointment.middle_place,
+            'secret_code': appointment.secret_code,
             'd_day': d_day,
         })
 
