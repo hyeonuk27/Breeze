@@ -55,7 +55,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 
@@ -65,15 +64,15 @@ export default {
   font-weight: bold;
 }
 .image-box {
-    width: 50%;
-    margin: 1% auto;
-  }
+  width: 45%;
+  margin: 1% auto;
+}
 .image-box-barami {
   width: 100%;
   height: 100%;
 }
 .group-container {
-  margin-top: 10%;
+  margin: auto;
 }
 .group-member-container {
   padding-right: 0;

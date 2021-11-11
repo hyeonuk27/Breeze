@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-center justify-content-center">
+  <div class="introduction-container">
     <div class="image-box">
       <img
         :src="require('@/assets/barami/' + randomNum + '.png')"
@@ -42,11 +42,18 @@ export default {
 </script>
 
 <style scoped>
+.introduction-container {
+  width: 88%;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
 .image-box {
-    margin-right: 3%;
-    width: 15%;
-    /* padding: 3px; */
-    border-radius: 70%;
+  margin-right: 3%;
+  width: 15%;
+  /* padding: 3px; */
+  border-radius: 70%;
   }
 .image-box-barami {
   width: 100%;
