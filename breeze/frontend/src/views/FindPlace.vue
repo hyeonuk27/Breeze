@@ -25,6 +25,10 @@ export default {
       store.dispatch('setFilter', 0)
       store.dispatch('setWishPlace', [])
       next()
+    } else if ( from.name == 'MakeAppointment') {
+      store.dispatch('setMode2', 0)
+      store.dispatch('setFilter', 0)
+      next()
     } else {
       next()
     }
