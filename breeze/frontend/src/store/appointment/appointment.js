@@ -28,7 +28,8 @@ export default {
     isGroupSaved: state => state.isGroupSaved,
     getIsGroupSaved(state) {
       return state.isGroupSaved
-    }
+    },
+    groupId: state => state.groupId
   },
   mutations: {
     SETDATE (state, data) {
