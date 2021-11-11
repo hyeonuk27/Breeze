@@ -28,12 +28,12 @@ export default {
       appointmentCnt: 0,
       appointmentList: 
       [
-        {
-        secret_code: 0,
-        datetime: '2021-10-28(목) 오후 1시',
-        middle_place: '신촌역',
-        d_day: 0
-        },
+        // {
+        // secret_code: 0,
+        // datetime: '2021-10-28(목) 오후 1시',
+        // middle_place: '신촌역',
+        // d_day: 0
+        // },
       ]
     }
   },
@@ -62,15 +62,15 @@ export default {
   top: 50%;
   left: 50%;  
   transform: translate(-50%, -50%);
-  font-size: 14px;
+  font-size: 0.85rem;
   width: 100%;
   color: #7b6f72;
 }
 .nothing-image {
   position: absolute;
-  top: 38%;
+  top: 36%;
   left: 50%;  
   transform: translate(-50%, -50%);
-  width: 38%;
+  width: 48vw;
 }
 </style>
