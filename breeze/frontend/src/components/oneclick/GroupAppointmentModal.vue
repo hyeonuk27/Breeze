@@ -8,7 +8,7 @@
         <h5 class="modal-title" id="groupAppointmentModalLabel">약속 날짜 설정</h5>
       </div>
       <div>
-        <v-date-picker mode="dateTime" v-model="date" class="choose-date">
+        <v-date-picker mode="dateTime" v-model="date" class="choose-date" :min-date="startDate" :model-config="modelConfig">
           <template v-slot="{ inputValue, togglePopover }">
             <div
               class="choose-date-box"
@@ -36,12 +36,23 @@
 
 <script>
 import { mapActions } from 'vuex'
+import dayjs from 'dayjs'
+import  customParseFormat from 'dayjs/plugin/customParseFormat'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+dayjs.extend(customParseFormat)
+dayjs.extend(isSameOrBefore)
 
 export default {
   name: 'GroupAppointmentModal',
   data () {
     return {
-      date: ''
+      date: '',
+      timezone: 'Asia/Seoul',
+      startDate: dayjs().toISOString(),
+      modelConfig: {
+        type: 'string',
+        mask: 'YYYY-MM-DD HH:mm'
+      }
     }
   },
   methods: {
@@ -52,10 +63,16 @@ export default {
       'setMenu',
     ]),
     goToFindMiddle: function() {
-      this.$router.push({ name: 'FindMiddle' })
-      this.setMode1(0)
-      this.setMiddle(0)
-      this.setMenu(1)
+      if (!this.date) {
+        alert('약속 날짜를 입력해야 합니다.')
+      } else if (dayjs(this.date, 'YYYY-MM-DD HH:mm').isSameOrBefore(dayjs())) {
+        alert('약속 날짜를 올바르게 선택해주세요')
+      } else {
+        this.$router.push({ name: 'FindMiddle' })
+        this.setMode1(0)
+        this.setMiddle(0)
+        this.setMenu(1)
+      }
     }
   },
   watch: {

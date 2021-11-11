@@ -13,12 +13,27 @@ export default {
     middleLatitude: 0,
     middleLongitude: 0,
     groupName: '',
-    groupId: null
+    groupId: null,
+    isFirst: false,
+    isGroupSaved: false,
   },
   getters: {
     date: state => state.date,
     participants: state => state.participants,
     partMiddleTime: state => state.partMiddleTime,
+    //isFirst, getIsFirst 둘 다 필요
+    isFirst: state => state.isFirst,
+    getIsFirst(state) {
+      return state.isFirst
+    },
+    getGroupId(state) {
+      return state.groupId
+    },
+    isGroupSaved: state => state.isGroupSaved,
+    getIsGroupSaved(state) {
+      return state.isGroupSaved
+    },
+    groupId: state => state.groupId,
     wishPlaces: state => state.wishPlaces,
     middleName: state => state.middleName,
     middleLatitude: state => state.middleLatitude,
@@ -71,6 +86,12 @@ export default {
     SETGROUPID (state, data) {
       state.groupId = data
     },
+    SETISFIRST (state, data) {
+      state.isFirst = data
+    },
+    SETISGROUPSAVED (state, data) {
+      state.isGroupSaved = data
+    },
   },
   actions: {
     setDate ({ commit }, data) {
@@ -114,6 +135,12 @@ export default {
     },
     setGroupId ({ commit }, data) {
       commit('SETGROUPID', data)
+    },
+    setIsFirst ({ commit }, data) {
+      commit('SETISFIRST', data)
+    },
+    setIsGroupSaved ({ commit }, data) {
+      commit('SETISGROUPSAVED', data)
     }
   },
 }

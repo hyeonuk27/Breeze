@@ -29,6 +29,7 @@
 import { SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import groupApi from '@/api/group.js'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Group',
@@ -41,20 +42,37 @@ export default {
   },
   data() {
     return {
-      groupIdx: this.idx
+      groupIdx: 0,
     }
   },
   methods: {
-    deleteGroup() {
-      alert('정말 삭제하시겠습니까?')
-      const response = groupApi.deleteGroup(this.groupIdx)
-      console.log(response)
-      if (response == 'success') {
-        this.$emit('renew-grouplist')
+     ...mapActions([
+      'setParticipants',
+      'setGroupName',
+      'setGroupId',
+    ]),
+    async deleteGroup() {
+      console.log(this.groupIdx)
+      if (confirm('정말 삭제하시겠습니까?')) {
+        const response = await groupApi.deleteGroup(this.groupIdx)
+        // console.log(response)
+        if (response == 'success') {
+          this.setParticipants([])
+          this.setGroupName('')
+          this.setGroupId(null)
+          this.$emit('renew-grouplist')
+        }
       }
     }
+  },
+  created() {
+    this.groupIdx = this.groupId
+  },
+  computed: {
+  ...mapGetters([
+      'groupId',
+    ])
   }
-
 }
 </script>
 
@@ -64,15 +82,15 @@ export default {
   font-weight: bold;
 }
 .image-box {
-    width: 50%;
-    margin: 1% auto;
-  }
+  width: 45%;
+  margin: 1% auto;
+}
 .image-box-barami {
   width: 100%;
   height: 100%;
 }
 .group-container {
-  margin-top: 10%;
+  margin: auto;
 }
 .group-member-container {
   padding-right: 0;

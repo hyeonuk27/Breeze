@@ -1,23 +1,35 @@
 <template>
-  <div class="group-appointment-btn-items">
+  <div class="group-appointment-btn">
     <button
       type="button"
-      class="group-appointment-btn"
-      >이 모임으로 약속 만들기</button>
+      @click="goToEnterInfo()"
+      >새 약속 만들러가기</button>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'GroupAppointmentBtn'
+  name: 'GroupAppointmentBtn2',
+  methods: {
+    ...mapActions([
+      'setMenu',
+    ]),
+    goToEnterInfo() {
+      this.$router.push({ name: 'EnterInfo' })
+      this.setMenu(1)
+    }
+  }
+
 }
 </script>
 
 <style scoped>
-.group-appointment-btn-items {
+.group-appointment-btn {
   position: relative;
 }
-.group-appointment-btn-items .group-appointment-btn {
+.group-appointment-btn button {
   position: absolute;
   top: 50%;
   left: 50%;
