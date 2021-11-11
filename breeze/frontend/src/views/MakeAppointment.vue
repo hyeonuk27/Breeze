@@ -10,7 +10,8 @@
     <WishPlaceList 
       class="wish-place-list"
       :wishPlaces="noteInfo.places"/>
-    <div v-if="this.userId" class="btn-group">
+    <!-- <div v-if="this.userId" class="btn-group"> -->
+    <div class="btn-group">
       <Buttons 
       :isFirst="isFirst"
       :noteInfo="noteInfo"/>

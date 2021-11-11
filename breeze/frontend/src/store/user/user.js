@@ -26,6 +26,7 @@ export default {
   getters: {
     getUserId(state) {
       return state.userId
-    }
+    },
+    isLoggedIn: state => state.userId,
   }
 }

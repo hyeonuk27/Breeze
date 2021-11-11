@@ -2,19 +2,25 @@
   <div id="app">
     <Header v-if="$route.name !== 'Welcome'" id="header"/>
     <router-view :style="[$route.name == 'Welcome' ? {height:'100%'} : {height:'82%'}]"/>
-    <Footer v-if="$route.name !== 'Welcome'" id="footer"/>
+    <Footer v-if="$route.name !== 'Welcome' && isLoggedIn" id="footer"/>
   </div>
 </template>
 
 <script>
 import Header from '@/components/common/Header'
 import Footer from '@/components/common/Footer'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
   components: {
     Header,
     Footer
+  },
+  computed: {
+    ...mapGetters([
+      'isLoggedIn'
+    ])
   }
 }
 </script>

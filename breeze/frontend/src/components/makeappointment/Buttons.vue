@@ -1,17 +1,26 @@
 <template>
   <div class="container">
-    <div v-if="first" class="background">
-      <button
-        class="remember-btn"
-        data-bs-toggle="modal" 
-        data-bs-target="#rememberModal"
-        id="remember-first-btn"
-      >이멤버리멤버
-      </button>
-      <button class="share-btn-1">공유하기</button>
+    <div v-if="isLoggedIn">
+      <div v-if="first" class="background">
+        <button
+          class="remember-btn"
+          data-bs-toggle="modal" 
+          data-bs-target="#rememberModal"
+          id="remember-first-btn"
+        >이멤버리멤버
+        </button>
+        <button class="share-btn-1">공유하기</button>
+      </div>
+      <div v-else>
+        <button class="share-btn-2">공유하기</button>
+      </div>
     </div>
     <div v-else>
-      <button class="share-btn-2">공유하기</button>
+      <button 
+        class="share-btn-2" 
+        @click="goToWelcome()">
+        Welcome
+      </button>
     </div>
   </div>
 </template>
@@ -43,6 +52,9 @@ export default {
           rememberBtn.style.textDecoration = null
           }
        }
+    },
+    goToWelcome() {
+      this.$router.push({ name: 'Welcome' })
     }
   },
   mounted() {
@@ -51,6 +63,7 @@ export default {
   computed: {
    ...mapGetters([
       'isGroupSaved',
+      'isLoggedIn'
    ])
   },
   watch: {
