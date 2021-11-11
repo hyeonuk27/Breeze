@@ -23,7 +23,13 @@ export default {
     FindMiddleBtn,
   },
   beforeRouteEnter(to, from, next) {
-    if (from.name == 'OneClick' || from.name == 'MakeAppointment') {
+    var isGroup
+    if (store.getters.getGroupId == null) {
+      isGroup = false
+    } else {
+      isGroup = true
+    }
+    if (from.name == 'OneClick' || from.name == 'MakeAppointment' || isGroup ) {
       // console.log('oneclick에서 온다')
       store.dispatch('setDate', new Date())
       store.dispatch('setParticipants', [])
