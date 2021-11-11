@@ -16,7 +16,7 @@
       </div>
       <button
         class="col-3 cancel-btn"
-        @click="deleteParticipant(idx)">
+        @click="deleteParticipant([idx, participant.baramiType])">
         <i class="fas fa-times"></i>
       </button>
     </div>
@@ -48,8 +48,7 @@ export default {
 
 <style scoped>
 .participant {
-  /* width: 95%; */
-  /* height: 30%; */
+  width: 95%;
 }
 .image-box {
     /* grid-column: 1; */
@@ -57,7 +56,7 @@ export default {
     /* align-self: left;
     justify-self: left; */
     /* height: 5%; */
-    margin-right: 5%;
+    margin-right: 2%;
     margin-left: 3%;
     width: 15%;
     padding: 7px;
@@ -81,12 +80,13 @@ export default {
 }
 .participant-hr {
   color: #a7a7a7;
+  margin-left: 3%;
 }
 .cancel-btn {
   background: none;
   border: none;
   text-align: right;
-  padding-right: 5%;
+  padding-right: 4%;
   color: #a7a7a7;
   font-weight: lighter;
 }

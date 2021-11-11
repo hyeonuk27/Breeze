@@ -1,7 +1,7 @@
 <template>
   <div class="one-click">
     <Introduction class="introduction" />
-    <GroupList class="group-list d-flex align-items-center justify-content-center" />
+    <GroupList class="group-list" />
     <GroupAppointmentBtn
       v-if="this.groupId"
       class="group-appointment-btn"
@@ -57,17 +57,21 @@ export default {
 
 <style scoped>
 .one-click {
-  padding: 8%;
+  /* padding: 8%; */
 }
 .introduction {
   /* padding: 5%; */
   /* margin: 1%; */
-  height: 9%;
+  height: 15%;
+  /* padding-top: 8%; */
 }
 .group-list {
   /* margin: auto 0%; */
-  height: 80%;
-  margin-top: 5%;
+  height: 67%;
+  margin-top: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .group-appointment-btn {
   height: 14%;

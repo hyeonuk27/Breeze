@@ -53,14 +53,15 @@ export default {
     ]),
     async deleteGroup() {
       console.log(this.groupIdx)
-      alert('정말 삭제하시겠습니까?')
-      const response = await groupApi.deleteGroup(this.groupIdx)
-      // console.log(response)
-      if (response == 'success') {
-        this.setParticipants([])
-        this.setGroupName('')
-        this.setGroupId(null)
-        this.$emit('renew-grouplist')
+      if (confirm('정말 삭제하시겠습니까?')) {
+        const response = await groupApi.deleteGroup(this.groupIdx)
+        // console.log(response)
+        if (response == 'success') {
+          this.setParticipants([])
+          this.setGroupName('')
+          this.setGroupId(null)
+          this.$emit('renew-grouplist')
+        }
       }
     }
   },
@@ -72,7 +73,6 @@ export default {
       'groupId',
     ])
   }
-
 }
 </script>
 
@@ -82,15 +82,15 @@ export default {
   font-weight: bold;
 }
 .image-box {
-    width: 50%;
-    margin: 1% auto;
-  }
+  width: 45%;
+  margin: 1% auto;
+}
 .image-box-barami {
   width: 100%;
   height: 100%;
 }
 .group-container {
-  margin-top: 10%;
+  margin: auto;
 }
 .group-member-container {
   padding-right: 0;

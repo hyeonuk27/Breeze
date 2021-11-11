@@ -28,5 +28,6 @@ export default {
       return state.userId
     },
     isLoggedIn: state => state.userId,
+    userName: state => state.userName,
   }
 }

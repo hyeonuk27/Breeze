@@ -1,8 +1,12 @@
+import _ from 'lodash'
+
 export default {
   state: {
     date: new Date(),
     timezone: 'Asia/Seoul',
     participants: [],
+    barami: [],
+    wishPlaces: [],
     //약속쪽지에서 필요한 참여자 정보 리스트(타입, 이름, 시간)
     partMiddleTime: [],
     middleName: '',
@@ -29,7 +33,11 @@ export default {
     getIsGroupSaved(state) {
       return state.isGroupSaved
     },
-    groupId: state => state.groupId
+    groupId: state => state.groupId,
+    wishPlaces: state => state.wishPlaces,
+    middleName: state => state.middleName,
+    middleLatitude: state => state.middleLatitude,
+    middleLongitude: state => state.middleLongitude,
   },
   mutations: {
     SETDATE (state, data) {
@@ -37,15 +45,29 @@ export default {
     },
     //enterinfo에서 참여자 추가할 때마다 사용
     ADDPARTICIPANT (state, data) {
+      if (state.barami.length != 0) {
+        data['baramiType'] = state.barami.shift()
+      }
       state.participants.push(data)
     },
     DELETEPARTICIPANT (state, data) {
-      state.participants.splice(data, 1)
+      state.barami.push(data[1])
+      state.participants.splice(data[0], 1)
     },
     //전체 참여자 초기화 or 그룹 참여자 세팅 시 사용
     SETPARTICIPANTS (state, data) {
       state.participants = data
     },
+    SET_WISH_PLACE (state, data) {
+      state.wishPlaces = data
+    },
+    ADD_WISH_PLACE (state, data) {
+      state.wishPlaces.push(data)
+      state.wishPlaces = _.uniqBy(state.wishPlaces, 'placeName')
+    },
+    DELETE_WISH_PLACE (state, data) {
+      state.wishPlaces.splice(data, 1)
+    },  
     SETPARTMIDTIME (state, data) {
       state.partMiddleTime = data
     },
@@ -80,6 +102,18 @@ export default {
     },
     deleteParticipant ({ commit }, data) {
       commit('DELETEPARTICIPANT', data)
+    },
+    addGroupParticipants ({ commit }, data) {
+      commit('ADDGROUPPARTICIPANTS', data)
+    },
+    setWishPlace ( {commit}, data) {
+      commit('SET_WISH_PLACE', data)
+    },
+    addWishPlace ({ commit }, data) {
+      commit('ADD_WISH_PLACE', data)
+    },
+    deleteWishPlace ({ commit }, data) {
+      commit('DELETE_WISH_PLACE', data)
     },
     setParticipants ({ commit }, data) {
       commit('SETPARTICIPANTS', data)

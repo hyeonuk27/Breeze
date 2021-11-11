@@ -1,7 +1,8 @@
 <template>
-  <div class="group-appointment-btn">
+  <div class="group-appointment-btn-items">
     <button
       type="button"
+      class="group-appointment-btn"
       >이 모임으로 약속 만들기</button>
   </div>
 </template>
@@ -13,10 +14,10 @@ export default {
 </script>
 
 <style scoped>
-.group-appointment-btn {
+.group-appointment-btn-items {
   position: relative;
 }
-.group-appointment-btn button {
+.group-appointment-btn-items .group-appointment-btn {
   position: absolute;
   top: 50%;
   left: 50%;

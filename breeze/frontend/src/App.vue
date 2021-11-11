@@ -2,7 +2,7 @@
   <div id="app">
     <Header v-if="$route.name !== 'Welcome'" id="header"/>
     <router-view :style="[$route.name == 'Welcome' ? {height:'100%'} : {height:'82%'}]"/>
-    <Footer v-if="$route.name !== 'Welcome' && 'NotFound' && isLoggedIn" id="footer"/>
+    <Footer v-if="$route.name !== 'Welcome' && $route.name !== 'NotFound' && isLoggedIn" id="footer"/>
   </div>
 </template>
 

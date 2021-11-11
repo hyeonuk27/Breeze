@@ -27,8 +27,8 @@ def appointment(request):
     user = get_object_or_404(User, id=request.user.id)
     # 쪽지 저장
     note_data = {
-        'datetime': request.data.dateTime,
-        'middle_place': request.data.middlePlace,
+        'datetime': request.data['dateTime'],
+        'middle_place': request.data['middlePlace'],
     }
     sereializer = AppointmentSerializer(data=note_data, partial=True)
     if sereializer.is_valid(raise_exception=True):
@@ -38,22 +38,22 @@ def appointment(request):
     note_id = sereializer.data.get('id')
     appointment = get_object_or_404(Appointment, id=note_id)
     
-    for place in request.data.places:
+    for place in request.data['places']:
         place_data = {
-            'name': place.placeName,
-            'category': place.placeCategory,
-            'url': place.placeUrl,
+            'name': place['placeName'],
+            'category': place['placeCategory'],
+            'url': place['placeUrl'],
         }
         sereializer = AppointmentplaceSerializer(data=place_data, partial=True)
         if sereializer.is_valid(raise_exception=True):
             sereializer.save(appointment=appointment)
 
     # 참가자 저장
-    for paricipant in request.data.participants:
+    for paricipant in request.data['participants']:
         paricipant_data = {
-            'name': paricipant.partName,
-            'time': paricipant.time,
-            'barami_type': paricipant.baramiType,
+            'name': paricipant['partName'],
+            'time': paricipant['time'],
+            'barami_type': paricipant['baramiType'],
         }
         sereializer = ParticipantSerializer(data=paricipant_data, partial=True)
         if sereializer.is_valid(raise_exception=True):

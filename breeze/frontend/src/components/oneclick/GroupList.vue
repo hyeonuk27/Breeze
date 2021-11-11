@@ -236,8 +236,13 @@ export default {
   background-color: rgb(157, 206, 255, 0.2);
   border-radius: 15px;
   /* margin: 0 6%; */
-  padding: 7%;
+  padding: 5%;
   height: 95%;
+  display: flex;
+  flex-direction: column;
+}
+.group-list {
+  width: 88%;
 }
 .group-box2 {
   background-color: rgb(157, 206, 255, 0.2);
