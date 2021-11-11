@@ -8,7 +8,7 @@ class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments')
     datetime = models.DateTimeField()
     middle_place = models.CharField(max_length=50)
-    secret_code = models.TextField(default=0)
+    secret_code = models.TextField()
 
 
 class Appointmentplace(models.Model):
