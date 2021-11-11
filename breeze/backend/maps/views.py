@@ -15,6 +15,10 @@ import numpy as np
 import pandas as pd
 import requests
 
+from .models import Place
+from .serializers import PlaceListSerializer
+
+
 
 REST_API_KEY = config('REST_API_KEY')
 User = get_user_model()
@@ -202,7 +206,8 @@ def get_time(longitude, latitude, participant):
 @check_login
 def get_store(request, category_id, filter_id):
     # 중간역에 해당하는 가게들 선택, 그 중 해당 카테고리 선택
-    category_store = Place.objects.filter(middle_name=request.data['middlePlace'][:-1], category_num=category_id)
+    category_store = Place.objects.filter(middle_name=request.data['middlePlace'], category_num=category_id)
+    print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 
     # 전체 결과가 10개 이하면 다 반환
     if len(category_store) < 11:

@@ -10,13 +10,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 import datetime
-# import crypto
-# import sys
-# sys.modules['Crypto'] = crypto
+import crypto
+import sys
+sys.modules['Crypto'] = crypto
 
-# import base64
-# from Crypto import Random
-# from Crypto.Cipher import AES
+import base64
+from Crypto import Random
+from Crypto.Cipher import AES
 
 
 User = get_user_model()

@@ -37,7 +37,7 @@ export default {
       ]
     }
   },
-  methos: {
+  methods: {
     async getAppointmentList() {
       const response = await appointmentApi.getAppointmentList();
       this.appointmentList = response.my_appointment
@@ -46,7 +46,7 @@ export default {
     }
   },
   created() {
-    this.getAppointmentList
+    this.getAppointmentList()
   }
 }
 </script>
