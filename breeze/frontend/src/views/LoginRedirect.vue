@@ -1,7 +1,5 @@
 <template>
-  <div>
-    hello.... please.....show 여기에는 나중에 스피너가 들어갈 예정입니다~
-  </div>
+  
 </template>
 
 <script>
@@ -29,6 +27,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 
 </style>

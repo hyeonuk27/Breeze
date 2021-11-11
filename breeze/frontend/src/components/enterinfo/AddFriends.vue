@@ -45,6 +45,7 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapGetters } from 'vuex'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'AddFriends',
@@ -98,13 +99,33 @@ export default {
     },
     addPart () {
       if (!this.partLocation || !this.partLocation.trim()) {
-        alert('출발지를 입력해주세요')
+        Swal.fire({
+          icon: 'error',
+          html: '<b>출발지를 입력해주세요</b>',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } else if (!this.partName || !this.partName.trim()) {
-        alert('이름을 입력해주세요')
+        Swal.fire({
+          icon: 'error',
+          html: '<b>이름을 입력해주세요</b>',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } else if (this.partName.length > 6 || this.partName.trim().length > 6) {
-        alert('이름은 1~6자로 입력해주세요')
+        Swal.fire({
+          icon: 'error',
+          html: '<b>이름은 1~6자로 입력해주세요</b>',
+          showConfirmButton: false,
+          timer: 1500
+        })
       } else if (this.participants.length == 6) {
-        alert('친구는 최대 6명까지만 추가가 가능해요.')
+        Swal.fire({
+          icon: 'error',
+          html: '<b>친구는 최대 6명까지만 추가가 가능해요</b>',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.partName = ''
         this.searchWord = ''
       } else {
