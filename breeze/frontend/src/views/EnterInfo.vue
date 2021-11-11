@@ -31,7 +31,7 @@ export default {
     }
     if (from.name == 'OneClick' || from.name == 'MakeAppointment' || isGroup ) {
       // console.log('oneclick에서 온다')
-      store.dispatch('setDate', new Date())
+      store.dispatch('setDate', '')
       store.dispatch('setParticipants', [])
       store.dispatch('setPartMidTime', [])
       store.dispatch('setMiddleName', '')

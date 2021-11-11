@@ -53,7 +53,7 @@ export default {
       this.setMenu(idx)
       //홈이나 원클릭으로 이동 시, 약속/모드 스토어 초기화
       if (idx !== 1) {
-        this.setDate(new Date())
+        this.setDate('')
         this.setParticipants([])
         this.setPartMidTime([])
         this.setMiddleName('')

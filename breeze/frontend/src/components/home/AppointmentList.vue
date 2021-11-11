@@ -8,7 +8,6 @@
       v-for="(appointment, idx) in appointmentList"
       :key="idx"
       :appointment="appointment"
-      @get-appointmentlist="getAppointmentList"
     />
   </div>
 </template>
@@ -16,6 +15,7 @@
 <script>
 import Appointment from '@/components/home/Appointment'
 import appointmentApi from "@/api/appointment.js";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'AppointmentList',
@@ -25,28 +25,46 @@ export default {
   data() {
     return {
       isDday: false,
+      isDeleted: false,
       appointmentCnt: 0,
-      appointmentList: 
-      [
-        // {
-        // secret_code: 0,
-        // datetime: '2021-10-28(목) 오후 1시',
-        // middle_place: '신촌역',
-        // d_day: 0
-        // },
-      ]
+      appointmentList: [],
     }
   },
   methods: {
+   ...mapActions([
+      'setIsAppointmentDeleted',
+    ]),
     async getAppointmentList() {
+      
       const response = await appointmentApi.getAppointmentList();
-      this.appointmentList = response.my_appointment
+      this.appointmentList = response.my_appointment;
+
+      for(let i = 0; i < this.appointmentList.length; i++) {
+        var data = this.appointmentList[i].datetime;
+        const date = data.substr(0, 4) + '년 ' + data.substr(5, 2) + '월 ' + data.substr(8, 2) + '일 '
+        var localDate = new Date(data)
+        const local = localDate.toString()
+        const cal = date + local.substr(16, 2) + '시 ' + local.substr(19, 2) + '분' 
+        this.appointmentList[i].datetime = cal
+      }
+
       this.appointmentCnt = this.appointmentList.length;
-      this.$emit('set-info', this.appointmentCnt)	
-    }
+      this.$emit('set-info', this.appointmentCnt)
+      this.setIsAppointmentDeleted(false)
+    },
   },
   created() {
     this.getAppointmentList()
+  },
+  computed: {
+   ...mapGetters([
+      'isAppointmentDeleted',
+  ])
+  },
+  watch: {
+    isAppointmentDeleted() {
+      this.getAppointmentList()
+    }
   }
 }
 </script>
