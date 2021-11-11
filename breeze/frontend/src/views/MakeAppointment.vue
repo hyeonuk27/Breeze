@@ -33,7 +33,7 @@ import AppointmentDate from '@/components/makeappointment/AppointmentDate.vue'
 import WishPlaceList from '@/components/makeappointment/WishPlaceList.vue'
 import Buttons from '@/components/makeappointment/Buttons.vue'
 import RememberModal from '@/components/makeappointment/RememberModal.vue'
-// import appointmentApi from '@/api/appointment.js'
+import appointmentApi from '@/api/appointment.js'
 import store from "@/store"
 import { mapGetters } from 'vuex'
 
@@ -152,10 +152,20 @@ export default {
       console.log('$$$$$$$$$$$$$$$$$$$$$$$$$')
       this.secretCode = this.$route.params.secretCode
       console.log(this.secretCode, '노트아이디 확인')
-      // const response = await appointmentApi.getAppointment(this.secretCode)
-      // console.log(response)
-      // this.noteInfo = response
+      const response = await appointmentApi.getAppointment(this.secretCode)
+      console.log(response)
+      this.noteInfo = response
       console.log(this.noteInfo)
+
+      const data = this.noteInfo.datetime
+
+      const date = data.substr(0, 4) + '년 ' + data.substr(5, 2) + '월 ' + data.substr(8, 2) + '일 '
+      var localDate = new Date(data)
+      const local = localDate.toString()
+      const cal = date + local.substr(16, 2) + '시 ' + local.substr(19, 2) + '분'
+      this.noteInfo.datetime = cal 
+      console.log('############################################')
+      console.log(this.noteInfo.datetime)
     }
 
   },

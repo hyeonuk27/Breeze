@@ -6,7 +6,7 @@
   >
     <img
       onclick="event.cancelBubble = true;"
-      @click="deleteAppointment(appointment.secret_code)"
+      @click="deleteAppointment(appointment.appointment_id)"
       class="deleteBtn"
       src="@/assets/common/close.png"
       alt="close button"
@@ -15,7 +15,7 @@
     </div>{{ appointment.middle_place }}</div>
     <div class="appointment-d-day">
       <div v-if="isDday" class="appointment-d-day-text">오늘</div>
-      <div v-else class="appointment-d-day-text">D-{{ appointment.d_day }}</div>
+      <div v-else class="appointment-d-day-text">D{{ appointment.d_day }}</div>
     </div>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
       this.$router.push({
         name: "MakeAppointment",
         params: {
-          noteId: this.appointment.secret_code,
+          secretCode: this.appointment.secret_code,
         },
       });
     },
