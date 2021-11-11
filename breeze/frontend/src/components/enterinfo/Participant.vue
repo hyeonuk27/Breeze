@@ -1,7 +1,7 @@
 <template>
   <div class="participant">
-    <div class="row d-flex justify-content-center align-items-center">
-      <div class="col-1 image-box ms-3">
+    <div class="participant-container">
+      <div class="col-1 image-box">
         <img
           :src="require('@/assets/barami/' + participant.baramiType + '.png')"
           class="image-box-barami"
@@ -48,27 +48,32 @@ export default {
 
 <style scoped>
 .participant {
-  width: 95%;
+  width: 100%;
+}
+.participant-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .image-box {
-    /* grid-column: 1; */
-    /* grid-row: 2; */
-    /* align-self: left;
-    justify-self: left; */
-    /* height: 5%; */
-    margin-right: 2%;
-    margin-left: 3%;
-    width: 15%;
-    padding: 7px;
-    border-radius: 70%;
-    background: #E9EDFE;
+  /* grid-column: 1; */
+  /* grid-row: 2; */
+  /* align-self: left;
+  justify-self: left; */
+  /* height: 5%; */
+  margin-right: 3%;
+  margin-left: 0;
+  width: 18%;
+  padding: 7px;
+  border-radius: 70%;
+  background: #E9EDFE;
   }
 .image-box-barami {
   width: 100%;
   height: 100%;
 }
 .content-box {
-  /* margin-left: 5%; */
+  margin-left: 5%;
   text-align: left;
 }
 .participant-name {
@@ -86,7 +91,8 @@ export default {
   background: none;
   border: none;
   text-align: right;
-  padding-right: 4%;
+  /* padding-right: 4%; */
+  /* width: 22%; */
   color: #a7a7a7;
   font-weight: lighter;
 }

@@ -29,20 +29,21 @@ export default {
   /* padding-top: 2%; */
 }
 .choose-date {
-  height: 12%;
+  height: 11%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: end;
+  margin-bottom: 3%;
 }
 .add-friends {
-  height: 25%;
+  height: 26%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  margin-bottom: 4%;
+  margin-bottom: 3%;
 }
 .participant-list {
-  height: 45%;
+  height: 43%;
 }
 .find-middle-btn {
   height: 14%;
