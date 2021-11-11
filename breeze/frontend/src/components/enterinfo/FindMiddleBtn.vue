@@ -26,7 +26,15 @@ export default {
       'setMiddle'
     ]),
     goToFindMiddle: function() {
-      if (dayjs(this.date, 'YYYY-MM-DD HH:mm').isSameOrBefore(dayjs())) {
+      console.log(this.date)
+      if (!this.date) {
+        Swal.fire({
+          icon: 'error',
+          html: '<b>약속 날짜를 선택해주세요</b>',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (dayjs(this.date, 'YYYY-MM-DD HH:mm').isSameOrBefore(dayjs())) {
         Swal.fire({
           icon: 'error',
           html: '<b>약속 날짜를 올바르게 선택해주세요</b>',

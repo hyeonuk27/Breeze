@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 export default {
   state: {
-    date: new Date(),
+    date: '',
     timezone: 'Asia/Seoul',
     participants: [],
     barami: [],
