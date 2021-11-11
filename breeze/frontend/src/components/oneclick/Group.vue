@@ -46,11 +46,12 @@ export default {
   },
   methods: {
     deleteGroup() {
-      alert('정말 삭제하시겠습니까?')
-      const response = groupApi.deleteGroup(this.groupIdx)
-      console.log(response)
-      if (response == 'success') {
-        this.$emit('renew-grouplist')
+      if (confirm('정말 삭제하시겠습니까?')) {
+        const response = groupApi.deleteGroup(this.groupIdx)
+        console.log(response)
+        if (response == 'success') {
+          this.$emit('renew-grouplist')
+        }
       }
     }
   }
