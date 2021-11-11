@@ -4,7 +4,7 @@
       <hr class="line-1">
       <div class="date-box">
         <div class="place-name">{{ middlePlace }}</div>
-        <div class="date">{{ calDate }}</div> 
+        <div class="date">{{ datetime }}</div> 
       </div>
       <hr class="line-2">
     </div>
@@ -30,13 +30,20 @@ export default {
       // console.log(localDate, typeof(localDate))
       const local = localDate.toString()
       // console.log(typeof(local))
-      const cal = date + local.substr(16, 2) + '시 ' + local.substr(19, 2) + '분' 
-      this.calDate = cal
+      // const cal = date + local.substr(16, 2) + '시 ' + local.substr(19, 2) + '분' 
+      return date + local.substr(16, 2) + '시 ' + local.substr(19, 2) + '분' 
+      // this.calDate = cal
     }
   },
   created() {
-    this.toLocalDate(this.datetime)
-  }
+    // console.log(this.datetime)
+    // this.toLocalDate(this.datetime)
+  },
+  // watch: {
+  //   datetime (val) {
+  //     this.toLocalDate(val)
+  //   }
+  // }
 
 }
 </script>

@@ -11,17 +11,18 @@
       src="@/assets/common/close.png"
       alt="close button"
     />
-    <div class="appointment-info">{{ calDate }}<div>
+    <div class="appointment-info">{{ appointment.datetime }}<div>
     </div>{{ appointment.middle_place }}</div>
     <div class="appointment-d-day">
       <div v-if="isDday" class="appointment-d-day-text">오늘</div>
-      <div v-else class="appointment-d-day-text">D-{{ appointment.d_day }}</div>
+      <div v-else class="appointment-d-day-text">D{{ appointment.d_day }}</div>
     </div>
   </div>
 </template>
 
 <script>
 import appointmentApi from "@/api/appointment.js";
+import { mapActions } from "vuex";
 
 export default {
   name: "Appointment",
@@ -31,39 +32,29 @@ export default {
   data() {
     return {
       isDday: false,
-      datetime: this.appointment.datetime,
-      calDate: ''
     };
   },
   methods: {
+    ...mapActions ([
+      'setIsAppointmentDeleted'
+    ]),
     async deleteAppointment(secret_code) {
       const data = {
         secretCode: secret_code,
       };
       await appointmentApi.deleteAppointment(data);
-      this.$emit("get-appointmentlist");
-      console.log("삭제");
+      this.setIsAppointmentDeleted(true)
     },
     moveToAppointmentNote: function () {
       this.$router.push({
         name: "MakeAppointment",
         params: {
-          noteId: this.appointment.secret_code,
+          secretCode: this.appointment.secret_code,
         },
       });
     },
-    toLocalDate(data) {
-      const date = data.substr(0, 4) + '년 ' + data.substr(5, 2) + '월 ' + data.substr(8, 2) + '일 '
-      var localDate = new Date(data)
-      // console.log(localDate, typeof(localDate))
-      const local = localDate.toString()
-      // console.log(typeof(local))
-      const cal = date + local.substr(16, 2) + '시 ' + local.substr(19, 2) + '분' 
-      this.calDate = cal
-    }
   },
   created() {
-    this.toLocalDate(this.datetime)
     if (this.appointment.d_day == 0) {
       this.isDday = true;
     }

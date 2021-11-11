@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 export default {
   state: {
-    date: new Date(),
+    date: '',
     timezone: 'Asia/Seoul',
     participants: [],
     barami: [],
@@ -16,6 +16,7 @@ export default {
     groupId: null,
     isFirst: false,
     isGroupSaved: false,
+    isAppointmentDeleted: false,
   },
   getters: {
     date: state => state.date,
@@ -33,6 +34,7 @@ export default {
     getIsGroupSaved(state) {
       return state.isGroupSaved
     },
+    isAppointmentDeleted: state => state.isAppointmentDeleted,
     groupId: state => state.groupId,
     wishPlaces: state => state.wishPlaces,
     middleName: state => state.middleName,
@@ -92,6 +94,9 @@ export default {
     SETISGROUPSAVED (state, data) {
       state.isGroupSaved = data
     },
+    SET_IS_APPOINTMENT_DELETED (state, data) {
+      state.isAppointmentDeleted = data
+    },
   },
   actions: {
     setDate ({ commit }, data) {
@@ -141,6 +146,9 @@ export default {
     },
     setIsGroupSaved ({ commit }, data) {
       commit('SETISGROUPSAVED', data)
+    },
+    setIsAppointmentDeleted ({ commit }, data) {
+      commit('SET_IS_APPOINTMENT_DELETED', data)
     }
   },
 }

@@ -52,9 +52,10 @@ export default {
       'setGroupId',
     ]),
     async deleteGroup() {
+      console.log('#########################################삭제')
       console.log(this.groupIdx)
       if (confirm('정말 삭제하시겠습니까?')) {
-        const response = await groupApi.deleteGroup(this.groupIdx)
+        const response = await groupApi.deleteGroup(this.groupId)
         // console.log(response)
         if (response == 'success') {
           this.setParticipants([])
