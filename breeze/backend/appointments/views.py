@@ -10,9 +10,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 import datetime
-import crypto
-import sys
-sys.modules['Crypto'] = crypto
+# import crypto
+# import sys
+# sys.modules['Crypto'] = crypto
 
 import base64
 from Crypto import Random
