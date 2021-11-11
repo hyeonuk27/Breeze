@@ -29,16 +29,16 @@
         <hr class="search-divide">
       </div>
     </div>
-      <div class="row d-flex justify-content-between add-friends-name-btn-container">
-        <input
-          type="text"
-          class="col-10 name-input"
-          v-model="partName"
-          placeholder="이름을 1~6자로 입력해주세요.">
-        <button @click="addPart" class="col-2 add-friends-btn">
-          <i class="fas fa-plus"></i>
-        </button>
-      </div>
+    <div class="row d-flex justify-content-between add-friends-name-btn-container">
+      <input
+        type="text"
+        class="col-10 name-input"
+        v-model="partName"
+        placeholder="이름을 1~6자로 입력해주세요.">
+      <button @click="addPart" class="col-2 add-friends-btn">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -135,7 +135,7 @@ export default {
 <style>
 .add-friends-box {
   background-color: #E9EDFE;
-  width: 95%;
+  width: 88%;
   margin: 0 auto;
   border-radius: 15px;
 }
@@ -170,6 +170,7 @@ export default {
 .add-friends-name-btn-container {
   width: 95%;
   margin: 0 auto;
+  padding-bottom: 2%;
 }
 .add-friends-btn {
   background: linear-gradient(to left, #92A3FD, #9DCEFF);

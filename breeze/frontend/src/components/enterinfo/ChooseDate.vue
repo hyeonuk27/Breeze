@@ -10,7 +10,7 @@
         <input
           placeholder="약속 날짜를 선택해주세요."
           :value="inputValue"
-          class="choose-date-input text-gray-700 w-full py-1 px-2 appearance-none rounded-r focus:outline-none focus:border-blue-500"
+          class="choose-date-input text-gray-700 w-full py-1 px-2 appearance-none rounded-r"
           readonly
         />
       </div>
@@ -63,7 +63,7 @@ export default {
   /* margin: 0%; */
 }
 .choose-date-box {
-  width: 95%;
+  width: 88%;
   margin: 0 auto;
   border-radius: 15px;
   background-color: #F7F8F8;
@@ -79,5 +79,8 @@ export default {
   background-color: #F7F8F8;
   border: none;
   text-align: left;
+}
+.choose-date-input:focus {
+  outline: none;
 }
 </style>
