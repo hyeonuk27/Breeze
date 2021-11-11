@@ -72,7 +72,7 @@ export default {
         console.log(apiKey)
         axios.get(URL, {
           headers: {
-            'Authorization': apiKey
+            'Authorization': 'KakaoAK ' + apiKey
           },
           params: {
             'query': this.searchWord
