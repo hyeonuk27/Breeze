@@ -117,6 +117,7 @@ def appointment_list(request):
             'secret_code': appointment.secret_code,
             'd_day': d_day,
         })
+    appointment_data.sort(key=lambda x: x['d_day'], reverse=True)
 
     data = {
         'access_token': request.access_token,
