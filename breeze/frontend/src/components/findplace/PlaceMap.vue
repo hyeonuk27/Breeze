@@ -38,7 +38,7 @@ export default {
       var container = document.getElementById("place-map");
       var options = {
         center: new kakao.maps.LatLng(this.middleLatitude, this.middleLongitude),
-        level: 5,
+        level: 4,
       };
       var map = new kakao.maps.Map(container, options);
       
@@ -130,7 +130,7 @@ export default {
       var placePhone = document.createElement('a')
       placePhone.className = "place-desc"
       placePhone.innerHTML = place.phone;
-      placePhone.href = 'tell:' + place.phone
+      placePhone.href = 'tell: + place.phone'
 
       var placeUrl = document.createElement('a')
       placeUrl.innerHTML = '상세보기'
