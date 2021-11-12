@@ -295,6 +295,8 @@ export default {
       console.log('oneclick 또는 enterinfo에서 온다')
       store.dispatch('setMode1', 0)
       store.dispatch('setMiddle', 0)
+      store.dispatch('setMiddleLists', [])
+      store.dispatch('setIsMapRendered', false)
       next()
     }  else {
       console.log('비정상적 진입 또는 새로고침한 경우')

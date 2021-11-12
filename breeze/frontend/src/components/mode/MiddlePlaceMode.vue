@@ -13,9 +13,14 @@ export default {
   name: 'MiddlePlaceMode',
   methods: {
     ...mapActions([
-      'setMode1'
+      'setMode1',
+      'setMiddleLists',
+      'setIsMapRendered',
     ]),
     modeUpdate: function (idx) {
+      console.log('111111111111111111111111111111111111111')
+      // this.setMiddleLists([])
+      // this.setIsMapRendered(false)
       this.setMode1(idx)
     }
   },

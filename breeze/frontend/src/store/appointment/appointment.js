@@ -9,6 +9,8 @@ export default {
     wishPlaces: [],
     //약속쪽지에서 필요한 참여자 정보 리스트(타입, 이름, 시간)
     partMiddleTime: [],
+    //중간장소 후보지들
+    middleLists: [],
     middleName: '',
     middleLatitude: 0,
     middleLongitude: 0,
@@ -17,6 +19,7 @@ export default {
     isFirst: false,
     isGroupSaved: false,
     isAppointmentDeleted: false,
+    isMapRendered: false,
   },
   getters: {
     date: state => state.date,
@@ -37,9 +40,11 @@ export default {
     isAppointmentDeleted: state => state.isAppointmentDeleted,
     groupId: state => state.groupId,
     wishPlaces: state => state.wishPlaces,
+    middleLists: state => state.middleLists,
     middleName: state => state.middleName,
     middleLatitude: state => state.middleLatitude,
     middleLongitude: state => state.middleLongitude,
+    isMapRendered: state => state.isMapRendered,
   },
   mutations: {
     SETDATE (state, data) {
@@ -73,6 +78,9 @@ export default {
     SETPARTMIDTIME (state, data) {
       state.partMiddleTime = data
     },
+    SETMIDDLELISTS (state, data) {
+      state.middleLists = data
+    },
     SETMIDDLENAME (state, data) {
       state.middleName = data
     },
@@ -96,6 +104,9 @@ export default {
     },
     SET_IS_APPOINTMENT_DELETED (state, data) {
       state.isAppointmentDeleted = data
+    },
+    SETISMAPRENDERED (state, data) {
+      state.isMapRendered = data
     },
   },
   actions: {
@@ -126,6 +137,9 @@ export default {
     setPartMidTime ({ commit }, data) {
       commit('SETPARTMIDTIME', data)
     },
+    setMiddleLists ({ commit }, data) {
+      commit('SETMIDDLELISTS', data)
+    },
     setMiddleName ({ commit }, data) {
       commit('SETMIDDLENAME', data)
     },
@@ -149,6 +163,9 @@ export default {
     },
     setIsAppointmentDeleted ({ commit }, data) {
       commit('SET_IS_APPOINTMENT_DELETED', data)
+    },
+    setIsMapRendered ({ commit }, data) {
+      commit('SETISMAPRENDERED', data)
     }
   },
 }
