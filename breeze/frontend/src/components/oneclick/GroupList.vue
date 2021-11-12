@@ -1,26 +1,30 @@
 <template>
-  <swiper class="swiper" ref="groupList" @slide-change-transition-end="getActive">
+  <swiper class="swiper" :options="swiperOption" ref="groupList" @slide-change-transition-end="getActive">
     <Group
       v-for="(group, idx) in groups"
       :key="idx"
       :idx="idx"
       :group="group"
-      class="group-box"
+      class="swiper-slide"
       @renew-grouplist="renewGroupList"
     />
     <NoGroup
       v-if="!groups.length"
       class="group-box2"
     />
+    <div class="swiper-pagination" slot="pagination"></div> 
+    <div class="swiper-button-prev" slot="button-prev"></div> 
+    <div class="swiper-button-next" slot="button-next"></div>
   </swiper>
 </template>
 
 <script>
 import Group from '@/components/oneclick/Group.vue'
 import NoGroup from '@/components/oneclick/NoGroup.vue'
-import { Swiper } from 'vue-awesome-swiper'
-import { mapActions } from 'vuex'
+import { Swiper } from 'vue-awesome-swiper' 
 import 'swiper/css/swiper.css'
+import { mapActions } from 'vuex'
+
 import groupApi from '@/api/group.js'
 
 export default {
@@ -28,10 +32,25 @@ export default {
   components: {
     Group,
     NoGroup,
-    Swiper
+    Swiper,
+    // SwiperSlide,
   },
   data () {
     return {
+      swiperOption: { 
+        slidesPerView: 1, 
+        spaceBetween: 30, 
+        loop: true, 
+        pagination: { 
+          el: '.swiper-pagination', 
+          clickable: true,
+          type: 'bullets',
+        }, 
+        navigation: { 
+          nextEl: '.swiper-button-next', 
+          prevEl: '.swiper-button-prev',
+        } 
+      },
       groups: [],
       // enterinfo에서 참여자 저장하는 형식과 맞춘 리스트 
       groupMemInfoList: [],
@@ -232,7 +251,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.group-box {
+.swiper-slide {
   background-color: rgb(157, 206, 255, 0.2);
   border-radius: 15px;
   /* margin: 0 6%; */
@@ -241,6 +260,11 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
+.group {
+  padding: 9%;
+}
+
 .group-list {
   width: 88%;
 }
@@ -252,4 +276,18 @@ export default {
   width: 100%;
   height: 95%;
 }
+
+.swiper-button-prev, .swiper-button-next {
+  color: #94b8f37a;
+  width: 4%;
+}
+
+.swiper-pagination {
+  top: 95%;
+}
+
+.swiper-pagination-bullet-active {
+  background: #94B9F3;
+}
+
 </style>

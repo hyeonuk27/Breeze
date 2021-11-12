@@ -9,10 +9,10 @@
           id="remember-first-btn"
         >이멤버리멤버
         </button>
-        <button class="share-btn-1">공유하기</button>
+        <button class="share-btn-1" @click="sendLink">공유하기</button>
       </div>
       <div v-else>
-        <button class="share-btn-2">공유하기</button>
+        <button class="share-btn-2" @click="sendLink">공유하기</button>
       </div>
     </div>
     <div v-else>
@@ -25,8 +25,9 @@
   </div>
 </template>
 
-<script>
+<script >
 import { mapGetters } from 'vuex'
+const KAKAO_KEY = process.env.VUE_APP_KAKAO_MAP_API_KEY
 
 export default {
   name: 'Buttons',
@@ -55,6 +56,34 @@ export default {
     },
     goToWelcome() {
       this.$router.push({ name: 'Welcome' })
+    },
+    sendLink() {
+      console.log(this.noteInfo)
+      /* global Kakao */
+      if (!Kakao.isInitialized()){
+        Kakao.init(KAKAO_KEY)
+      }
+      Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: this.noteInfo.middle_place,
+          description: this.noteInfo.datetime,
+          imageUrl: '',
+          link: {
+            mobileWebUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,
+            webUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,
+          }
+        },
+        buttons: [
+          {
+            title: '자세히 보기',
+            link: {
+              mobileWebUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,
+              webUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,
+            }
+          }
+        ]
+      })
     }
   },
   mounted() {

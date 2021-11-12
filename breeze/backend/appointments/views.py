@@ -110,7 +110,7 @@ def appointment_list(request):
     appointment_data = []
     for appointment in appointments:
         # 디데이 구하기
-        d_day = (now - appointment.datetime).days
+        d_day = (now.date() - appointment.datetime.date()).days
         appointment_data.append({
             'datetime': appointment.datetime,
             'middle_place': appointment.middle_place,
