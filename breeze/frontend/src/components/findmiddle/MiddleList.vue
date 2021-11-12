@@ -2,7 +2,7 @@
   <div class="middle-list-container">
     <div class="middle-list-items">
       <div 
-        v-for="(place, idx) in modeList" 
+        v-for="(place, idx) in middleLists" 
         :key="idx"
       >
         <label class="middle-select-label">
@@ -25,7 +25,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import mapApi from '@/api/map.js'
+// import mapApi from '@/api/map.js'
 
 export default {
   name: 'MiddleList',
@@ -33,7 +33,7 @@ export default {
     return {
       selectedMiddle: 0,
       //전체 중간 장소 리스트
-      middleList: [],
+      // middleList: [],
       //헤더 모드에 따라 분류된 장소 리스트
       modeList: [],
       //헤더 모드에 따라 소요되는 장소별 평균 시간
@@ -44,14 +44,14 @@ export default {
     ...mapActions([
       'setMiddle'
     ]),
-    filterList(idx) {
-      this.modeList = []
-      for (let i = 0; i < this.middleList.length; i++) {
-        if (this.middleList[i].middle_place_type === idx) {
-          this.modeList.push(this.middleList[i])
-        }
-      } 
-    },
+    // filterList(idx) {
+    //   this.modeList = []
+    //   for (let i = 0; i < this.middleList.length; i++) {
+    //     if (this.middleList[i].middle_place_type === idx) {
+    //       this.modeList.push(this.middleList[i])
+    //     }
+    //   } 
+    // },
     middleUpdate(idx) {
       this.setMiddle(idx)
       this.selectedMiddle = idx
@@ -75,32 +75,36 @@ export default {
         temp = []
       }
     },
-    async setInfo() {
-      // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
-      const cnt = this.participants.length
-      const data = []
-      for (let i = 0; i < cnt; i++) {
-        const part = {
-          baramiType: this.participants[i].baramiType,
-          partLatitude: this.participants[i].partLatitude,
-          partLongitude: this.participants[i].partLongitude
-        }
-      data.push(part)
-      }
-      // console.log(data, '내가 axios에 data로 담아 보내는 정보. 리스트')
-      const response = await mapApi.middle(data)
-      // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 리스트')
-      this.middleList = response.middle_data
-      // console.log(this.middleList, '마지막 확인')
-      // console.log('**************************')
+    // async setInfo() {
+    //   // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
+    //   const cnt = this.participants.length
+    //   const data = []
+    //   for (let i = 0; i < cnt; i++) {
+    //     const part = {
+    //       baramiType: this.participants[i].baramiType,
+    //       partLatitude: this.participants[i].partLatitude,
+    //       partLongitude: this.participants[i].partLongitude
+    //     }
+    //   data.push(part)
+    //   }
+    //   // console.log(data, '내가 axios에 data로 담아 보내는 정보. 리스트')
+    //   const response = await mapApi.middle(data)
+    //   // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 리스트')
+    //   this.middleList = response.middle_data
+    //   // console.log(this.middleList, '마지막 확인')
+    //   // console.log('**************************')
       
-      this.filterList(this.mode)
-      this.partAverageTime(this.modeList)
-      this.selectedMiddle = this.middle
-    }
+    //   this.filterList(this.mode)
+    //   this.partAverageTime(this.modeList)
+    //   this.selectedMiddle = this.middle
+    // }
   },
   created() {
-   this.setInfo()
+    this.modeList = this.middleLists
+    //아래 안되면 this.middleLists로 바꿔보기
+    this.partAverageTime(this.modeList)
+    this.selectedMiddle = this.middle
+  //  this.setInfo()
   },
   computed: {
     ...mapState({
@@ -108,17 +112,19 @@ export default {
       middle: state => state.mode.middle
     }), 
     ...mapGetters([
-      'participants'
+      'participants',
+      'middleLists',
     ]) 
   },
   watch: {
     selectedMiddle : function (newVal, ) {
       this.middleUpdate(newVal)
     },
-    mode : function (newVal, ) {
+    mode : function () {
       // console.log('바뀐 값--->' + newVal, '이전 값--->' + oldVal)
-      this.filterList(newVal)
-      this.partAverageTime(this.modeList)
+      // this.filterList(newVal)
+      // this.partAverageTime(this.modeList)
+      this.partAverageTime(this.middleLists)
       this.middleUpdate(0)
     }
   }

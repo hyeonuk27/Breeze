@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import mapApi from '@/api/map.js'
 
 export default {
@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       //전체 중간 장소 리스트
-      middleList: [],
+      // middleList: [],
       //모드에 따라 분류된 중간 장소 리스트
       modeList: [],
       //중간장소 정해진 후, 참여자들의 정보 리스트
@@ -27,15 +27,19 @@ export default {
     }
   },
   methods: {
-    filterList(modeIdx) {
-      this.modeList = []
-      for (let i = 0; i < this.middleList.length; i++) {
-        if (this.middleList[i].middle_place_type === modeIdx) {
-          this.modeList.push(this.middleList[i])         
-        }
-      }
-      return this.modeList
-    },
+    ...mapActions([
+      'setMiddleLists',
+    ]),
+
+    // filterList(modeIdx) {
+    //   this.modeList = []
+    //   for (let i = 0; i < this.middleList.length; i++) {
+    //     if (this.middleList[i].middle_place_type === modeIdx) {
+    //       this.modeList.push(this.middleList[i])         
+    //     }
+    //   }
+    //   return this.modeList
+    // },
     concateArray(arr) {
       this.partInfo = []
       const selectedMiddle = arr[this.middleIdx]
@@ -59,25 +63,33 @@ export default {
     async initMap() {
       // console.log('%%%%%%%%%%%%%%%%%%%%%%%')
       const cnt = this.participants.length
-      const data = []
+      const partBox = []
       for (let i = 0; i < cnt; i++) {
         const part = {
           baramiType: this.participants[i].baramiType,
           partLatitude: this.participants[i].partLatitude,
           partLongitude: this.participants[i].partLongitude
         }
-      data.push(part)
+      partBox.push(part)
       }
-      // console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
+      const data = {
+        'participants' : partBox,
+        'middle_place_type' : this.mode
+      }
+      console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
       const response = await mapApi.middle(data)
       // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
-      this.middleList = response.middle_data
+      // this.middleList = response.middle_data
+      this.modeList = response.middle_data
+      //스토어 저장
+      this.setMiddleLists(this.modeList)
       // console.log('**************************')
 
-      const modes = this.filterList(this.modeIdx)
-      this.concateArray(modes)
+      // const modes = this.filterList(this.modeIdx)
+      // this.concateArray(modes)
+      this.concateArray(this.modeList)
 
-      const selectedMiddle = modes[this.middleIdx]
+      const selectedMiddle = this.modeList[this.middleIdx]
       // console.log(selectedMiddle, '중간장소 확인')
       this.latitude = selectedMiddle.latitude
       this.longitude = selectedMiddle.longitude
@@ -95,8 +107,7 @@ export default {
       var bounds = new kakao.maps.LatLngBounds()
       var points = []
       
-      // var middleMarkerSrc = require('@/assets/map/middle.png')
-      var middleMarkerSrc = 'https://previews.123rf.com/images/yupiramos/yupiramos1607/yupiramos160710032/60037776-%ED%99%94%EC%82%B4%ED%91%9C-%EC%9C%84%EC%B9%98-%ED%95%80-%EC%A0%88%EC%97%B0-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%94%94%EC%9E%90%EC%9D%B8-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EA%B7%B8%EB%9E%98%ED%94%BD.jpg'
+      var middleMarkerSrc = require('@/assets/map/middle.png')
       var middelMarkerSize = new kakao.maps.Size(30, 30)
       var middleMarkerImage = new kakao.maps.MarkerImage(middleMarkerSrc, middelMarkerSize)
       var middleMarkerPosition  = options.center
@@ -166,14 +177,44 @@ export default {
       }
       map.setBounds(bounds)
     },
+    async sendAxios () {
+      const cnt = this.participants.length
+      const partBox = []
+      for (let i = 0; i < cnt; i++) {
+        const part = {
+          baramiType: this.participants[i].baramiType,
+          partLatitude: this.participants[i].partLatitude,
+          partLongitude: this.participants[i].partLongitude
+        }
+      partBox.push(part)
+      }
+      const data = {
+        'participants' : partBox,
+        'middle_place_type' : this.mode
+      }
+      console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
+      const response = await mapApi.middle(data)
+      // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
+      this.modeList = response.middle_data
+      //스토어 저장
+      this.setMiddleLists(this.modeList)
+    },
+    async waitAndRun() {
+      await this.sendAxios()
+      //65에서 85까지 주석처리한 후 테스트해봐야
+      this.initMap()
+    }
   },
   created() {
     this.modeIdx = this.mode
     this.middleIdx = this.middle
+    this.modeList = this.middleLists
     // console.log('created')
   },
   mounted() {
   if (window.kakao && window.kakao.maps) {
+    //218 주석처리 후, 217번 테스트해보기
+    // this.waitAndRun()
     this.initMap();
   } else {
     const script = document.createElement('script');
@@ -190,18 +231,22 @@ computed: {
     middle: state => state.mode.middle,
   }),
   ...mapGetters([
-    'participants'
+    'participants',
+    'middleLists',
   ])
 },
 watch: {
     mode : function (newVal, ) {
       // console.log(newVal, this.middle, '모드랑 중간값 확인')
       this.modeIdx = newVal
+      //244 주석처리 후, 243 테스트 해보기
+      // this.waitAndRun()
       this.initMap()
     },
     middle : function (newVal, ) {
       // console.log(this.mode, newVal, '모드랑 중간값 확인')
       this.middleIdx = newVal
+      //waitAndRun 테스트할 때, 아래 initMap에서 axios 부분 주석처리해야!
       this.initMap()
     }
   }
