@@ -58,6 +58,7 @@ export default {
       this.$router.push({ name: 'Welcome' })
     },
     sendLink() {
+      console.log(this.noteInfo)
       /* global Kakao */
       if (!Kakao.isInitialized()){
         Kakao.init(KAKAO_KEY)
@@ -65,25 +66,24 @@ export default {
       Kakao.Link.sendDefault({
         objectType: 'feed',
         content: {
-          title: '테스트',
-          description: '',
+          title: this.noteInfo.middle_place,
+          description: this.noteInfo.datetime,
           imageUrl: '',
           link: {
-            mobileWebUrl: '',
-            webUrl: '',
+            mobileWebUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,
+            webUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,
           }
         },
         buttons: [
           {
             title: '자세히 보기',
             link: {
-              mobileWebUrl: '',
-              webUrl: '',
+              mobileWebUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,
+              webUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,
             }
           }
         ]
       })
-      
     }
   },
   mounted() {
