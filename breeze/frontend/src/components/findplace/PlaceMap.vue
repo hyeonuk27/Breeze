@@ -130,7 +130,7 @@ export default {
       var placePhone = document.createElement('a')
       placePhone.className = "place-desc"
       placePhone.innerHTML = place.phone;
-      placePhone.href = 'tell: + place.phone'
+      placePhone.href = 'tel: ' + place.phone
 
       var placeUrl = document.createElement('a')
       placeUrl.innerHTML = '상세보기'
