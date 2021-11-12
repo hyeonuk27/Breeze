@@ -2,7 +2,7 @@
   <div class="middle-list-container">
     <div class="middle-list-items">
       <div 
-        v-for="(place, idx) in modeList" 
+        v-for="(place, idx) in middleLists" 
         :key="idx"
       >
         <label class="middle-select-label">
@@ -15,8 +15,8 @@
           <div class="circle-design"></div>
           <div class="desc-text">
             <div class="select-text name">{{ place.name }}</div>
-            <div class="select-text time">평균 이동 시간 {{ modeAvgTime[idx]}} 분</div>
-            <!-- <div class="select-text time">평균 이동 시간 {{ place.avgTime}} 분</div> -->
+            <!-- <div class="select-text time">평균 이동 시간 {{ modeAvgTime[idx]}} 분</div> -->
+            <div class="select-text time">평균 이동 시간 {{ place.avgTime}} 분</div>
           </div>
         </label>
       </div>
@@ -130,11 +130,11 @@ export default {
     }
   },
   created() {
-    // this.modeList = this.middleLists
+    this.modeList = this.middleLists
     //아래 안되면 this.middleLists로 바꿔보기
     // this.partAverageTime(this.middleLists)
     this.selectedMiddle = this.middle
-    this.sendAxios()
+    // this.sendAxios()
   //  this.setInfo()
   },
   computed: {
@@ -157,8 +157,8 @@ export default {
       // this.filterList(newVal)
       // this.partAverageTime(this.modeList)
       // this.partAverageTime(this.middleLists)
-      this.wait()
-      console.log('33333333333333333333333333333333333')
+      // this.wait()
+      // console.log('33333333333333333333333333333333333')
       // this.middleUpdate(0)
     },
     // middleLists: function () {
