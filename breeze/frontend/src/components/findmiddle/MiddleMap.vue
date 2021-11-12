@@ -108,8 +108,8 @@ export default {
       console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
       const response = await mapApi.middle(data)
       console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
-      // this.modeList = response.middle_data
-      this.modeList = this.partAverageTime(response.middle_data)
+      this.modeList = response.middle_data
+      // this.modeList = this.partAverageTime(response.middle_data)
 
 
 
@@ -501,7 +501,7 @@ computed: {
 },
 watch: {
     mode : function (newVal, ) {
-      this.setMiddleLists([])
+      // this.setMiddleLists([])
       console.log('222222222222222222222222')
       // console.log(newVal, this.middle, '모드랑 중간값 확인')
       this.modeIdx = newVal
@@ -512,7 +512,7 @@ watch: {
       // console.log(this.mode, newVal, '모드랑 중간값 확인')
       this.middleIdx = newVal
       console.log('444444444444444444444444444444444')
-      this.initMap2()
+      this.initMap()
       console.log('9999999999999999999999999999999')
     }
   }

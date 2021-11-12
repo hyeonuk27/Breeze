@@ -2,7 +2,7 @@
   <div class="middle-list-container">
     <div class="middle-list-items">
       <div 
-        v-for="(place, idx) in middleLists" 
+        v-for="(place, idx) in modeList" 
         :key="idx"
       >
         <label class="middle-select-label">
@@ -15,8 +15,8 @@
           <div class="circle-design"></div>
           <div class="desc-text">
             <div class="select-text name">{{ place.name }}</div>
-            <!-- <div class="select-text time">평균 이동 시간 {{ modeAvgTime[idx]}} 분</div> -->
-            <div class="select-text time">평균 이동 시간 {{ place.avgTime}} 분</div>
+            <div class="select-text time">평균 이동 시간 {{ modeAvgTime[idx]}} 분</div>
+            <!-- <div class="select-text time">평균 이동 시간 {{ place.avgTime}} 분</div> -->
           </div>
         </label>
       </div>
@@ -114,21 +114,27 @@ export default {
         'participants' : partBox,
         'middle_place_type' : this.mode
       }
-      console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
+      console.log(data, '내가 axios에 data로 담아 보내는 정보. 리스트')
       const response = await mapApi.middle(data)
       // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
       this.modeList = response.middle_data
       this.partAverageTime(this.modeList)
       //스토어 저장
-      this.setMiddleLists(this.modeList)
+      // this.setMiddleLists(this.modeList)
     },
+    async wait() {
+      await this.sendAxios()
+      console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+      console.log(this.modeList, '다 잘 들어오니')
+      this.middleUpdate(0)
+    }
   },
   created() {
-    this.modeList = this.middleLists
+    // this.modeList = this.middleLists
     //아래 안되면 this.middleLists로 바꿔보기
     // this.partAverageTime(this.middleLists)
     this.selectedMiddle = this.middle
-    // this.sendAxios()
+    this.sendAxios()
   //  this.setInfo()
   },
   computed: {
@@ -151,8 +157,7 @@ export default {
       // this.filterList(newVal)
       // this.partAverageTime(this.modeList)
       // this.partAverageTime(this.middleLists)
-      // this.sendAxios()
-      window.setTimeout(this.middleUpdate(0), 7000)
+      this.wait()
       console.log('33333333333333333333333333333333333')
       // this.middleUpdate(0)
     },
