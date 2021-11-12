@@ -212,6 +212,7 @@ export default {
   text-align: left;
   color: #3a3c3c;
   background: rgba(184, 208, 250, 0.9);
+  /* background: rgba(256, 256, 256, 0.9); */
   border-radius: 10px;
 
 }

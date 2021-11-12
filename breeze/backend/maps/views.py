@@ -52,8 +52,8 @@ def get_middle(request):
         center = P.centroid
         # 위도 기준으로 차이가 적은 후보 역들 추리기
         diff = []
-        for lat in passenger['latitude']:
-            diff.append(abs(lat - center.x)) 
+        for lat, long in zip(passenger['latitude'], passenger['longitude']):
+            diff.append(abs(lat - center.x) + abs(long - center.y)) 
         passenger['diff'] = diff
         subway_list = passenger.sort_values('diff')[:20]
         # 후보 역들과 중간 지점의 거리 구하기
@@ -66,11 +66,17 @@ def get_middle(request):
         final_subway = final_subway.drop(['id'], axis=1)
         print(final_subway)
     else:
-        center = [sum(list(map(lambda x: x[0], participants_loc))) / 2, sum(list(map(lambda x: x[1], participants_loc))) / 2]
+        x, y = [], []
+        for participant in participants_loc:
+            x.append(participant[0])
+            y.append(participant[1])
+        center = [sum(x) / 2, sum(y) / 2]
+        print(x, y)
+        print(center)
         # 위도 기준으로 차이가 적은 후보 역들 추리기
         diff = []
-        for lat in passenger['latitude']:
-            diff.append(abs(lat - center[0])) 
+        for lat, long in zip(passenger['latitude'], passenger['longitude']):
+            diff.append(abs(lat - center[0]) + abs(long - center[1])) 
         passenger['diff'] = diff
         subway_list = passenger.sort_values('diff')[:20]
         # 후보 역들과 중간 지점의 거리 구하기
@@ -192,13 +198,25 @@ def get_time(longitude, latitude, participant):
         ('alternatives', 'false'),
         ('road_details', 'false'),
     )
-
-    response = requests.get('https://apis-navi.kakaomobility.com/v1/directions', headers=headers, params=params).json()
-    time_sec = response.get('routes')[0].get('summary').get('duration')
-    time_min = round(time_sec/60)
     
-    guides_list = response.get('routes')[0].get('sections')[0].get('guides')
+    time_min = 0
+    guides_list = []
+    response = requests.get('https://apis-navi.kakaomobility.com/v1/directions', headers=headers, params=params).json()
+    try:
+        time_sec = response.get('routes')[0].get('summary').get('duration')
+        time_min = round(time_sec/60)
+    except TypeError as e:
+        print(e)
+    except AttributeError as e:
+        print(e)
         
+    try:
+        guides_list = response.get('routes')[0].get('sections')[0].get('guides')
+    except TypeError as e:
+        print(e)
+    except AttributeError as e:
+        print(e)
+    
     return (time_min, guides_list)
 
 
@@ -210,20 +228,20 @@ def get_store(request, category_id, filter_id):
     print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 
     # 전체 결과가 10개 이하면 다 반환
-    if len(category_store) < 11:
+    if len(category_store) < 21:
         stores = category_store
     else:
         if filter_id == 0:
             # 인기순
-            stores = category_store.order_by('-review')[:10]
+            stores = category_store.order_by('-review')[:20]
         elif filter_id == 1:
             # 평점순
-            stores = category_store.order_by('-rate')[:10]
+            stores = category_store.order_by('-rate')[:20]
         elif filter_id == 2:
             # 랜덤
             category_store = list(category_store)
             random.shuffle(category_store)
-            stores = category_store[:10]
+            stores = category_store[:20]
     
     store_data = []
     for store in stores:
