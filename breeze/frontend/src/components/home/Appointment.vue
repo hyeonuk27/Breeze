@@ -39,11 +39,16 @@ export default {
       'setIsAppointmentDeleted'
     ]),
     async deleteAppointment(secret_code) {
-      const data = {
-        secretCode: secret_code,
-      };
-      await appointmentApi.deleteAppointment(data);
-      this.setIsAppointmentDeleted(true)
+      if (confirm('약속을 삭제하시겠습니까?')) {
+        const data = {
+          secretCode: secret_code,
+        };
+        const response = await appointmentApi.deleteAppointment(data)
+        // console.log(response)
+        if (response == 'success') {
+          this.setIsAppointmentDeleted(true)
+        }
+      }
     },
     moveToAppointmentNote: function () {
       this.$router.push({
