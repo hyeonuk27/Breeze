@@ -23,6 +23,7 @@
 <script>
 import appointmentApi from "@/api/appointment.js";
 import { mapActions } from "vuex";
+import Swal from 'sweetalert2'
 
 export default {
   name: "Appointment",
@@ -38,12 +39,42 @@ export default {
     ...mapActions ([
       'setIsAppointmentDeleted'
     ]),
-    async deleteAppointment(secret_code) {
-      const data = {
-        secretCode: secret_code,
-      };
-      await appointmentApi.deleteAppointment(data);
-      this.setIsAppointmentDeleted(true)
+    deleteAppointment(secret_code) {
+      Swal.fire({
+        html: "<b>정말 삭제하시겠습니까?</b>",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#94B9F3',
+        cancelButtonColor: '#FF91A4',
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소',
+      }).then(async(result) => {
+        if (result.isConfirmed) {
+          const data = {
+            secretCode: secret_code,
+          };
+          const response = await appointmentApi.deleteAppointment(data)
+          if (response == 'success') {
+            this.setIsAppointmentDeleted(true)
+            Swal.fire({
+              html: "<b>삭제되었습니다</b>",
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          }
+        }
+      })
+      // if (confirm('약속을 삭제하시겠습니까?')) {
+      //   const data = {
+      //     secretCode: secret_code,
+      //   };
+      //   const response = await appointmentApi.deleteAppointment(data)
+      //   // console.log(response)
+      //   if (response == 'success') {
+      //     this.setIsAppointmentDeleted(true)
+      //   }
+      // }
     },
     moveToAppointmentNote: function () {
       this.$router.push({

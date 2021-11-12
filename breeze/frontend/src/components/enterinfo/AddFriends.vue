@@ -68,10 +68,10 @@ export default {
       if ( this.searchWord.trim() ) {
         // 키워드 장소 검색
         const URL = 'https://dapi.kakao.com/v2/local/search/keyword.json'
-        const apiKey = process.env.VUE_APP_KAKAO_API_KEY
+        const apiKey = process.env.VUE_APP_KAKAO_CLIENT_ID
         axios.get(URL, {
           headers: {
-            'Authorization': apiKey
+            'Authorization': 'KakaoAK ' + apiKey
           },
           params: {
             'query': this.searchWord
