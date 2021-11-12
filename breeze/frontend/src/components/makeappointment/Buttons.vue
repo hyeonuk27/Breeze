@@ -66,9 +66,10 @@ export default {
       Kakao.Link.sendDefault({
         objectType: 'feed',
         content: {
-          title: this.noteInfo.middle_place,
-          description: this.noteInfo.datetime,
-          imageUrl: '',
+          title: '약속 쪽지가 바람에 날아왔어요~!!',
+          description: this.noteInfo.datetime + '에 ' + this.noteInfo.middle_place + '에서 만나요 :)',
+          imageUrl: 'https://ifh.cc/g/bYAc4j.png',
+          // imageUrl: 'https://ifh.cc/g/xVTZzF.jpg',
           link: {
             mobileWebUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,
             webUrl: 'https://k5a202.p.ssafy.io/makeappointment/' + this.$route.params.secretCode,

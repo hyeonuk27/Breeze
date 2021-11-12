@@ -1,5 +1,5 @@
 <template>
-  <swiper class="swiper" :options="swiperOption" ref="groupList" @slide-change-transition-end="getActive">
+  <swiper class="swiper" :options="swiperOption" ref="groupList" @slide-change-transition-start ="getActive" >
     <Group
       v-for="(group, idx) in groups"
       :key="idx"
@@ -49,6 +49,9 @@ export default {
         navigation: { 
           nextEl: '.swiper-button-next', 
           prevEl: '.swiper-button-prev',
+        },
+        on: {
+          slideChange: this.getActive,
         } 
       },
       groups: [],
@@ -168,14 +171,14 @@ export default {
       'setGroupId'
     ]),
     getActive () {
-      // console.log('바뀌었다')
+      console.log('바뀌었다!')
       const swiper = this.$refs.groupList.$swiper
-      this.activeIndex = swiper.activeIndex
-      // console.log(this.activeIdx)
+      this.activeIndex = swiper.realIndex
     },
     async getGroups () {
       const response = await groupApi.getGroupList()
-      // console.log(response.group_data, '그룹 리스트 잘 들어왔는지 확인')
+      console.log(response)
+      console.log(response.group_data, '그룹 리스트 잘 들어왔는지 확인')
       this.groups = response.group_data
     },
     setGroupMemInfo (groupMembers) {
@@ -202,7 +205,7 @@ export default {
 
     async setGroupInfo() {
       const response = await groupApi.getGroupList()
-      // console.log(response.group_data, '그룹 리스트 잘 들어왔는지 확인')
+      console.log(response.group_data, '그룹 리스트 잘 들어왔는지 확인')
       this.groups = response.group_data
       if (this.groups.length !== 0) {
         const selectedGroup = this.groups[this.activeIndex]
