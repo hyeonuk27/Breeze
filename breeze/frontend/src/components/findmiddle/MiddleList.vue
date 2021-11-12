@@ -15,7 +15,8 @@
           <div class="circle-design"></div>
           <div class="desc-text">
             <div class="select-text name">{{ place.name }}</div>
-            <div class="select-text time">평균 이동 시간 {{ modeAvgTime[idx]}} 분</div>
+            <!-- <div class="select-text time">평균 이동 시간 {{ modeAvgTime[idx]}} 분</div> -->
+            <div class="select-text time">평균 이동 시간 {{ place.avgTime}} 분</div>
           </div>
         </label>
       </div>
@@ -25,7 +26,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-// import mapApi from '@/api/map.js'
+import mapApi from '@/api/map.js'
 
 export default {
   name: 'MiddleList',
@@ -98,12 +99,36 @@ export default {
     //   this.partAverageTime(this.modeList)
     //   this.selectedMiddle = this.middle
     // }
+    async sendAxios () {
+      const cnt = this.participants.length
+      const partBox = []
+      for (let i = 0; i < cnt; i++) {
+        const part = {
+          baramiType: this.participants[i].baramiType,
+          partLatitude: this.participants[i].partLatitude,
+          partLongitude: this.participants[i].partLongitude
+        }
+      partBox.push(part)
+      }
+      const data = {
+        'participants' : partBox,
+        'middle_place_type' : this.mode
+      }
+      console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
+      const response = await mapApi.middle(data)
+      // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
+      this.modeList = response.middle_data
+      this.partAverageTime(this.modeList)
+      //스토어 저장
+      this.setMiddleLists(this.modeList)
+    },
   },
   created() {
     this.modeList = this.middleLists
     //아래 안되면 this.middleLists로 바꿔보기
-    this.partAverageTime(this.modeList)
+    // this.partAverageTime(this.middleLists)
     this.selectedMiddle = this.middle
+    // this.sendAxios()
   //  this.setInfo()
   },
   computed: {
@@ -114,6 +139,7 @@ export default {
     ...mapGetters([
       'participants',
       'middleLists',
+      'isMapRendered',
     ]) 
   },
   watch: {
@@ -124,9 +150,23 @@ export default {
       // console.log('바뀐 값--->' + newVal, '이전 값--->' + oldVal)
       // this.filterList(newVal)
       // this.partAverageTime(this.modeList)
-      this.partAverageTime(this.middleLists)
-      this.middleUpdate(0)
-    }
+      // this.partAverageTime(this.middleLists)
+      // this.sendAxios()
+      window.setTimeout(this.middleUpdate(0), 7000)
+      console.log('33333333333333333333333333333333333')
+      // this.middleUpdate(0)
+    },
+    // middleLists: function () {
+    //   console.log('중간장소리스트들이 바뀌면... 여길 와라?? 리스트를 판단할 수 있을까?')
+      // this.middleUpdate(0)
+    // }
+    // isMapRendered: function (val) {
+    //   console.log(val)
+    //   if (val == true) {
+    //     console.log('지도 렌더링 된 후에야 중간을 바꾸자')
+    //     this.middleUpdate(0)
+    //   } 
+    // }
   }
 }
 </script>

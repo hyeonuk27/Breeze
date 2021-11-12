@@ -19,16 +19,19 @@ export default {
       modeList: [],
       //중간장소 정해진 후, 참여자들의 정보 리스트
       partInfo: [],
+      // modeAvgTime: [],
       modeIdx: 0,
       middleIdx: 0,
       latitude: 0,
       longitude: 0,
+      map: null,
       color: ['#f39bab', '#f3cb9b', '#f3e3b3', '#bbd3ab', '#a3d3fb', '#ab9be3'],
     }
   },
   methods: {
     ...mapActions([
       'setMiddleLists',
+      'setIsMapRendered',
     ]),
 
     // filterList(modeIdx) {
@@ -60,6 +63,28 @@ export default {
       // console.log(this.partInfo, '참여자 정보')
 
     },
+    partAverageTime(data) {
+      let temp = []
+      let newData = data
+      const placeCnt = data.length
+      for (let i = 0; i < placeCnt; i++) {
+        const partCnt = data[i].participants.length
+        for (let j = 0; j < partCnt; j++) {
+          temp.push(data[i].participants[j].time)
+        }
+        // console.log(temp, '장소별 각 참가자의 소요 시간')
+        const result = temp.reduce(function add(sum, currVal) {
+          return sum + currVal
+        }, 0)
+        const avg = Math.round(result / temp.length)
+        // this.modeAvgTime.push(avg)
+        // console.log(this.modeAvgTime, '장소별 평균 시간')
+        newData[i]['avgTime'] = avg
+        temp = []
+      }
+      return newData
+    },
+
     async initMap() {
       // console.log('%%%%%%%%%%%%%%%%%%%%%%%')
       const cnt = this.participants.length
@@ -78,15 +103,19 @@ export default {
       }
       console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
       const response = await mapApi.middle(data)
-      // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
-      // this.middleList = response.middle_data
-      this.modeList = response.middle_data
+      console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
+      // this.modeList = response.middle_data
+      this.modeList = this.partAverageTime(response.middle_data)
+
+
+
       //스토어 저장
       this.setMiddleLists(this.modeList)
       // console.log('**************************')
 
       // const modes = this.filterList(this.modeIdx)
       // this.concateArray(modes)
+      console.log('init함수 안 렌더링 중 확인하기', this.modeList)
       this.concateArray(this.modeList)
 
       const selectedMiddle = this.modeList[this.middleIdx]
@@ -177,7 +206,11 @@ export default {
       }
       map.setBounds(bounds)
     },
+
+
+
     async sendAxios () {
+      // this.setMiddleLists([])
       const cnt = this.participants.length
       const partBox = []
       for (let i = 0; i < cnt; i++) {
@@ -193,17 +226,27 @@ export default {
         'middle_place_type' : this.mode
       }
       console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
+      console.log('5555555555555555555555555555555')
       const response = await mapApi.middle(data)
       // console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
-      this.modeList = response.middle_data
+      // this.modeList = response.middle_data
+      console.log('66666666666666666666666666666666666666666666')
+      this.modeList = this.partAverageTime(response.middle_data)
       //스토어 저장
       this.setMiddleLists(this.modeList)
     },
+
+
     async waitAndRun() {
       await this.sendAxios()
       //65에서 85까지 주석처리한 후 테스트해봐야
+      console.log('777777777777777777777777777777')
+      console.log(this.middleLists, '잘 들어가냐고*****************')
       this.initMap()
+      console.log('8888888888888888888888888888888888')
     }
+
+
   },
   created() {
     this.modeIdx = this.mode
@@ -213,7 +256,7 @@ export default {
   },
   mounted() {
   if (window.kakao && window.kakao.maps) {
-    //218 주석처리 후, 217번 테스트해보기
+    console.log('맨 처음 ??')
     // this.waitAndRun()
     this.initMap();
   } else {
@@ -237,17 +280,19 @@ computed: {
 },
 watch: {
     mode : function (newVal, ) {
+      // this.setMiddleLists([])
+      console.log('222222222222222222222222')
       // console.log(newVal, this.middle, '모드랑 중간값 확인')
       this.modeIdx = newVal
-      //244 주석처리 후, 243 테스트 해보기
       // this.waitAndRun()
       this.initMap()
     },
     middle : function (newVal, ) {
       // console.log(this.mode, newVal, '모드랑 중간값 확인')
       this.middleIdx = newVal
-      //waitAndRun 테스트할 때, 아래 initMap에서 axios 부분 주석처리해야!
+      console.log('444444444444444444444444444444444')
       this.initMap()
+      console.log('9999999999999999999999999999999')
     }
   }
 

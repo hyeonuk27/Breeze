@@ -87,7 +87,8 @@ export default {
       this.setMiddleLat(middleInfo.latitude)
       this.setMiddleLong(middleInfo.longitude)
       this.setPartMidTime(this.partInfo)
-      this.$router.push({ name: 'FindPlace' })
+      console.log('멈춰')
+      // this.$router.push({ name: 'FindPlace' })
     },
 
   },
