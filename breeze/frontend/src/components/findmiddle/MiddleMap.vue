@@ -85,7 +85,228 @@ export default {
       return newData
     },
 
+    //신기하게도 처음 페이지에 들어왔을 때, (created된 후에) 
+    //바로 initMap이란 함수를 찾아서 작동되는 듯
+    //함수명을 바꾸면 렌더링이 안되버림... 하... :)
     async initMap() {
+      console.log('initMap1')
+
+      const cnt = this.participants.length
+      const partBox = []
+      for (let i = 0; i < cnt; i++) {
+        const part = {
+          baramiType: this.participants[i].baramiType,
+          partLatitude: this.participants[i].partLatitude,
+          partLongitude: this.participants[i].partLongitude
+        }
+      partBox.push(part)
+      }
+      const data = {
+        'participants' : partBox,
+        'middle_place_type' : this.mode
+      }
+      console.log(data, '내가 axios에 data로 담아 보내는 정보. 맵')
+      const response = await mapApi.middle(data)
+      console.log(response.middle_data, '중간 장소 관련 data들이 넘어온다. 맵')
+      // this.modeList = response.middle_data
+      this.modeList = this.partAverageTime(response.middle_data)
+
+
+
+      //스토어 저장
+      this.setMiddleLists(this.modeList)
+      // console.log('**************************')
+
+      // const modes = this.filterList(this.modeIdx)
+      // this.concateArray(modes)
+      console.log('init함수 안 렌더링 중 확인하기', this.modeList)
+      this.concateArray(this.modeList)
+
+      const selectedMiddle = this.modeList[this.middleIdx]
+      // console.log(selectedMiddle, '중간장소 확인')
+      this.latitude = selectedMiddle.latitude
+      this.longitude = selectedMiddle.longitude
+      
+
+      var container = document.getElementById('map');
+      var options = {
+        center: new kakao.maps.LatLng(this.latitude, this.longitude),
+        level: 3,
+        // draggable: true
+      };
+
+      var map = new kakao.maps.Map(container, options);
+      
+      var bounds = new kakao.maps.LatLngBounds()
+      var points = []
+      
+      var middleMarkerSrc = require('@/assets/map/middle.png')
+      var middelMarkerSize = new kakao.maps.Size(30, 30)
+      var middleMarkerImage = new kakao.maps.MarkerImage(middleMarkerSrc, middelMarkerSize)
+      var middleMarkerPosition  = options.center
+      var marker = new kakao.maps.Marker({
+        map: map,
+        image: middleMarkerImage,
+        position: middleMarkerPosition,
+      })
+      points.push(middleMarkerPosition)
+      marker.setMap(map)
+
+
+      for (var i = 0; i < this.partInfo.length; i++) {
+        // console.log(this.partInfo[i], '참여자 정보')
+
+        // var partMarkerSrc = require("@/assets/barami/m" + this.partInfo[i].baramiType + ".png")
+        var partMarkerSrc = require(`@/assets/barami/m${this.partInfo[i].baramiType}.png`)
+        var partMarkerSize = new kakao.maps.Size(45, 45)
+        var partMarkerImage = new kakao.maps.MarkerImage(partMarkerSrc, partMarkerSize)
+        var partMarkerPosition = new kakao.maps.LatLng(this.partInfo[i].partLatitude, this.partInfo[i].partLongitude)
+
+        var partMarker = new kakao.maps.Marker({
+            // map: map,
+            image : partMarkerImage,
+            position: partMarkerPosition,
+        })
+        points.push(partMarkerPosition)
+        partMarker.setMap(map)
+
+        var content = `<div class="find-middle-overlay">`;
+            content +=  `<div class="desc">`
+            content +=    `<div class="name">${this.partInfo[i].partName}</div>`;
+            content +=    `<div class="time">${this.partInfo[i].time}분</div>`;
+            content +=  `</div>`;
+            content += `</div>`;
+        
+        var customOverlay = new kakao.maps.CustomOverlay({
+          map: map,
+          position: partMarkerPosition,
+          content: content,
+          xAnchor: 0.55,
+          yAnchor: -0.03,
+        })
+        customOverlay.setMap(map)
+
+        var linePath = []
+        const routesList = this.partInfo[i].route
+
+        for (var j = 0; j < routesList.length; j++) {
+          var routesLat = routesList[j][0]
+          var routesLng = routesList[j][1]
+          linePath.push(new kakao.maps.LatLng(routesLat, routesLng))
+        }
+        // console.log(linePath, '내가 찍을 좌표들')
+        var polyline = new kakao.maps.Polyline({
+          path: linePath,
+          strokeWeight: 7, 
+          strokeColor: this.color[this.partInfo[i].baramiType], 
+          strokeOpacity: 1, 
+          strokeStyle: 'solid'
+        })
+        polyline.setMap(map);
+      }
+
+      for (var k = 0; k < points.length; k++) {
+        bounds.extend(points[k])
+      }
+      map.setBounds(bounds)
+    },
+
+    async initMap2() {
+      console.log('initMap2')
+    
+      console.log('init함수 안 렌더링 중 확인하기', this.modeList)
+      this.concateArray(this.modeList)
+
+      const selectedMiddle = this.modeList[this.middleIdx]
+      // console.log(selectedMiddle, '중간장소 확인')
+      this.latitude = selectedMiddle.latitude
+      this.longitude = selectedMiddle.longitude
+      
+
+      var container = document.getElementById('map');
+      var options = {
+        center: new kakao.maps.LatLng(this.latitude, this.longitude),
+        level: 3,
+        // draggable: true
+      };
+
+      var map = new kakao.maps.Map(container, options);
+      
+      var bounds = new kakao.maps.LatLngBounds()
+      var points = []
+      
+      var middleMarkerSrc = require('@/assets/map/middle.png')
+      var middelMarkerSize = new kakao.maps.Size(30, 30)
+      var middleMarkerImage = new kakao.maps.MarkerImage(middleMarkerSrc, middelMarkerSize)
+      var middleMarkerPosition  = options.center
+      var marker = new kakao.maps.Marker({
+        map: map,
+        image: middleMarkerImage,
+        position: middleMarkerPosition,
+      })
+      points.push(middleMarkerPosition)
+      marker.setMap(map)
+
+
+      for (var i = 0; i < this.partInfo.length; i++) {
+        // console.log(this.partInfo[i], '참여자 정보')
+
+        // var partMarkerSrc = require("@/assets/barami/m" + this.partInfo[i].baramiType + ".png")
+        var partMarkerSrc = require(`@/assets/barami/m${this.partInfo[i].baramiType}.png`)
+        var partMarkerSize = new kakao.maps.Size(45, 45)
+        var partMarkerImage = new kakao.maps.MarkerImage(partMarkerSrc, partMarkerSize)
+        var partMarkerPosition = new kakao.maps.LatLng(this.partInfo[i].partLatitude, this.partInfo[i].partLongitude)
+
+        var partMarker = new kakao.maps.Marker({
+            // map: map,
+            image : partMarkerImage,
+            position: partMarkerPosition,
+        })
+        points.push(partMarkerPosition)
+        partMarker.setMap(map)
+
+        var content = `<div class="find-middle-overlay">`;
+            content +=  `<div class="desc">`
+            content +=    `<div class="name">${this.partInfo[i].partName}</div>`;
+            content +=    `<div class="time">${this.partInfo[i].time}분</div>`;
+            content +=  `</div>`;
+            content += `</div>`;
+        
+        var customOverlay = new kakao.maps.CustomOverlay({
+          map: map,
+          position: partMarkerPosition,
+          content: content,
+          xAnchor: 0.55,
+          yAnchor: -0.03,
+        })
+        customOverlay.setMap(map)
+
+        var linePath = []
+        const routesList = this.partInfo[i].route
+
+        for (var j = 0; j < routesList.length; j++) {
+          var routesLat = routesList[j][0]
+          var routesLng = routesList[j][1]
+          linePath.push(new kakao.maps.LatLng(routesLat, routesLng))
+        }
+        // console.log(linePath, '내가 찍을 좌표들')
+        var polyline = new kakao.maps.Polyline({
+          path: linePath,
+          strokeWeight: 7, 
+          strokeColor: this.color[this.partInfo[i].baramiType], 
+          strokeOpacity: 1, 
+          strokeStyle: 'solid'
+        })
+        polyline.setMap(map);
+      }
+
+      for (var k = 0; k < points.length; k++) {
+        bounds.extend(points[k])
+      }
+      map.setBounds(bounds)
+    },
+    async initMap3() {
+      console.log('initMap3')
       // console.log('%%%%%%%%%%%%%%%%%%%%%%%')
       const cnt = this.participants.length
       const partBox = []
@@ -252,12 +473,12 @@ export default {
     this.modeIdx = this.mode
     this.middleIdx = this.middle
     this.modeList = this.middleLists
-    // console.log('created')
+    console.log(this.mode, this.middle, this.middleLists)
+    console.log('created')
   },
   mounted() {
   if (window.kakao && window.kakao.maps) {
-    console.log('맨 처음 ??')
-    // this.waitAndRun()
+    console.log('새로고침 된 경우로 추정')
     this.initMap();
   } else {
     const script = document.createElement('script');
@@ -280,7 +501,7 @@ computed: {
 },
 watch: {
     mode : function (newVal, ) {
-      // this.setMiddleLists([])
+      this.setMiddleLists([])
       console.log('222222222222222222222222')
       // console.log(newVal, this.middle, '모드랑 중간값 확인')
       this.modeIdx = newVal
@@ -291,7 +512,7 @@ watch: {
       // console.log(this.mode, newVal, '모드랑 중간값 확인')
       this.middleIdx = newVal
       console.log('444444444444444444444444444444444')
-      this.initMap()
+      this.initMap2()
       console.log('9999999999999999999999999999999')
     }
   }
