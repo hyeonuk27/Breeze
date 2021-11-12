@@ -30,6 +30,7 @@ import { SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import groupApi from '@/api/group.js'
 import { mapGetters, mapActions } from 'vuex'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'Group',
@@ -51,19 +52,45 @@ export default {
       'setGroupName',
       'setGroupId',
     ]),
-    async deleteGroup() {
+    deleteGroup() {
       console.log('#########################################삭제')
       console.log(this.groupIdx)
-      if (confirm('정말 삭제하시겠습니까?')) {
-        const response = await groupApi.deleteGroup(this.groupId)
-        // console.log(response)
-        if (response == 'success') {
-          this.setParticipants([])
-          this.setGroupName('')
-          this.setGroupId(null)
-          this.$emit('renew-grouplist')
+      Swal.fire({
+        html: "<b>정말 삭제하시겠습니까?</b>",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#94B9F3',
+        cancelButtonColor: '#FF91A4',
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소',
+      }).then(async(result) => {
+        if (result.isConfirmed) {
+          const response = await groupApi.deleteGroup(this.groupId)
+          // console.log(response)
+          if (response == 'success') {
+            this.setParticipants([])
+            this.setGroupName('')
+            this.setGroupId(null)
+            this.$emit('renew-grouplist')
+            Swal.fire({
+              html: "<b>삭제되었습니다</b>",
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          }
         }
-      }
+      })
+      // if (confirm('정말 삭제하시겠습니까?')) {
+      //   const response = await groupApi.deleteGroup(this.groupId)
+      //   // console.log(response)
+      //   if (response == 'success') {
+      //     this.setParticipants([])
+      //     this.setGroupName('')
+      //     this.setGroupId(null)
+      //     this.$emit('renew-grouplist')
+      //   }
+      // }
     }
   },
   created() {
