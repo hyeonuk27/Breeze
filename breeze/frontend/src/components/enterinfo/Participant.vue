@@ -16,37 +16,57 @@
       </div>
       <button
         class="col-3 cancel-btn"
-        @click="deleteParticipant([idx, participant.baramiType])">
+        @click="deleteParticipant([idx, participant.baramiType])"
+      >
         <i class="fas fa-times"></i>
       </button>
     </div>
-    <hr v-if="idx < participants.length-1" class="participant-hr">
+    <hr v-if="idx < participants.length - 1" class="participant-hr" />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapGetters } from "vuex"
 
 export default {
-  name: 'Participant',
+  name: "Participant",
   props: {
-    participant: Object,
     idx: Number,
+    participant: Object,
   },
   methods: {
-    ...mapActions([
-      'deleteParticipant'
-    ])
+    ...mapActions(["deleteParticipant"]),
   },
   computed: {
-    ...mapGetters([
-      'participants'
-    ])
-  }
+    ...mapGetters(["participants"]),
+  },
 }
 </script>
 
 <style scoped>
+.cancel-btn {
+  background: none;
+  border: none;
+  text-align: right;
+  color: #a7a7a7;
+  font-weight: lighter;
+}
+.content-box {
+  margin-left: 5%;
+  text-align: left;
+}
+.image-box {
+  margin-right: 3%;
+  margin-left: 0;
+  width: 18%;
+  padding: 7px;
+  border-radius: 70%;
+  background: #e9edfe;
+}
+.image-box-barami {
+  width: 100%;
+  height: 100%;
+}
 .participant {
   width: 100%;
 }
@@ -55,45 +75,15 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.image-box {
-  /* grid-column: 1; */
-  /* grid-row: 2; */
-  /* align-self: left;
-  justify-self: left; */
-  /* height: 5%; */
-  margin-right: 3%;
-  margin-left: 0;
-  width: 18%;
-  padding: 7px;
-  border-radius: 70%;
-  background: #E9EDFE;
-  }
-.image-box-barami {
-  width: 100%;
-  height: 100%;
-}
-.content-box {
-  margin-left: 5%;
-  text-align: left;
-}
-.participant-name {
-  font-weight: bold;
-}
-.participant-location {
-  font-size: 10pt;
-  color: #7B6F72;
-}
 .participant-hr {
   color: #a7a7a7;
   margin-left: 3%;
 }
-.cancel-btn {
-  background: none;
-  border: none;
-  text-align: right;
-  /* padding-right: 4%; */
-  /* width: 22%; */
-  color: #a7a7a7;
-  font-weight: lighter;
+.participant-location {
+  font-size: 10pt;
+  color: #7b6f72;
+}
+.participant-name {
+  font-weight: bold;
 }
 </style>

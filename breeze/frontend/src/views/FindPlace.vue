@@ -7,46 +7,45 @@
 </template>
 
 <script>
+import MakeAppointmentBtn from "@/components/findplace/MakeAppointmentBtn"
+import PlaceMap from "@/components/findplace/PlaceMap"
+import WishPlaceList from "@/components/findplace/WishPlaceList"
 import store from "@/store"
-import PlaceMap from "@/components/findplace/PlaceMap";
-import WishPlaceList from "@/components/findplace/WishPlaceList";
-import MakeAppointmentBtn from "@/components/findplace/MakeAppointmentBtn";
 
 export default {
-  name: 'FindPlace',
+  name: "FindPlace",
   components: {
+    MakeAppointmentBtn,
     PlaceMap,
     WishPlaceList,
-    MakeAppointmentBtn
   },
   beforeRouteEnter(to, from, next) {
-    if (from.name == 'FindMiddle') {
-      store.dispatch('setMode2', 0)
-      store.dispatch('setFilter', 0)
-      store.dispatch('setWishPlace', [])
+    if (from.name == "FindMiddle") {
+      store.dispatch("setFilter", 0)
+      store.dispatch("setMode2", 0)
+      store.dispatch("setWishPlace", [])
       next()
-    } else if ( from.name == 'MakeAppointment') {
-      store.dispatch('setMode2', 0)
-      store.dispatch('setFilter', 0)
+    } else if (from.name == "MakeAppointment") {
+      store.dispatch("setFilter", 0)
+      store.dispatch("setMode2", 0)
       next()
     } else {
       next()
     }
-  }
-} 
+  },
+}
 </script>
 
 <style scoped>
-
+.make-appointment-btn {
+  height: 14%;
+  background: rgba(233, 237, 252, 0.1);
+}
 .place-map {
   height: 64%;
 }
 .wish-place-list {
   height: 22%;
-  background: rgba(233, 237, 252, 0.1);
-}
-.make-appointment-btn {
-  height: 14%;
   background: rgba(233, 237, 252, 0.1);
 }
 </style>

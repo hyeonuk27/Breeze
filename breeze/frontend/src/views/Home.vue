@@ -6,37 +6,37 @@
 </template>
 
 <script>
-import Profile from "@/components/home/Profile";
-import AppointmentList from "@/components/home/AppointmentList";
+import AppointmentList from "@/components/home/AppointmentList"
+import Profile from "@/components/home/Profile"
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    Profile,
     AppointmentList,
+    Profile,
   },
   data() {
     return {
       appointmentCnt: 0,
-    };
+    }
   },
   methods: {
     setInfo(data) {
-      this.appointmentCnt = data;
+      this.appointmentCnt = data
     },
   },
-};
+}
 </script>
 
 <style scoped>
-  .home {
-    padding: 8%;
-  }
-  .profile {
-    height: 30%;
-    background: rgb(235, 239, 254);
-  }
-  .appointment-list {
-    height: 66%;
-  }
+.appointment-list {
+  height: 66%;
+}
+.home {
+  padding: 8%;
+}
+.profile {
+  height: 30%;
+  background: rgb(235, 239, 254);
+}
 </style>

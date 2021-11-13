@@ -5,6 +5,13 @@ export default {
     userId: null,
     userName: null,
   },
+  getters: {
+    getUserId(state) {
+      return state.userId
+    },
+    isLoggedIn: state => state.userId,
+    userName: state => state.userName,
+  },
   mutations: {
     SET_USER: function (state, data) {
       state.userId = data.userId,
@@ -23,11 +30,4 @@ export default {
       commit('REMOVE_USER')
     }
   },
-  getters: {
-    getUserId(state) {
-      return state.userId
-    },
-    isLoggedIn: state => state.userId,
-    userName: state => state.userName,
-  }
 }

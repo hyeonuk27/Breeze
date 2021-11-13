@@ -4,7 +4,8 @@
       <div
         v-for="(part, idx) in noteParticipants"
         :key="idx"
-        class="participant-item">
+        class="participant-item"
+      >
         <div class="participant">
           <div class="image-box">
             <img
@@ -23,15 +24,33 @@
 
 <script>
 export default {
-  name: 'Participants',
+  name: "Participants",
   props: {
     noteParticipants: Array,
-  }
-
+  },
 }
 </script>
 
 <style scoped>
+.barami-img {
+  width: 100%;
+  height: 100%;
+}
+.image-box {
+  width: 6.7vh;
+  height: 6.7vh;
+}
+.part-name {
+  font-size: 10px;
+  padding-top: 4px;
+}
+.part-time {
+  font-size: 9px;
+}
+.participant {
+  display: flex;
+  flex-direction: column;
+}
 .participant-container {
   width: 100%;
   padding-top: 5%;
@@ -46,24 +65,4 @@ export default {
   width: 13%;
   display: inline-block;
 }
-.participant {
-  display: flex;
-  flex-direction: column;
-}
-.image-box {
-  width: 6.7vh;
-  height: 6.7vh;
-}
-.barami-img {
-  width: 100%;
-  height: 100%;
-}
-.part-name {
-  font-size: 10px;
-  padding-top: 4px;
-}
-.part-time {
-  font-size: 9px;
-}
-
 </style>

@@ -1,66 +1,56 @@
 <template>
   <div class="find-middle-btn-items">
-    <button
-      type="button"
-      class="find-middle-btn"
-      @click="goToFindMiddle()"
-      >중간 장소 찾기
+    <button type="button" class="find-middle-btn" @click="goToFindMiddle()">
+      중간 장소 찾기
     </button>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import dayjs from 'dayjs'
-import  customParseFormat from 'dayjs/plugin/customParseFormat'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import Swal from 'sweetalert2'
+import { mapActions, mapGetters } from "vuex"
+import dayjs from "dayjs"
+import customParseFormat from "dayjs/plugin/customParseFormat"
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore"
+import Swal from "sweetalert2"
 dayjs.extend(customParseFormat)
 dayjs.extend(isSameOrBefore)
 
 export default {
-  name: 'FindMiddleBtn',
+  name: "FindMiddleBtn",
   methods: {
-    ...mapActions([
-      'setMode1',
-      'setMiddle'
-    ]),
-    goToFindMiddle: function() {
-      console.log(this.date)
+    ...mapActions(["setMiddle", "setMode1"]),
+    goToFindMiddle: function () {
       if (!this.date) {
         Swal.fire({
-          icon: 'error',
-          html: '<b>약속 날짜를 선택해주세요</b>',
+          icon: "error",
+          html: "<b>약속 날짜를 선택해주세요</b>",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         })
-      } else if (dayjs(this.date, 'YYYY-MM-DD HH:mm').isSameOrBefore(dayjs())) {
+      } else if (dayjs(this.date, "YYYY-MM-DD HH:mm").isSameOrBefore(dayjs())) {
         Swal.fire({
-          icon: 'error',
-          html: '<b>약속 날짜를 올바르게 선택해주세요</b>',
+          icon: "error",
+          html: "<b>약속 날짜를 올바르게 선택해주세요</b>",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         })
       } else if (this.participants.length < 2) {
         Swal.fire({
-          icon: 'error',
-          html: '<b>2명 이상의 친구를 추가해주세요</b>',
+          icon: "error",
+          html: "<b>2명 이상의 친구를 추가해주세요</b>",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         })
       } else {
-        this.$router.push({ name: 'FindMiddle' })
+        this.$router.push({ name: "FindMiddle" })
         this.setMode1(0)
         this.setMiddle(0)
       }
-    }
+    },
   },
   computed: {
-    ...mapGetters([
-      'participants', 
-      'date'
-    ])
-  }
+    ...mapGetters(["date", "participants"]),
+  },
 }
 </script>
 

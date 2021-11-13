@@ -7,27 +7,24 @@
 </template>
 
 <script>
-import authApi from '@/api/auth.js'
+import authApi from "@/api/auth.js"
 
 export default {
-  name: 'LoginRedirect',
+  name: "LoginRedirect",
   methods: {
     async kakaoLogin() {
-      let code = new URL(window.location.href).searchParams.get('code');
-      console.log(code, 'kakao 인가코드 axios 보내기 전 확인')
+      let code = new URL(window.location.href).searchParams.get("code")
       const response = await authApi.login(code)
-      console.log(response, '로그인_프론트에서 받은 응답 확인')
-      await this.$store.dispatch('setUser', {
+      await this.$store.dispatch("setUser", {
         userId: response.id,
-        userName: response.username
+        userName: response.username,
       })
-      this.$router.push('/home')
-    }
+      this.$router.push("/home")
+    },
   },
   created() {
     this.kakaoLogin()
-  }
-
+  },
 }
 </script>
 
@@ -37,41 +34,45 @@ export default {
   width: 100px;
   text-align: center;
 }
-
-.spinner > div {
-  width: 18px;
-  height: 18px;
-  background-color: #B8D0FA;
-  border-radius: 100%;
-  display: inline-block;
-  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-}
-
 .spinner .bounce1 {
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
   margin-right: 10%;
 }
-
 .spinner .bounce2 {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
   margin-right: 10%;
 }
-
-@-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0) }
-  40% { -webkit-transform: scale(1.0) }
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #b8d0fa;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
 }
-
+@-webkit-keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
 @keyframes sk-bouncedelay {
-  0%, 80%, 100% { 
+  0%,
+  80%,
+  100% {
     -webkit-transform: scale(0);
     transform: scale(0);
-  } 40% { 
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }
 </style>

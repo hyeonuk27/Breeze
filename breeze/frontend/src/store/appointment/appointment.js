@@ -2,170 +2,162 @@ import _ from 'lodash'
 
 export default {
   state: {
-    date: '',
-    timezone: 'Asia/Seoul',
-    participants: [],
     barami: [],
-    wishPlaces: [],
-    //약속쪽지에서 필요한 참여자 정보 리스트(타입, 이름, 시간)
-    partMiddleTime: [],
-    //중간장소 후보지들
-    middleLists: [],
-    middleName: '',
-    middleLatitude: 0,
-    middleLongitude: 0,
-    groupName: '',
+    date: '',
     groupId: null,
+    groupName: '',
+    isAppointmentDeleted: false,
     isFirst: false,
     isGroupSaved: false,
-    isAppointmentDeleted: false,
     isMapRendered: false,
+    middleLists: [],
+    middleLatitude: 0,
+    middleLongitude: 0,
+    middleName: '',
+    participants: [],
+    partMiddleTime: [],
+    timezone: 'Asia/Seoul',
+    wishPlaces: [],
   },
   getters: {
     date: state => state.date,
-    participants: state => state.participants,
-    partMiddleTime: state => state.partMiddleTime,
-    //isFirst, getIsFirst 둘 다 필요
-    isFirst: state => state.isFirst,
-    getIsFirst(state) {
-      return state.isFirst
-    },
     getGroupId(state) {
       return state.groupId
     },
-    isGroupSaved: state => state.isGroupSaved,
     getIsGroupSaved(state) {
       return state.isGroupSaved
     },
-    isAppointmentDeleted: state => state.isAppointmentDeleted,
+    getIsFirst(state) {
+      return state.isFirst
+    },
     groupId: state => state.groupId,
-    wishPlaces: state => state.wishPlaces,
-    middleLists: state => state.middleLists,
+    isAppointmentDeleted: state => state.isAppointmentDeleted,
+    isFirst: state => state.isFirst,
+    isGroupSaved: state => state.isGroupSaved,
+    isMapRendered: state => state.isMapRendered,
     middleName: state => state.middleName,
     middleLatitude: state => state.middleLatitude,
     middleLongitude: state => state.middleLongitude,
-    isMapRendered: state => state.isMapRendered,
+    middleLists: state => state.middleLists,
+    participants: state => state.participants,
+    partMiddleTime: state => state.partMiddleTime,
+    wishPlaces: state => state.wishPlaces,
   },
   mutations: {
-    SETDATE (state, data) {
-      state.date = data
-    },
-    //enterinfo에서 참여자 추가할 때마다 사용
-    ADDPARTICIPANT (state, data) {
+    ADD_PARTICIPANT(state, data) {
       if (state.barami.length != 0) {
         data['baramiType'] = state.barami.shift()
       }
       state.participants.push(data)
     },
-    DELETEPARTICIPANT (state, data) {
-      state.barami.push(data[1])
-      state.participants.splice(data[0], 1)
-    },
-    //전체 참여자 초기화 or 그룹 참여자 세팅 시 사용
-    SETPARTICIPANTS (state, data) {
-      state.participants = data
-    },
-    SET_WISH_PLACE (state, data) {
-      state.wishPlaces = data
-    },
-    ADD_WISH_PLACE (state, data) {
+    ADD_WISH_PLACE(state, data) {
       state.wishPlaces.push(data)
       state.wishPlaces = _.uniqBy(state.wishPlaces, 'placeName')
     },
-    DELETE_WISH_PLACE (state, data) {
+    DELETE_PARTICIPANT(state, data) {
+      state.barami.push(data[1])
+      state.participants.splice(data[0], 1)
+    },
+    DELETE_WISH_PLACE(state, data) {
       state.wishPlaces.splice(data, 1)
-    },  
-    SETPARTMIDTIME (state, data) {
-      state.partMiddleTime = data
     },
-    SETMIDDLELISTS (state, data) {
-      state.middleLists = data
+    SET_DATE(state, data) {
+      state.date = data
     },
-    SETMIDDLENAME (state, data) {
-      state.middleName = data
-    },
-    SETMIDDLELAT (state, data) {
-      state.middleLatitude = data
-    },
-    SETMIDDLELONG (state, data) {
-      state.middleLongitude = data
-    },
-    SETGROUPNAME (state, data) {
-      state.groupName = data
-    },
-    SETGROUPID (state, data) {
+    SET_GROUP_ID(state, data) {
       state.groupId = data
     },
-    SETISFIRST (state, data) {
-      state.isFirst = data
+    SET_GROUP_NAME(state, data) {
+      state.groupName = data
     },
-    SETISGROUPSAVED (state, data) {
-      state.isGroupSaved = data
-    },
-    SET_IS_APPOINTMENT_DELETED (state, data) {
+    SET_IS_APPOINTMENT_DELETED(state, data) {
       state.isAppointmentDeleted = data
     },
-    SETISMAPRENDERED (state, data) {
+    SET_IS_FIRST(state, data) {
+      state.isFirst = data
+    },
+    SET_IS_GROUPSAVED(state, data) {
+      state.isGroupSaved = data
+    },
+    SET_IS_MAPRENDERED(state, data) {
       state.isMapRendered = data
+    },
+    SET_MIDDLE_LAT(state, data) {
+      state.middleLatitude = data
+    },
+    SET_MIDDLE_LISTS(state, data) {
+      state.middleLists = data
+    },
+    SET_MIDDLE_LONG(state, data) {
+      state.middleLongitude = data
+    },
+    SET_MIDDLE_NAME(state, data) {
+      state.middleName = data
+    },
+    SET_PART_MID_TIME(state, data) {
+      state.partMiddleTime = data
+    },
+    SET_PARTICIPANTS(state, data) {
+      state.participants = data
+    },
+    SET_WISH_PLACE(state, data) {
+      state.wishPlaces = data
     },
   },
   actions: {
-    setDate ({ commit }, data) {
-      commit('SETDATE', data)
+    addParticipant({ commit }, data) {
+      commit('ADD_PARTICIPANT', data)
     },
-    addParticipant ({ commit }, data) {
-      commit('ADDPARTICIPANT', data)
-    },
-    deleteParticipant ({ commit }, data) {
-      commit('DELETEPARTICIPANT', data)
-    },
-    addGroupParticipants ({ commit }, data) {
-      commit('ADDGROUPPARTICIPANTS', data)
-    },
-    setWishPlace ( {commit}, data) {
-      commit('SET_WISH_PLACE', data)
-    },
-    addWishPlace ({ commit }, data) {
+    addWishPlace({ commit }, data) {
       commit('ADD_WISH_PLACE', data)
     },
-    deleteWishPlace ({ commit }, data) {
+    deleteParticipant({ commit }, data) {
+      commit('DELETE_PARTICIPANT', data)
+    },
+    deleteWishPlace({ commit }, data) {
       commit('DELETE_WISH_PLACE', data)
     },
-    setParticipants ({ commit }, data) {
-      commit('SETPARTICIPANTS', data)
+    setDate({ commit }, data) {
+      commit('SET_DATE', data)
     },
-    setPartMidTime ({ commit }, data) {
-      commit('SETPARTMIDTIME', data)
+    setGroupId({ commit }, data) {
+      commit('SET_GROUP_ID', data)
     },
-    setMiddleLists ({ commit }, data) {
-      commit('SETMIDDLELISTS', data)
+    setGroupName({ commit }, data) {
+      commit('SET_GROUP_NAME', data)
     },
-    setMiddleName ({ commit }, data) {
-      commit('SETMIDDLENAME', data)
-    },
-    setMiddleLat ({ commit }, data) {
-      commit('SETMIDDLELAT', data)
-    },
-    setMiddleLong ({ commit }, data) {
-      commit('SETMIDDLELONG', data)
-    },
-    setGroupName ({ commit }, data) {
-      commit('SETGROUPNAME', data)
-    },
-    setGroupId ({ commit }, data) {
-      commit('SETGROUPID', data)
-    },
-    setIsFirst ({ commit }, data) {
-      commit('SETISFIRST', data)
-    },
-    setIsGroupSaved ({ commit }, data) {
-      commit('SETISGROUPSAVED', data)
-    },
-    setIsAppointmentDeleted ({ commit }, data) {
+    setIsAppointmentDeleted({ commit }, data) {
       commit('SET_IS_APPOINTMENT_DELETED', data)
     },
-    setIsMapRendered ({ commit }, data) {
-      commit('SETISMAPRENDERED', data)
-    }
+    setIsFirst({ commit }, data) {
+      commit('SET_IS_FIRST', data)
+    },
+    setIsGroupSaved({ commit }, data) {
+      commit('SET_IS_GROUPSAVED', data)
+    },
+    setIsMapRendered({ commit }, data) {
+      commit('SET_IS_MAPRENDERED', data)
+    },
+    setMiddleLat({ commit }, data) {
+      commit('SET_MIDDLE_LAT', data)
+    },
+    setMiddleLists({ commit }, data) {
+      commit('SET_MIDDLE_LISTS', data)
+    },
+    setMiddleLong({ commit }, data) {
+      commit('SET_MIDDLE_LONG', data)
+    },
+    setMiddleName({ commit }, data) {
+      commit('SET_MIDDLE_NAME', data)
+    },
+    setPartMidTime({ commit }, data) {
+      commit('SET_PART_MID_TIME', data)
+    },
+    setParticipants({ commit }, data) {
+      commit('SET_PARTICIPANTS', data)
+    },
+    setWishPlace({ commit }, data) {
+      commit('SET_WISH_PLACE', data)
+    },
   },
 }
