@@ -13,7 +13,6 @@ from rest_framework.response import Response
 
 User = get_user_model()
 
-
 @api_view(['POST'])
 @check_login
 def group_create(request):
@@ -27,9 +26,7 @@ def group_create(request):
     group_id = serializer.data.get('id')
     group = get_object_or_404(Group, id=group_id)
 
-    # 그룹별 멤버 저장
     members = request.data.get('groupMembers')
-    print(request.data)
     for member in members:
         member_data = {
             'name': member.get('partName'),
@@ -49,15 +46,14 @@ def group_create(request):
 @check_login
 def groups(request):
     groups = Group.objects.filter(user_id=request.user.id)
-
     group_data = []
+
     for group in groups:
         group_members = get_list_or_404(Groupmember, group_id=group.id)
         members_data = []
         for member in group_members:
             serializer = GroupmemberSerializer(member)
             members_data.append(serializer.data)
-        
         group_data.append(
             {
                 'group_id': group.id,
