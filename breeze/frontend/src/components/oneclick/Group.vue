@@ -1,5 +1,5 @@
 <template>
-  <swiper-slide class="group">
+  <swiper-slide>
     <div class="d-flex justify-content-between align-items-center">
       <div class="group-name">{{ group.group_name }}</div>
       <button type="button" class="btn-close" @click="deleteGroup()"></button>
