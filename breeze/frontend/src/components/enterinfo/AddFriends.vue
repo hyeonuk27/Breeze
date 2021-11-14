@@ -12,7 +12,7 @@
       ref="place-input-ref"
       placeholder="출발지를 입력해주세요."
     />
-    <!-- 출발지 검색 결과 창 -->
+
     <div v-if="isSearchResultOpen" class="search-result">
       <div v-for="(result, idx) in searchResult" :key="idx">
         <div class="d-flex align-items-center" @click="setLocation(idx)">
@@ -64,7 +64,6 @@ export default {
     ...mapActions(["addParticipant"]),
     searchPlace() {
       if (this.searchWord.trim()) {
-        // 키워드 장소 검색
         const URL = "https://dapi.kakao.com/v2/local/search/keyword.json"
         const apiKey = process.env.VUE_APP_KAKAO_CLIENT_ID
         axios
@@ -151,7 +150,6 @@ export default {
 </script>
 
 <style>
-
 .add-friends-box {
   background-color: #e9edfe;
   border-radius: 15px;
@@ -222,7 +220,7 @@ p {
 }
 .search-result {
   position: absolute;
-  height: 45vh;
+  height: 45%;
   overflow-y: scroll;
   z-index: 100;
   margin: 0 auto;

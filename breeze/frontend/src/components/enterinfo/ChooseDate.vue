@@ -78,14 +78,15 @@ export default {
   box-shadow: 1.5px 1.5px 2px rgba(197, 197, 197, 0.3);
 }
 .choose-date-btn {
+  display: inline;
   border: none;
   background-color: #f7f8f8;
 }
 .choose-date-input {
+  display: inline;
   background-color: #f7f8f8;
   border: none;
   text-align: left;
-  
 }
 .choose-date-input:focus {
   outline: none;

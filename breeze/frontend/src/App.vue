@@ -38,7 +38,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  width: 100vw;
+  width: 100vw; 
   height: 100vh;
 }
 ::-webkit-scrollbar {

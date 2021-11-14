@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="enter-info-items">
     <ChooseDate class="choose-date" />
     <AddFriends class="add-friends" />
     <ParticipantList class="participant-list" />
