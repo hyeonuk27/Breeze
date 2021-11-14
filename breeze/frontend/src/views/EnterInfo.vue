@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="enter-info-items">
     <ChooseDate class="choose-date" />
     <AddFriends class="add-friends" />
     <ParticipantList class="participant-list" />
@@ -49,6 +49,10 @@ export default {
 </script>
 
 <style scoped>
+.enter-info-items {
+  width: 100%;
+  height: 100%;
+}
 .add-friends {
   height: 30%;
   display: flex;
