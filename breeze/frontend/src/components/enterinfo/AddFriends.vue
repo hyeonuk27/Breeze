@@ -220,7 +220,7 @@ p {
 }
 .search-result {
   position: absolute;
-  height: 45vh;
+  height: 45%;
   overflow-y: scroll;
   z-index: 100;
   margin: 0 auto;
