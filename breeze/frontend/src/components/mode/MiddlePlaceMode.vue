@@ -27,7 +27,7 @@ import { mapActions, mapState } from "vuex"
 export default {
   name: "MiddlePlaceMode",
   methods: {
-    ...mapActions(["setIsMapRendered", "setMiddleLists", "setMode1"]),
+    ...mapActions(["setMiddleLists", "setMode1"]),
     modeUpdate: function (idx) {
       this.setMode1(idx);
     },

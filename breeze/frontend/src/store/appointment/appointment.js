@@ -9,7 +9,6 @@ export default {
     isAppointmentDeleted: false,
     isFirst: false,
     isGroupSaved: false,
-    isMapRendered: false,
     middleLists: [],
     middleLatitude: 0,
     middleLongitude: 0,
@@ -34,11 +33,10 @@ export default {
     isAppointmentDeleted: state => state.isAppointmentDeleted,
     isFirst: state => state.isFirst,
     isGroupSaved: state => state.isGroupSaved,
-    isMapRendered: state => state.isMapRendered,
-    middleName: state => state.middleName,
+    middleLists: state => state.middleLists,
     middleLatitude: state => state.middleLatitude,
     middleLongitude: state => state.middleLongitude,
-    middleLists: state => state.middleLists,
+    middleName: state => state.middleName,
     participants: state => state.participants,
     partMiddleTime: state => state.partMiddleTime,
     wishPlaces: state => state.wishPlaces,
@@ -78,9 +76,6 @@ export default {
     },
     SET_IS_GROUPSAVED(state, data) {
       state.isGroupSaved = data
-    },
-    SET_IS_MAPRENDERED(state, data) {
-      state.isMapRendered = data
     },
     SET_MIDDLE_LAT(state, data) {
       state.middleLatitude = data
@@ -135,14 +130,11 @@ export default {
     setIsGroupSaved({ commit }, data) {
       commit('SET_IS_GROUPSAVED', data)
     },
-    setIsMapRendered({ commit }, data) {
-      commit('SET_IS_MAPRENDERED', data)
+    setMiddleLists({ commit }, data) {
+      commit('SET_MIDDLE_LISTS', data)
     },
     setMiddleLat({ commit }, data) {
       commit('SET_MIDDLE_LAT', data)
-    },
-    setMiddleLists({ commit }, data) {
-      commit('SET_MIDDLE_LISTS', data)
     },
     setMiddleLong({ commit }, data) {
       commit('SET_MIDDLE_LONG', data)

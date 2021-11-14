@@ -38,7 +38,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setIsAppointmentDeleted"]),
+    ...mapActions(["setIsAppointmentDeleted", "setMenu"]),
     deleteAppointment(secret_code) {
       Swal.fire({
         html: "<b>정말 삭제하시겠습니까?</b>",
@@ -73,6 +73,7 @@ export default {
           secretCode: this.appointment.secret_code,
         },
       })
+      this.setMenu(3)
     },
   },
   created() {

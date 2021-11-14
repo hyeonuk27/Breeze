@@ -8,6 +8,7 @@
 <script>
 import AppointmentList from "@/components/home/AppointmentList"
 import Profile from "@/components/home/Profile"
+import store from "@/store"
 
 export default {
   name: "Home",
@@ -19,6 +20,10 @@ export default {
     return {
       appointmentCnt: 0,
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    store.dispatch("setMenu", 0)
+    next()
   },
   methods: {
     setInfo(data) {

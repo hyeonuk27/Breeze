@@ -29,6 +29,7 @@ import GroupAppointmentBtn2 from "@/components/oneclick/GroupAppointmentBtn2.vue
 import GroupAppointmentModal from "@/components/oneclick/GroupAppointmentModal.vue"
 import GroupList from "@/components/oneclick/GroupList.vue"
 import { mapGetters } from "vuex"
+import store from "@/store"
 
 export default {
   name: "OneClick",
@@ -43,6 +44,10 @@ export default {
     return {
       isModalOpen: false,
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    store.dispatch("setMenu", 2)
+    next()
   },
   methods: {
     closeModal() {

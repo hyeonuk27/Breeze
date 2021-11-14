@@ -23,7 +23,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setMiddleLists", "setIsMapRendered"]),
+    ...mapActions(["setMiddleLists"]),
     concateArray(arr) {
       this.partInfo = []
       const selectedMiddle = arr[this.middleIdx]

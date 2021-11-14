@@ -29,6 +29,7 @@ export default {
     } else {
       isGroup = true
     }
+    store.dispatch("setMenu", 1)
     if (from.name == "OneClick" || from.name == "MakeAppointment" || isGroup) {
       store.dispatch("setDate", "")
       store.dispatch("setGroupId", null)

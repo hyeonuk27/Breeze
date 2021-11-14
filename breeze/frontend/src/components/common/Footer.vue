@@ -40,6 +40,7 @@ export default {
       "setGroupName",
       "setMenu",
       "setMiddle",
+      "setMiddleLists",
       "setMiddleLat",
       "setMiddleLong",
       "setMiddleName",
@@ -47,6 +48,7 @@ export default {
       "setMode2",
       "setParticipants",
       "setPartMidTime",
+      "setWishPlace",
     ]),
     menuUpdate: function (idx) {
       this.setMenu(idx)
@@ -55,6 +57,7 @@ export default {
         this.setFilter(0)
         this.setGroupId(null)
         this.setGroupName("")
+        this.setMiddleLists([])
         this.setMiddleLat(0)
         this.setMiddleLong(0)
         this.setMiddleName("")
@@ -63,6 +66,7 @@ export default {
         this.setMode2(0)
         this.setParticipants([])
         this.setPartMidTime([])
+        this.setWishPlace([])
       }
     },
   },

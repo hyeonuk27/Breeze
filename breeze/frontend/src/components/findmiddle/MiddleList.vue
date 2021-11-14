@@ -92,7 +92,7 @@ export default {
       middle: (state) => state.mode.middle,
       mode: (state) => state.mode.mode1,
     }),
-    ...mapGetters(["isMapRendered", "middleLists", "participants"]),
+    ...mapGetters(["middleLists", "participants"]),
   },
   watch: {
     selectedMiddle: function (newVal) {

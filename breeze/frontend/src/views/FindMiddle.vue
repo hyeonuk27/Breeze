@@ -21,7 +21,6 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     if (from.name == "EnterInfo" || from.name == "OneClick") {
-      store.dispatch("setIsMapRendered", false)
       store.dispatch("setMiddle", 0)
       store.dispatch("setMiddleLists", [])
       store.dispatch("setMode1", 0)

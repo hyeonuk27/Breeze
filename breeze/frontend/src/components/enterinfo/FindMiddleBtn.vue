@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"
+import { mapGetters } from "vuex"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore"
@@ -18,7 +18,6 @@ dayjs.extend(isSameOrBefore)
 export default {
   name: "FindMiddleBtn",
   methods: {
-    ...mapActions(["setMiddle", "setMode1"]),
     goToFindMiddle: function () {
       if (!this.date) {
         Swal.fire({
@@ -43,8 +42,6 @@ export default {
         })
       } else {
         this.$router.push({ name: "FindMiddle" })
-        this.setMode1(0)
-        this.setMiddle(0)
       }
     },
   },

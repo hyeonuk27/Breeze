@@ -52,6 +52,8 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
+    store.dispatch("setMenu", 3)
+
     var isGroup
     if (store.getters.getGroupId == null) {
       isGroup = false
