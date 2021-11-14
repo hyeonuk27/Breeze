@@ -16,18 +16,15 @@ def check_login(func):
             user_id = request.headers["X-Id"]
             access_token = request.headers["Authorization"].split()[1]
 
-            # 토큰 유효성 확인
             token_status = get_token_status(access_token)
             user = User.objects.get(id=user_id)
             request.user = user
             
             if token_status == 200:
                 request.access_token = 0
-            # 유효하지 않으면
             else:
                 refresh_token = user.token
                 new_access_token, new_refresh_token = update_token(refresh_token)
-                # refresh token 갱신되면 모델에 다시 저장
                 if new_refresh_token:
                     user.token = new_refresh_token
                     user.save()

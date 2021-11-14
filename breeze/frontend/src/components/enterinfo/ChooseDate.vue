@@ -1,86 +1,97 @@
 <template>
-  <v-date-picker mode="dateTime" v-model="date" class="choose-date-picker" :min-date="startDate" :model-config="modelConfig">
-    <template v-slot="{ inputValue, togglePopover }">
-      <div
-        class="choose-date-box"
-        @click="togglePopover()">
-        <button class="choose-date-btn">
-          <i class="far fa-calendar-alt"></i>
-        </button>
-        <input
-          placeholder="약속 날짜를 선택해주세요."
-          :value="inputValue"
-          class="choose-date-input text-gray-700 w-full py-1 px-2 appearance-none rounded-r"
-          readonly
-        />
-      </div>
-    </template>
-  </v-date-picker>
+  <div class="choose-date-items">
+    <v-date-picker
+      mode="dateTime"
+      v-model="date"
+      class="choose-date-picker"
+      :min-date="startDate"
+      :model-config="modelConfig"
+    >
+      <template v-slot="{ inputValue, togglePopover }">
+        <div class="choose-date-box" @click="togglePopover()">
+          <button class="choose-date-btn">
+            <i class="far fa-calendar-alt"></i>
+          </button>
+          <input
+            placeholder="약속 날짜를 선택해주세요."
+            :value="inputValue"
+            class="
+              choose-date-input
+              text-gray-700
+              w-full
+              py-1
+              px-2
+              appearance-none
+              rounded-r
+            "
+            readonly
+          />
+        </div>
+      </template>
+    </v-date-picker>
+  </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import dayjs from 'dayjs'
+import { mapActions } from "vuex"
+import dayjs from "dayjs"
 
 export default {
-  name: 'ChooseDate',
+  name: "ChooseDate",
   data() {
     return {
-      date: '',
-      timezone: 'Asia/Seoul',
-      startDate: dayjs().toISOString(),
+      date: "",
       modelConfig: {
-        type: 'string',
-        mask: 'YYYY-MM-DD HH:mm'
-      }
+        type: "string",
+        mask: "YYYY-MM-DD HH:mm",
+      },
+      startDate: dayjs().toISOString(),
+      timezone: "Asia/Seoul",
     }
   },
   methods: {
-    ...mapActions([
-      'setDate'
-    ])
+    ...mapActions(["setDate"]),
   },
   computed: {
-    chooseDate () {
+    chooseDate() {
       return this.date
     },
   },
   watch: {
-    chooseDate (val) {
+    chooseDate(val) {
       this.setDate(val)
-    }
+    },
   },
 }
 </script>
 
 <style scoped>
 * {
-    color: #ADA4A5;
-  }
-.choose-date-picker {
-  /* margin-top: 8%;
-  height: 30%; */
-  /* margin: 0%; */
+  color: #ada4a5;
 }
 .choose-date-box {
-  width: 88%;
-  margin: 0 auto;
+  width: 100%;
   border-radius: 15px;
-  background-color: #F7F8F8;
-  padding: 1%;
+  background-color: #f7f8f8;
   padding-left: 3%;
   text-align: left;
+  box-shadow: 1.5px 1.5px 2px rgba(197, 197, 197, 0.3);
 }
 .choose-date-btn {
   border: none;
-  background-color: #F7F8F8;
+  background-color: #f7f8f8;
 }
 .choose-date-input {
-  background-color: #F7F8F8;
+  background-color: #f7f8f8;
   border: none;
   text-align: left;
+  
 }
 .choose-date-input:focus {
   outline: none;
+}
+.choose-date-items {
+  padding: 0 8%;
+  height: 100%;
 }
 </style>

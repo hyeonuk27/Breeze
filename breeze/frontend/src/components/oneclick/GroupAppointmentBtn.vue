@@ -1,15 +1,14 @@
 <template>
   <div class="group-appointment-btn-items">
-    <button
-      type="button"
-      class="group-appointment-btn"
-      >이 모임으로 약속 만들기</button>
+    <button type="button" class="group-appointment-btn">
+      이 모임으로 약속 만들기
+    </button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'GroupAppointmentBtn'
+  name: "GroupAppointmentBtn",
 }
 </script>
 
