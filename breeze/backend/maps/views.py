@@ -125,32 +125,32 @@ def get_middle(request):
                 'longitude': longitude,
                 'participants': participants,
             })
-        else:
-            for i in range(3):
-                subway = subway_list.sort_values('passenger').iloc[i]
-                name = subway['name']
-                latitude = subway['latitude']
-                longitude = subway['longitude']
-                participants = []
-                for participant in participants_info:
-                    time, guides_list = get_time(longitude, latitude, participant)
-                    route = []
-                    for guide in guides_list:
-                        route.append([guide.get('y'), guide.get('x')])
-                        
-                    participants.append({
-                        'barami_type': participant['baramiType'],
-                        'time': time,
-                        'route': route
-                    })
-                
-                middle_data.append({
-                    'middle_place_type': 2,
-                    'name': name,
-                    'latitude': latitude,
-                    'longitude': longitude,
-                    'participants': participants,
+    else:
+        for i in range(3):
+            subway = subway_list.sort_values('passenger').iloc[i]
+            name = subway['name']
+            latitude = subway['latitude']
+            longitude = subway['longitude']
+            participants = []
+            for participant in participants_info:
+                time, guides_list = get_time(longitude, latitude, participant)
+                route = []
+                for guide in guides_list:
+                    route.append([guide.get('y'), guide.get('x')])
+                    
+                participants.append({
+                    'barami_type': participant['baramiType'],
+                    'time': time,
+                    'route': route
                 })
+            
+            middle_data.append({
+                'middle_place_type': 2,
+                'name': name,
+                'latitude': latitude,
+                'longitude': longitude,
+                'participants': participants,
+            })
 
     data = {
         'access_token': request.access_token,

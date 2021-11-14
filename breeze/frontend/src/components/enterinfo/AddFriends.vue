@@ -1,5 +1,5 @@
 <template>
-<di class="add-friends-items">
+<div class="add-friends-items">
   <div class="add-friends-box">
     <div class="add-friends-title">
       <i class="far fa-user add-friends-icon"></i>친구 추가하기
@@ -39,7 +39,7 @@
       </button>
     </div>
   </div>
-</di>
+</div>
 </template>
 
 <script>
