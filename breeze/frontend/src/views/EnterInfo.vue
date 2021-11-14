@@ -49,10 +49,6 @@ export default {
 </script>
 
 <style scoped>
-.enter-info-items {
-  width: 100%;
-  height: 100%;
-}
 .add-friends {
   height: 30%;
   display: flex;
