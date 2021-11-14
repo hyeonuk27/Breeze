@@ -68,7 +68,7 @@ export default {
         })
       } else {
         Swal.fire({
-          icon: "sucess",
+          icon: "success",
           html: "<b>그룹이 저장되었습니다</b>",
           showConfirmButton: false,
           timer: 1500,
