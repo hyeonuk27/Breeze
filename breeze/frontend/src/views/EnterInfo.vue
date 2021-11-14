@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <ChooseDate class="choose-date" />
     <AddFriends class="add-friends" />
     <ParticipantList class="participant-list" />
@@ -49,11 +49,10 @@ export default {
 
 <style scoped>
 .add-friends {
-  height: 26%;
+  height: 30%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  margin-bottom: 3%;
 }
 .find-middle-btn {
   height: 14%;
@@ -63,9 +62,8 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-bottom: 3%;
 }
 .participant-list {
-  height: 43%;
+  height: 45%;
 }
 </style>
