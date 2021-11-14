@@ -226,7 +226,7 @@ export default {
   position: absolute;
   left: 40px;
   bottom: 35px;
-  width: 180px;
+  width: 200px;
   height: 90px;
   margin-left: -120px;
   text-align: left;

@@ -1,4 +1,5 @@
 <template>
+<di class="add-friends-items">
   <div class="add-friends-box">
     <div class="add-friends-title">
       <i class="far fa-user add-friends-icon"></i>친구 추가하기
@@ -38,6 +39,7 @@
       </button>
     </div>
   </div>
+</di>
 </template>
 
 <script>
@@ -149,10 +151,9 @@ export default {
 </script>
 
 <style>
+
 .add-friends-box {
   background-color: #e9edfe;
-  width: 88%;
-  margin: 0 auto;
   border-radius: 15px;
 }
 .add-friends-btn {
@@ -165,14 +166,18 @@ export default {
   margin-bottom: 2%;
   width: 14%;
 }
-.add-friends-icon {
-  margin-left: 1%;
-  margin-right: 3%;
-}
 .add-friends-name-btn-container {
   width: 95%;
   margin: 0 auto;
   padding-bottom: 2%;
+}
+.add-friends-icon {
+  margin-left: 1%;
+  margin-right: 3%;
+}
+.add-friends-items {
+ padding: 0 8% 0 8%;
+ height: 95%;
 }
 .add-friends-title {
   text-align: left;
@@ -182,28 +187,31 @@ export default {
   border-radius: 15px;
   border: none;
   padding: 2%;
-  padding-left: 5%;
+  padding-left: 4%;
   margin-bottom: 2%;
 }
 p {
   margin-bottom: 0;
 }
 .place-input {
-  width: 95%;
+  width: 80vw;
   margin: 0 auto;
   border-radius: 15px;
   border: none;
   padding: 2%;
-  padding-left: 5%;
+  padding-left: 4%;
   margin-bottom: 2%;
+
 }
 .search-address {
   color: #ada4a5;
+  font-size: 0.7rem;
 }
 .search-divide {
   margin: 0 auto;
 }
 .search-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -214,13 +222,15 @@ p {
 }
 .search-result {
   position: absolute;
-  height: 45%;
+  height: 45vh;
   overflow-y: scroll;
   z-index: 100;
-  width: 95%;
   margin: 0 auto;
   background-color: white;
   border-radius: 15px;
-  margin-top: 90%;
+  width: 80vw;
+  margin: 0 2%;
+  border: solid 1px #e9edfe;
+  z-index: 1000;
 }
 </style>

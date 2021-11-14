@@ -3,7 +3,7 @@
     <div class="date-container">
       <hr class="line-1" />
       <div class="date-box">
-        <div class="place-name">{{ middlePlace }}</div>
+        <div class="place-name">{{ middlePlace }}역</div>
         <div class="date">{{ datetime }}</div>
       </div>
       <hr class="line-2" />

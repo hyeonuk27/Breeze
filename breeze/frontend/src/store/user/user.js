@@ -15,18 +15,18 @@ export default {
   mutations: {
     SET_USER: function (state, data) {
       state.userId = data.userId,
-      state.userName = data.userName
+        state.userName = data.userName
     },
     REMOVE_USER: function (state) {
       state.userId = null,
-      state.userName = null
+        state.userName = null
     }
   },
   actions: {
-    setUser: function ({commit}, data) {
+    setUser: function ({ commit }, data) {
       commit('SET_USER', data)
     },
-    removeUser: function ({commit}) {
+    removeUser: function ({ commit }) {
       commit('REMOVE_USER')
     }
   },
