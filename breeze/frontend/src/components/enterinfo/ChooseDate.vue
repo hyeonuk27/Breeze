@@ -78,6 +78,7 @@ export default {
   box-shadow: 1.5px 1.5px 2px rgba(197, 197, 197, 0.3);
 }
 .choose-date-btn {
+  display: inline-block;
   border: none;
   background-color: #f7f8f8;
 }
