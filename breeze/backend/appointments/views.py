@@ -19,7 +19,6 @@ User = get_user_model()
 def appointment(request):
     user = get_object_or_404(User, id=request.user.id)
     secret_code = str(uuid.uuid4())
-    # 쪽지 저장
     note_data = {
         'datetime': request.data['dateTime'],
         'middle_place': request.data['middlePlace'],
@@ -29,7 +28,6 @@ def appointment(request):
     if sereializer.is_valid(raise_exception=True):
         sereializer.save(user=user)
     
-    # 약속장소 저장
     note_id = sereializer.data.get('id')
     appointment = get_object_or_404(Appointment, id=note_id)
     
@@ -43,7 +41,6 @@ def appointment(request):
         if sereializer.is_valid(raise_exception=True):
             sereializer.save(appointment=appointment)
 
-    # 참가자 저장
     for paricipant in request.data['participants']:
         paricipant_data = {
             'name': paricipant['partName'],
@@ -100,7 +97,6 @@ def appointment_mynote(request, secret_code):
 @api_view(['GET'])
 @check_login
 def appointment_list(request):
-    # 이미 디데이 지난 약속 지우고 시작
     now = datetime.datetime.now()
     prevs = Appointment.objects.filter(datetime__lt=now)
     for prev in prevs:
@@ -109,7 +105,6 @@ def appointment_list(request):
     appointments = Appointment.objects.filter(user_id=request.user.id)
     appointment_data = []
     for appointment in appointments:
-        # 디데이 구하기
         d_day = (now.date() - appointment.datetime.date()).days
         appointment_data.append({
             'datetime': appointment.datetime,
