@@ -3,7 +3,7 @@
     <Header v-if="$route.name !== 'Welcome'" id="header" />
     <router-view
       :style="[
-        $route.name == 'Welcome' ? { height: '100%' } : { height: '82%' },
+        $route.name == 'Welcome' ? { height: '100%' } : { height: '78%' },
       ]"
     />
     <Footer
