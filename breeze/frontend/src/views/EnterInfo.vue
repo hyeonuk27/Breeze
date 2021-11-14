@@ -1,26 +1,26 @@
 <template>
-  <div class="enterinfo">
-    <ChooseDate class="choose-date"/>
-    <AddFriends class="add-friends"/>
-    <ParticipantList class="participant-list"/>
-    <FindMiddleBtn class="find-middle-btn"/>
+  <div>
+    <ChooseDate class="choose-date" />
+    <AddFriends class="add-friends" />
+    <ParticipantList class="participant-list" />
+    <FindMiddleBtn class="find-middle-btn" />
   </div>
 </template>
 
 <script>
-import ChooseDate from '@/components/enterinfo/ChooseDate.vue'
-import AddFriends from '@/components/enterinfo/AddFriends.vue'
-import ParticipantList from '@/components/enterinfo/ParticipantList.vue'
-import FindMiddleBtn from '@/components/enterinfo/FindMiddleBtn.vue'
+import AddFriends from "@/components/enterinfo/AddFriends.vue"
+import ChooseDate from "@/components/enterinfo/ChooseDate.vue"
+import FindMiddleBtn from "@/components/enterinfo/FindMiddleBtn.vue"
+import ParticipantList from "@/components/enterinfo/ParticipantList.vue"
 import store from "@/store"
 
 export default {
-  name: 'EnterInfo',
+  name: "EnterInfo",
   components: {
-    ChooseDate,
     AddFriends,
-    ParticipantList,
+    ChooseDate,
     FindMiddleBtn,
+    ParticipantList,
   },
   beforeRouteEnter(to, from, next) {
     var isGroup
@@ -29,20 +29,19 @@ export default {
     } else {
       isGroup = true
     }
-    if (from.name == 'OneClick' || from.name == 'MakeAppointment' || isGroup ) {
-      // console.log('oneclick에서 온다')
-      store.dispatch('setDate', '')
-      store.dispatch('setParticipants', [])
-      store.dispatch('setPartMidTime', [])
-      store.dispatch('setMiddleName', '')
-      store.dispatch('setMiddleLat', 0)
-      store.dispatch('setMiddleLong', 0)
-      store.dispatch('setGroupName', '')
-      store.dispatch('setGroupId', null)
-      store.dispatch('setIsFirst', false)
+    store.dispatch("setMenu", 1)
+    if (from.name == "OneClick" || from.name == "MakeAppointment" || isGroup) {
+      store.dispatch("setDate", "")
+      store.dispatch("setGroupId", null)
+      store.dispatch("setGroupName", "")
+      store.dispatch("setIsFirst", false)
+      store.dispatch("setMiddleLat", 0)
+      store.dispatch("setMiddleLong", 0)
+      store.dispatch("setMiddleName", "")
+      store.dispatch("setParticipants", [])
+      store.dispatch("setPartMidTime", [])
       next()
-    }  else {
-      // console.log('정상적으로 진입한 경우')
+    } else {
       next()
     }
   },
@@ -50,8 +49,15 @@ export default {
 </script>
 
 <style scoped>
-.enterinfo {
-  /* padding-top: 2%; */
+.add-friends {
+  height: 26%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 3%;
+}
+.find-middle-btn {
+  height: 14%;
 }
 .choose-date {
   height: 11%;
@@ -60,17 +66,7 @@ export default {
   justify-content: flex-end;
   margin-bottom: 3%;
 }
-.add-friends {
-  height: 26%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  margin-bottom: 3%;
-}
 .participant-list {
   height: 43%;
-}
-.find-middle-btn {
-  height: 14%;
 }
 </style>

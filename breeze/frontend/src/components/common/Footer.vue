@@ -5,7 +5,7 @@
         src="@/assets/footer/home.png"
         alt="home-button"
         @click="menuUpdate(0)"
-        :style="[selectedMenu == 0 ? {opacity:1} : {opacity:0.5}]"
+        :style="[selectedMenu == 0 ? { opacity: 1 } : { opacity: 0.5 }]"
       />
     </router-link>
     <router-link to="/enterinfo">
@@ -13,7 +13,7 @@
         src="@/assets/footer/new.png"
         alt="new-button"
         @click="menuUpdate(1)"
-        :style="[selectedMenu == 1 ? {opacity:1} : {opacity:0.5}]"
+        :style="[selectedMenu == 1 ? { opacity: 1 } : { opacity: 0.5 }]"
       />
     </router-link>
     <router-link to="/oneclick">
@@ -21,74 +21,76 @@
         src="@/assets/footer/oneclick.png"
         alt="oneclick-button"
         @click="menuUpdate(2)"
-        :style="[selectedMenu == 2 ? {opacity:1} : {opacity:0.5}]"
+        :style="[selectedMenu == 2 ? { opacity: 1 } : { opacity: 0.5 }]"
       />
     </router-link>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions, mapState } from "vuex"
 
 export default {
   name: "Footer",
   methods: {
     ...mapActions([
-      'setDate',
-      'setParticipants',
-      'setPartMidTime',
-      'setMiddleName',
-      'setMiddleLat',
-      'setMiddleLong',
-      'setGroupName',
-      'setGroupId',
-      'setMode1',
-      'setMode2',
-      'setFilter',
-      'setMiddle',
-      'setMenu',
+      "setDate",
+      "setFilter",
+      "setGroupId",
+      "setGroupName",
+      "setMenu",
+      "setMiddle",
+      "setMiddleLists",
+      "setMiddleLat",
+      "setMiddleLong",
+      "setMiddleName",
+      "setMode1",
+      "setMode2",
+      "setParticipants",
+      "setPartMidTime",
+      "setWishPlace",
     ]),
     menuUpdate: function (idx) {
-      //메뉴 업데이트
       this.setMenu(idx)
-      //홈이나 원클릭으로 이동 시, 약속/모드 스토어 초기화
       if (idx !== 1) {
-        this.setDate('')
-        this.setParticipants([])
-        this.setPartMidTime([])
-        this.setMiddleName('')
+        this.setDate("")
+        this.setFilter(0)
+        this.setGroupId(null)
+        this.setGroupName("")
+        this.setMiddleLists([])
         this.setMiddleLat(0)
         this.setMiddleLong(0)
-        this.setGroupName('')
-        this.setGroupId(null)
+        this.setMiddleName("")
+        this.setMiddle(0)
         this.setMode1(0)
         this.setMode2(0)
-        this.setFilter(0)
-        this.setMiddle(0)
-      }     
+        this.setParticipants([])
+        this.setPartMidTime([])
+        this.setWishPlace([])
+      }
     },
   },
   computed: {
     ...mapState({
-      selectedMenu: state => state.mode.menu,
+      selectedMenu: (state) => state.mode.menu,
     }),
-  }
-};
+  },
+}
 </script>
 
 <style scoped>
-  .footer-items {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-  .footer-items img {
-    height: 100%;
-    width: 20%;
-    flex:1;
-  }
-  .deactivate {
-    filter: opacity(0.5) drop-shadow(0 0 0 white);
-  }
+.deactivate {
+  filter: opacity(0.5) drop-shadow(0 0 0 white);
+}
+.footer-items {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.footer-items img {
+  height: 100%;
+  width: 20%;
+  flex: 1;
+}
 </style>

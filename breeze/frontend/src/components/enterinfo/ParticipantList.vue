@@ -4,34 +4,31 @@
       v-for="(participant, idx) in participants"
       :key="idx"
       :idx="idx"
-      :participant="participant" />
+      :participant="participant"
+    />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Participant from '@/components/enterinfo/Participant'
+import Participant from "@/components/enterinfo/Participant"
+import { mapGetters } from "vuex"
 
 export default {
-  name: 'ParticipantList',
+  name: "ParticipantList",
   components: {
-    Participant
+    Participant,
   },
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
   computed: {
-    ...mapGetters([
-      'participants'
-    ])
-  }
+    ...mapGetters(["participants"]),
+  },
 }
 </script>
 
 <style>
 .participant-list {
-  /* margin: 4%; */
   width: 88%;
   margin: auto;
   overflow-y: scroll;

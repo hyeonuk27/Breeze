@@ -1,22 +1,17 @@
 <template>
   <div class="make-appointment-btn-items">
-    <button
-      type="button"
-      @click="goToMakeAppointment()"
-    >
+    <button type="button" @click="goToMakeAppointment()">
       약속 쪽지 만들러 가기
-      <img
-        src="@/assets/common/arrow.png"
-        alt="arrow-image"
-      />
+      <img src="@/assets/common/arrow.png" alt="arrow-image" />
     </button>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import mapApi from '@/api/map.js'
-import Swal from 'sweetalert2'
+import mapApi from "@/api/map.js"
+import { mapGetters } from "vuex"
+import Swal from "sweetalert2"
+
 export default {
   name: "MakeAppointmentBtn",
   data() {
@@ -25,6 +20,22 @@ export default {
     }
   },
   methods: {
+    async goToMakeAppointment() {
+      if (this.wishPlaces.length == 0) {
+        Swal.fire({
+          icon: "error",
+          html: "<b>한 개 이상의 장소를 선택하세요</b>",
+          showConfirmButton: false,
+          timer: 1500,
+        })
+      } else {
+        await this.saveAppointment()
+        this.$router.push({
+          name: "MakeAppointment",
+          params: { secretCode: this.secretCode },
+        })
+      }
+    },
     async saveAppointment() {
       const data = {
         dateTime: this.date,
@@ -36,33 +47,11 @@ export default {
       const response = await mapApi.saveAppointment(data)
       this.secretCode = response.secret_code
     },
-    async goToMakeAppointment() {
-      if ( this.wishPlaces.length == 0 ) {
-        Swal.fire({
-          icon: 'error',
-          html: '<b>한 개 이상의 장소를 선택하세요</b>',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      } else {
-        await this.saveAppointment()
-        this.$router.push({ name: "MakeAppointment", params: {secretCode: this.secretCode} });
-      }
-    },
   },
   computed: {
-    ...mapGetters([
-      'date',
-      'middleName',
-      'partMiddleTime',
-      'wishPlaces',
-    ]),
+    ...mapGetters(["date", "middleName", "partMiddleTime", "wishPlaces"]),
   },
-  created() {
-    console.log(this.date)
-    console.log(this.participants)
-  }
-};
+}
 </script>
 
 <style>
@@ -88,5 +77,4 @@ export default {
   height: inherit;
   margin-left: 2%;
 }
-
 </style>

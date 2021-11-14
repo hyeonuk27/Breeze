@@ -4,9 +4,9 @@ const URL = 'http://localhost:8000/api/v1'
 export default {
   URL: URL,
   ROUTES: {
-    auth: '/auth',
-    map: '/map',
-    group: '/group',
     appointment: '/appointment',
+    auth: '/auth',
+    group: '/group',
+    map: '/map',
   }
 }
