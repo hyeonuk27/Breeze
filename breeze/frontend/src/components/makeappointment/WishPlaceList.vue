@@ -1,26 +1,22 @@
 <template>
   <div class="wish-place-container">
     <div class="wish-places">
-      <WishPlace
-        v-for="(place, idx) in wishPlaces"
-        :key="idx"
-        :place="place"/>
+      <WishPlace v-for="(place, idx) in wishPlaces" :key="idx" :place="place" />
     </div>
   </div>
 </template>
 
 <script>
-import WishPlace from '@/components/makeappointment/WishPlace.vue'
+import WishPlace from "@/components/makeappointment/WishPlace.vue"
 
 export default {
-  name: 'WishPlaceList',
+  name: "WishPlaceList",
   components: {
     WishPlace,
   },
   props: {
     wishPlaces: Array,
-  }
-
+  },
 }
 </script>
 
@@ -33,5 +29,4 @@ export default {
   height: 100%;
   overflow-y: scroll;
 }
-
 </style>
