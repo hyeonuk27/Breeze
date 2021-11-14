@@ -12,7 +12,7 @@
         />
       </div>
       <div class="desc">
-        <div>{{ place.name }}</div>
+        <div>{{ place.name | word }}</div>
         <a :href="place.url" class="arrow-box">
           <img src="@/assets/common/arrow.png" alt="" class="arrow-img" />
         </a>
@@ -32,6 +32,15 @@ export default {
       placeTypeColor: ["#ADA6AD", "#EBECCA", "#BFD5F8"],
     }
   },
+  filters: {
+    word: function (value) {
+      if (value.length > 10) {
+        return value.substr(0, 10) + ".."
+      } else {
+        return value
+      }
+    }
+  }
 }
 </script>
 
