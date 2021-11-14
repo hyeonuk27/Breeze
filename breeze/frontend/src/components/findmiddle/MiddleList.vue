@@ -25,14 +25,11 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex"
-import mapApi from "@/api/map.js"
 
 export default {
   name: "MiddleList",
   data() {
     return {
-      modeAvgTime: [],
-      modeList: [],
       selectedMiddle: 0,
     }
   },
@@ -41,50 +38,9 @@ export default {
     middleUpdate(idx) {
       this.setMiddle(idx)
       this.selectedMiddle = idx
-    },
-    partAverageTime(data) {
-      let temp = []
-      this.modeAvgTime = []
-      const placeCnt = data.length
-      for (let i = 0; i < placeCnt; i++) {
-        const partCnt = data[i].participants.length
-        for (let j = 0; j < partCnt; j++) {
-          temp.push(data[i].participants[j].time)
-        }
-        const result = temp.reduce(function add(sum, currVal) {
-          return sum + currVal
-        }, 0)
-        const avg = Math.round(result / temp.length)
-        this.modeAvgTime.push(avg)
-        temp = []
-      }
-    },
-    async sendAxios() {
-      const cnt = this.participants.length
-      const partBox = []
-      for (let i = 0; i < cnt; i++) {
-        const part = {
-          baramiType: this.participants[i].baramiType,
-          partLatitude: this.participants[i].partLatitude,
-          partLongitude: this.participants[i].partLongitude,
-        }
-        partBox.push(part)
-      }
-      const data = {
-        participants: partBox,
-        middle_place_type: this.mode,
-      }
-      const response = await mapApi.middle(data)
-      this.modeList = response.middle_data
-      this.partAverageTime(this.modeList)
-    },
-    async wait() {
-      await this.sendAxios()
-      this.middleUpdate(0)
-    },
+    }
   },
   created() {
-    this.modeList = this.middleLists
     this.selectedMiddle = this.middle
   },
   computed: {
@@ -98,7 +54,7 @@ export default {
     selectedMiddle: function (newVal) {
       this.middleUpdate(newVal)
     },
-  },
+  }
 }
 </script>
 

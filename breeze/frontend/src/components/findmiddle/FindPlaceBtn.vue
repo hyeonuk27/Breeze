@@ -13,7 +13,6 @@ export default {
   name: "FindPlaceBtn",
   data() {
     return {
-      modeList: [],
       partInfo: [],
     }
   },
@@ -56,10 +55,7 @@ export default {
       middle: (state) => state.mode.middle,
     }),
     ...mapGetters(["participants", "middleLists"]),
-  },
-  created() {
-    this.modeList = this.middleLists
-  },
+  }
 }
 </script>
 
