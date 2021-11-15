@@ -69,7 +69,7 @@ export default {
         cancelButtonText: "취소",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await groupApi.deleteGroup(this.groupId)
+          const response = await groupApi.deleteGoroup(this.groupId)
           if (response == "success") {
             this.setParticipants([])
             this.setGroupName("")
