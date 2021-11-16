@@ -48,6 +48,8 @@ export const requestGet = async (url, config) => {
     if (response.status === 200) {
       if (response.data['access_token']) updateAccessToken(response)
       return response.data
+    } else if (response.status === 204) {
+      return response.data
     }
     throw new Error()
   } catch (e) {

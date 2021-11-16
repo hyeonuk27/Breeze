@@ -60,28 +60,31 @@ def appointment(request):
 
 @api_view(['GET'])
 def appointment_note(request, secret_code):
-    note = get_object_or_404(Appointment, secret_code=secret_code)
-    places = get_list_or_404(Appointmentplace, appointment_id=note.id)
-    participants = get_list_or_404(Participant, appointment_id=note.id)
-    
-    place_data = []
-    for place in places:
-        serializer = AppointmentplaceSerializer(place)
-        place_data.append(serializer.data)
-    
-    participant_data = []
-    for participant in participants:
-            serializer = ParticipantSerializer(participant)
-            participant_data.append(serializer.data)
+    note_query = Appointment.objects.filter(secret_code=secret_code)
 
-    data = {
-        'datetime': note.datetime,
-        'middle_place': note.middle_place,
-        'places': place_data,
-        'participants': participant_data,
-    }
-    
-    return Response(data, status=status.HTTP_200_OK)
+    if note_query:
+        note = note_query[0]
+        places = get_list_or_404(Appointmentplace, appointment_id=note.id)
+        participants = get_list_or_404(Participant, appointment_id=note.id)
+        
+        place_data = []
+        for place in places:
+            serializer = AppointmentplaceSerializer(place)
+            place_data.append(serializer.data)
+        
+        participant_data = []
+        for participant in participants:
+                serializer = ParticipantSerializer(participant)
+                participant_data.append(serializer.data)
+
+        data = {
+            'datetime': note.datetime,
+            'middle_place': note.middle_place,
+            'places': place_data,
+            'participants': participant_data,
+        } 
+        return Response(data, status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['DELETE'])
