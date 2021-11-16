@@ -36,7 +36,7 @@ export default {
           this.middleLatitude,
           this.middleLongitude
         ),
-        level: 4,
+        level: 5,
       }
       var map = new kakao.maps.Map(container, options)
 
