@@ -10,31 +10,34 @@
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-9cf.svg" />
   </a>
 </p>
-
 <br>
 
-<center>
- <img src="https://ifh.cc/g/bYAc4j.png" alt="logo-img" width="300">
-</center>
+
+<div style="display: flex; justify-content: center;
+align-item: center;">
+    <img alt="logo-img" src="https://ifh.cc/g/bYAc4j.png" width="300"/>
+</div>
 
 <br>
 
 > 어디서 만날지 항상 고민하고 힘들어하는 우리를 위한 약속 장소 추천 서비스
-> 
 
-<div style="display:inline;">
-<a href="https://k5a202.p.ssafy.io" style="text-decoration:none;">
-<img src="https://user-images.githubusercontent.com/77473413/141771566-65525afb-c401-43b5-b699-c736472c543f.png" alt="logo-icon" style="display: inline;" width="9%;"/>
-<h3 style="display:inline; ">Homepage</h3>
+<p style="display: inline;" >
+    <a href="https://k5a202.p.ssafy.io" style="text-decoration:none;">
+<img src="https://user-images.githubusercontent.com/77473413/141771566-65525afb-c401-43b5-b699-c736472c543f.png" alt="logo-icon" width="9%;"/>Homepage
 </a>
-</div>
+  <a href="https://youtu.be/m_tz8_PWl14" style="text-decoration:none; margin: 0 10px">
+<img src = "https://i.imgur.com/TGNn7SL.png" alt="youtube-icon" width = "45" height = "40" style="margin: 0 16px;">UCC
+</a>
+  <a href="https://www.notion.so/Breeze-7900f2f7d7be47fd9a793c6872ecf6fa" style="text-decoration:none; margin: 0 10px">
+<img src = "https://i.imgur.com/H2BnAoP.png" alt="notion-icon" width = "45" height = "40" style="margin: 0 10px;">Notion
+</a>
+ <a href="https://velog.io/@breeze202" style="text-decoration:none; margin: 0 10px">
+<img src = "https://user-images.githubusercontent.com/77473413/142342801-1119b4fd-a9f1-48c8-b63e-72fcfac67dbf.png" alt="devblog-icon" width = "45" height = "40" style="margin: 0 10px;">Devblog
+</a>
+</p>
 
-<div style="display:inline;">
-<a href="https://youtu.be/m_tz8_PWl14" style="text-decoration:none;">
-<img src = "https://i.imgur.com/TGNn7SL.png" alt="youtube-icon" width = "40" height = "40" style="margin: 0 16px; display: inline;">
-<h3 style="display:inline;">UCC</p>
-</h3>  
-</div>
+<br>
 
 <br>
 
@@ -71,10 +74,7 @@ Breeze는 약속을 정하며 마주하는 여러 선택 상황들에서 사용�
 <br>
 
 ### Backend
-<img style="display: inline;" alt="Django" src ="https://img.shields.io/badge/Django-092e20.svg?&style=for-the-badge&logo=Django&logoColor=white"/>
-<img style="display: inline;" alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/>
-<img style="display: inline;" alt="jwt" src ="https://img.shields.io/badge/jwt-%23000000.svg?&style=for-the-badge&logo=JSON Web Tokens&logoColor=white"/>
-<img style="display: inline;" alt="mysql" src ="https://img.shields.io/badge/mysql-%234479A1.svg?&style=for-the-badge&logo=mysql&logoColor=white"/>
+<img style="display: inline;" alt="Django" src ="https://img.shields.io/badge/Django-092e20.svg?&style=for-the-badge&logo=Django&logoColor=white"/><img style="display: inline;" alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/><img style="display: inline;" alt="jwt" src ="https://img.shields.io/badge/jwt-%23000000.svg?&style=for-the-badge&logo=JSON Web Tokens&logoColor=white"/><img style="display: inline;" alt="mysql" src ="https://img.shields.io/badge/mysql-%234479A1.svg?&style=for-the-badge&logo=mysql&logoColor=white"/>
 
 - Django
 - python
@@ -114,7 +114,7 @@ Breeze는 약속을 정하며 마주하는 여러 선택 상황들에서 사용�
 </div>
 
     - 각 참여자들의 위치 정보를 바탕으로 중간 장소 리스트 제공
-    
+
 <br>
 
 #### 3. 가게 위시리스트 담기
@@ -123,7 +123,7 @@ Breeze는 약속을 정하며 마주하는 여러 선택 상황들에서 사용�
 </div>
 
     - 만남의 목적에 따른 추천 가게 리스트 제공
-    
+
 <br>
 
 #### 4. 쪽지 공유하기
@@ -133,7 +133,7 @@ Breeze는 약속을 정하며 마주하는 여러 선택 상황들에서 사용�
 </div>
 
     - 약속 내용을 담은 쪽지 카카오톡 공유
-    
+
 <br>
 
 #### 5. 이멤버 리멤버 & 원클릭 약속 만들기
