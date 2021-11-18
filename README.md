@@ -22,20 +22,10 @@ align-item: center;">
 
 > 어디서 만날지 항상 고민하고 힘들어하는 우리를 위한 약속 장소 추천 서비스
 
-<p style="display: inline;" >
-    <a href="https://k5a202.p.ssafy.io" style="text-decoration:none;">
-<img src="https://user-images.githubusercontent.com/77473413/141771566-65525afb-c401-43b5-b699-c736472c543f.png" alt="logo-icon" width="9%;"/>Homepage
-</a>
-  <a href="https://youtu.be/m_tz8_PWl14" style="text-decoration:none; margin: 0 10px">
-<img src = "https://i.imgur.com/TGNn7SL.png" alt="youtube-icon" width = "45" height = "40" style="margin: 0 16px;">UCC
-</a>
-  <a href="https://www.notion.so/Breeze-7900f2f7d7be47fd9a793c6872ecf6fa" style="text-decoration:none; margin: 0 10px">
-<img src = "https://i.imgur.com/H2BnAoP.png" alt="notion-icon" width = "45" height = "40" style="margin: 0 10px;">Notion
-</a>
- <a href="https://velog.io/@breeze202" style="text-decoration:none; margin: 0 10px">
-<img src = "https://user-images.githubusercontent.com/77473413/142342801-1119b4fd-a9f1-48c8-b63e-72fcfac67dbf.png" alt="devblog-icon" width = "45" height = "40" style="margin: 0 10px;">Devblog
-</a>
-</p>
+<br>
+
+| <img src="https://user-images.githubusercontent.com/77473413/141771566-65525afb-c401-43b5-b699-c736472c543f.png" alt="logo-icon" width="62;"/>[Homepage](https://k5a202.p.ssafy.io) | <img src = "https://i.imgur.com/TGNn7SL.png" alt="youtube-icon" width = "42" height = "40" style="margin: 0 16px;">[UCC](https://youtu.be/m_tz8_PWl14) | <img src = "https://i.imgur.com/H2BnAoP.png" alt="notion-icon" width = "42" height = "40" style="margin: 0 10px;">[Notion](https://www.notion.so/Breeze-7900f2f7d7be47fd9a793c6872ecf6fa) | <img src = "https://user-images.githubusercontent.com/77473413/142342801-1119b4fd-a9f1-48c8-b63e-72fcfac67dbf.png" alt="devblog-icon" width = "40" height = "38" style="margin: 0 10px;">[Devblog](https://velog.io/@breeze202) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
 <br>
 
